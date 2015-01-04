@@ -9,5 +9,5 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <icon src="res/ios/icon.png" platform="android" width="256" height="256" density="mdpi" />
+    <icon src="res/android/icon.png" platform="android" width="256" height="256" density="mdpi" />
 </widget>
