@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="me.thatmustbe.notify" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MicroPublish</name>
+    <description>
+        A simple MicroPub posting application.
+    </description>
+    <author email="ben@thatmustbe.me" href="http://ben.thatmustbe.me">
+        Ben Roberts
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <icon src="res/ios/icon.png" platform="android" width="256" height="256" density="mdpi" />
+</widget>
