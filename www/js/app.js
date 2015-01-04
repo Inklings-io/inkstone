@@ -210,10 +210,14 @@
     } // end getSiteObject
 
 
-    if(window.localStorage.getItem("me") && window.localStorage.getItem("token")){
+    if(window.localStorage.getItem("micropub") && window.localStorage.getItem("token")){
         showPostingUI();
         //$('.debugger').append('<li>me:'+window.localStorage.getItem("me")+'</li>');
         //$('.debugger').append('<li>token:'+window.localStorage.getItem("token")+'</li>');
+    }else if(window.localStorage.getItem("me") ){
+        me = decodeURIComponent(window.localStorage.getItem("me"));
+        $('#login-url').val(me);
+
     }
 
 }());
