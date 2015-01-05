@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="me.thatmustbe.micropublish" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MicroPublish</name>
+<widget id="me.thatmustbe.mobilepub" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MobilePub</name>
     <description>
         A simple MicroPub posting application.
     </description>
@@ -9,5 +9,5 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <icon src="res/android/icon.png" platform="android" width="256" height="256" density="mdpi" />
+    <icon src="res/android/note.png" platform="android" width="256" height="256" density="mdpi" />
 </widget>
