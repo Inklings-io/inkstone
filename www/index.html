@@ -15,11 +15,15 @@
 
 <div style='display:none;' id='postingPage'>
   <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+  <p id="input-syndication-wrapper" style="display:none">
+    <label for="input-syndicateto">Syndicate To</label>
     <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        <option value="https://www.brid.gy/publish/twitter">Brid.gy Twitter</option>
-        <option value="https://www.brid.gy/publish/facebook">Brid.gy Facebook</option>
     </select>
+  </p>
   <p><button id="post-btn">Post</button></p>
+
+<div id='success'></div>
 
   <p><button id="logout-btn">Logout</button></p>
 </div>

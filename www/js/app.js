@@ -16,14 +16,13 @@
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
             if(!targets_array){
-                $('#input-syndicateto').hide();
+                $('#input-syndication-wrapper').hide();
             } else {
                 $('#input-syndicateto').html('');
                 for (i = 0; i < targets_array.length; i++) {
                     $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
                 }
-          
-                $('#input-syndicateto').show();
+                $('#input-syndication-wrapper').show();
             }
         });
     }
@@ -48,9 +47,13 @@
         }
 
         mp_send(data, function(){
-            alert('posted');
             $('#input-content').val('');
             $('#input-syndicateto').val('');
+            $('#success').html('Posted!');
+            $('#success').show();
+            setTimeout(function() {
+                    $('#success').fadeOut('fast');
+            }, 2000);
 
         });
 

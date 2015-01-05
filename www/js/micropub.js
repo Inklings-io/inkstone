@@ -46,7 +46,7 @@
                 Authorization: 'Bearer ' + token
             },
             success: function(data){
-                successful_callback();
+                success_callback();
             }
         });
         
