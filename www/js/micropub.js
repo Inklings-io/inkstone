@@ -217,9 +217,11 @@
     } // end getSiteObject
 
 
-    function uploadPhoto(imageUrlToUpload) {
+    function uploadPhoto(data, imageUriToUpload) {
+        micropub = window.localStorage.getItem("micropub");
+
         //alert('upload: '+imageUriToUpload);
-        var url=encodeURI(youruploadurl);
+        var url=encodeURI(micropub);
         var params = new Object();
         params.your_param_name = "something";  //add your additional post parameters here
         var options = new FileUploadOptions();
@@ -246,7 +248,7 @@
             }else{alert('not computable');}
         };
 
-        ft.upload(imageUrlToUpload, url, photo_success, photo_fail, options);
+        ft.upload(imageUriToUpload, url, photo_success, photo_fail, options);
     }
 
     function photo_success(r) {
