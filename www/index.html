@@ -3,33 +3,90 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 
-<div class='header'><h1>MobilePub</h1></div>
+<script id="login-tpl" type="text/template">
+  <div class="login-screen-wrapper">
+    <header>
+        <h1 class="title">Welcome to MobilePub</h1>
+        <h2 class="title">Please Login</h2>
+    </header>
+    <div class="screen-main">
+        <input class='me' id="login-url" type="text" value="" placeholder="Enter domain"/>
+        <button id="login-btn">Login</button>
+    </div>
+  </div>
+</script>
 
-<div id='loginPage'>
-    <input class='me' id="login-url" type="text" value="" placeholder="Enter domain"/>
-    <p><button id="login-btn">Login</button></p>
-</div>
+<script id="home-tpl" type="text/template">
+  <div class="home-screen-wrapper">
+    <header>
+        <h1 class="title">Welcome to MobilePub</h1>
+    </header>
+    <ol class="home-screen-main">
+      {{#each this}}
+      <li class="homescreenIcon" id="homeicon_{{id}}">
+          <img src="{{image}}"/>
+          <span>{{label}}</span>
+      </li> 
+      {{/each}}
+      <div class="clear"></div>
+    </ol> 
+        
+  </div>
+</script>
 
-<div style='display:none;' id='postingPage'>
-  <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
 
-  <p id="input-syndication-wrapper" style="display:none">
-    <label for="input-syndicateto">Syndicate To</label>
-    <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-    </select>
-  </p>
-  <p><button id="post-btn">Post</button></p>
+<script id="camera-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Camera.png" />Post a Photo
+        </h1>
+      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <button id="camera-btn">Take Picture</button>
+      <img id="MyImage" />
 
-<div id='success'></div>
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <span id="upload-status"></span>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
+    </div>
+  </div>
+</script>
 
-  <p><button id="logout-btn">Logout</button></p>
-</div>
-<ul class='list debugger'></ul>
+<script id="new-note-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Speech-Bubble.png" />Create Note
+        </h1>
+      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
+    </div>
+  </div>
+</script>
+
 
 <script src="lib/jquery.js"></script>
+<script src="lib/handlebars.js"></script>
 <script src="js/micropub.js"></script>
 <script src="js/app.js"></script>
 <script src="cordova.js"></script>

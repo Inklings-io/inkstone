@@ -33,24 +33,6 @@
     } // end mp_login()
 
 
-    function mp_send(data, success_callback){
-        token = window.localStorage.getItem("token");
-        micropub = window.localStorage.getItem("micropub");
-
-        //alert(micropub);
-        $.ajax({
-            url: micropub,
-            type: 'post',
-            data: data,
-            headers: {
-                Authorization: 'Bearer ' + token
-            },
-            success: function(data){
-                success_callback();
-            }
-        });
-        
-    } // end mp_send
 
     /** getSyndicationTargets
      * get the array of all syndication targets from the clients micropub endpoint
@@ -217,24 +199,43 @@
     } // end getSiteObject
 
 
-    function uploadPhoto(data, imageUriToUpload) {
+    function mp_send(data, success_callback){
+        token = window.localStorage.getItem("token");
         micropub = window.localStorage.getItem("micropub");
 
+        //alert(micropub);
+        $.ajax({
+            url: micropub,
+            type: 'post',
+            data: data,
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+            success: function(data){
+                success_callback();
+            }
+        });
+        
+    } // end mp_send
+
+    function mp_uploadPhoto(data_obj, imageUriToUpload, success, failure) {
+        micropub = window.localStorage.getItem("micropub");
+        token = window.localStorage.getItem("token");
+
+        alert(imageUriToUpload);
         //alert('upload: '+imageUriToUpload);
         var url=encodeURI(micropub);
-        var params = new Object();
-        params.your_param_name = "something";  //add your additional post parameters here
         var options = new FileUploadOptions();
-        options.headers={Connection: "close"};
+        options.headers={Connection: "close", Authorization: 'Bearer ' + token };
         options.fileKey = "file"; //depends on the api
         options.fileName = imageUriToUpload.substr(imageUriToUpload.lastIndexOf('/')+1);
         options.mimeType = "image/jpeg";
         options.chunkedMode = false; //this is important to send both data and files
-        options.params = params;
+        options.params = data_obj;
 
         var ft = new FileTransfer();
         //what to do during the file transfer? lets show some percentage...
-        var status=$('yourselectorhere');//element in the dom that gets updated during the onprogress
+        var status=$('#upload-status');//element in the dom that gets updated during the onprogress
         ft.onprogress = function(progressEvent) {
             var perc;
 
@@ -248,13 +249,5 @@
             }else{alert('not computable');}
         };
 
-        ft.upload(imageUriToUpload, url, photo_success, photo_fail, options);
-    }
-
-    function photo_success(r) {
-        alert("Upload success: Code = " + r.responseCode);
-    }
-
-    function photo_fail(error) {
-        alert("An error has occurred: Code = " + error.code);
+        ft.upload(imageUriToUpload, url, success, failure, options);
     }

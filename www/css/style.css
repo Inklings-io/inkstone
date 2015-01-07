@@ -1,0 +1,78 @@
+html,body{
+  margin:0;
+  padding:0;
+  border:0;
+}
+.login-screen-wrapper,
+.home-screen-wrapper,
+.create-screen-wrapper{
+  background-color:black;
+  padding-bottom:50px;
+}
+.login-screen-wrapper header,
+.home-screen-wrapper header,
+.create-screen-wrapper header{
+  color:white; text-align:center;
+}
+.login-screen-wrapper h1 img,
+.home-screen-wrapper h1 img,
+.create-screen-wrapper h1 img{
+  height:44px;
+  margin-right:10px;
+}
+.screen-main {
+  background-color:grey;
+  margin: auto 10% ;
+  position:relative;
+  background: none repeat scroll 0 0 #4e4e50;
+  border-radius: 32px;
+  list-style: outside none none;
+  color:white;
+  padding: 20px 3%;
+  text-align:center;
+}
+.screen-main textarea,
+.screen-main input{
+  width: 90%;
+}
+.screen-main textarea{
+  min-height: 100px;
+}
+
+#home-btn {
+  text-align:center;
+  position:fixed;
+  top:10px; right:10px;
+}
+#home-btn img {
+  height:32px;
+  width:32px;
+}
+#home-btn span {
+  display:block;
+}
+
+.home-screen-main {
+  background-color:grey;
+  margin: auto 10% ;
+  position:relative;
+  background: none repeat scroll 0 0 #4e4e50;
+  border-radius: 32px;
+  list-style: outside none none;
+  color:white;
+  padding: 20px 3%
+}
+.homescreenIcon {
+  float:left;
+  width: 20%;
+  min-width: 100px;
+  margin-left:7%;
+  height: 120px;
+  text-align:center;
+}
+.homescreenIcon span {
+  display:block;
+}
+.clear {clear:both;}
+h1 {padding:21px 0; margin:0;}
+#MyImage {width:90%}
