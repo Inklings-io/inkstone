@@ -41,6 +41,14 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 3
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -64,6 +72,9 @@
             "PACKAGE_NAME": "me.thatmustbe.mobilepub"
         },
         "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "me.thatmustbe.mobilepub"
+        },
+        "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "me.thatmustbe.mobilepub"
         }
     },

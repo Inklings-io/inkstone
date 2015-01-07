@@ -218,18 +218,18 @@
         
     } // end mp_send
 
-    function mp_uploadPhoto(data_obj, imageUriToUpload, success, failure) {
+    function mp_uploadFile(data_obj, mimeType, fileUriToUpload, success, failure) {
         micropub = window.localStorage.getItem("micropub");
         token = window.localStorage.getItem("token");
 
-        alert(imageUriToUpload);
-        //alert('upload: '+imageUriToUpload);
+        //alert(fileUriToUpload);
+        //alert('upload: '+fileUriToUpload);
         var url=encodeURI(micropub);
         var options = new FileUploadOptions();
         options.headers={Connection: "close", Authorization: 'Bearer ' + token };
         options.fileKey = "file"; //depends on the api
-        options.fileName = imageUriToUpload.substr(imageUriToUpload.lastIndexOf('/')+1);
-        options.mimeType = "image/jpeg";
+        options.fileName = fileUriToUpload.substr(fileUriToUpload.lastIndexOf('/')+1);
+        options.mimeType =  mimeType;
         options.chunkedMode = false; //this is important to send both data and files
         options.params = data_obj;
 
@@ -249,5 +249,5 @@
             }else{alert('not computable');}
         };
 
-        ft.upload(imageUriToUpload, url, success, failure, options);
+        ft.upload(fileUriToUpload, url, success, failure, options);
     }

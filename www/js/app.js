@@ -30,7 +30,6 @@
             {'image':'icons-nonfree/iconSweets2/'+palette+'/64-Document.png', 'label':'New Article', 'id':'newarticle'},
             {'image':'icons-nonfree/iconSweets2/'+palette+'/64-Marker.png', 'label':'New Checkin', 'id':'newcheckin'},
             {'image':'icons-nonfree/iconSweets2/'+palette+'/64-Camera.png', 'label':'New Photo', 'id':'newphoto'},
-            {'image':'icons-nonfree/iconSweets2/'+palette+'/64-Image.png', 'label':'Upload Photo', 'id':'photoupload'},
             {'image':'icons-nonfree/iconSweets2/'+palette+'/64-Microphone.png', 'label':'New Audio', 'id':'newaudio'},
             {'image':'icons-nonfree/iconSweets2/'+palette+'/64-Day-Calendar.png', 'label':'New Event', 'id':'newevent'},
             {'image':'icons-nonfree/iconSweets2/'+palette+'/64-Settings-2.png', 'label':'Settings', 'id':'settings'},
@@ -52,6 +51,7 @@
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', postPhoto);
         $('#camera-btn').on('click', take_a_picture);
+        $('#gallery-btn').on('click', get_a_picture);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
             if(!targets_array){
@@ -69,7 +69,7 @@
     function renderNewNoteView() {
         $('body').html(newNoteTpl({'palette':palette}));
         $('#home-btn').on('click', renderHomeView);
-        $('#post-btn').on('click', sendPost);
+        $('#post-btn').on('click', sendNote);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
             if(!targets_array){
@@ -84,7 +84,7 @@
         });
     }
 
-    function sendPost(){
+    function sendNote(){
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
 
@@ -109,8 +109,21 @@
         });
     }
 
+    function get_a_picture(){
+        navigator.camera.getPicture(onPhotoSuccess, onPhotoFail, { quality: 50,
+              destinationType: Camera.DestinationType.FILE_URI,
+              sourceType : Camera.PictureSourceType.PHOTOLIBRARY, // or SAVEDPHOTOALBUM not sure what the difference is
+              allowEdit : true,
+              encodingType: Camera.EncodingType.JPEG,
+              targetWidth: 512,
+              targetHeight: 512,
+              popoverOptions: CameraPopoverOptions,
+              correctOrientation: true,
+              saveToPhotoAlbum: false
+        });
+    }
     function take_a_picture(){
-        navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+        navigator.camera.getPicture(onPhotoSuccess, onPhotoFail, { quality: 50,
               destinationType: Camera.DestinationType.FILE_URI,
               sourceType : Camera.PictureSourceType.CAMERA,
               allowEdit : true,
@@ -124,13 +137,13 @@
     }
 
     var photoData;
-    function onSuccess(imageSrc) {
+    function onPhotoSuccess(imageSrc) {
             $('#MyImage').attr('src', imageSrc);
             photoData = imageSrc;
 
     }
 
-    function onFail(message) {
+    function onPhotoFail(message) {
             alert('Failed because: ' + message);
     }
 
@@ -150,21 +163,17 @@
                 data_obj['syndicate-to['+i+']'] = syndicate[i];
             }
         }
-        mp_uploadPhoto(data_obj, photo_uri,
-            function(r){ alert("Upload success: Code = " + r.responseCode); },
-            function(error){ alert("An error has occurred: Code = " + error.code); });
-
-        mp_send(data, function(){
-            alert('Posted!');
-            $('#input-content').val('');
-            $('#input-syndicateto').val('');
-            //$('#success').html('Posted!');
-            //$('#success').show();
-            //setTimeout(function() {
-                    //$('#success').fadeOut('fast');
-            //}, 2000);
-
+        mp_uploadFile(data_obj, "image/jpeg", photo_uri,
+            function(r){ 
+                alert('Posted!');
+                $('#input-content').val('');
+                $('#input-syndicateto').val('');
+                photoData = null;
+                $('#MyImage').attr('src', '');
+            },
+            function(error){ alert("An error has occurred: Code = " + error.code); 
         });
+
     }
 
 
