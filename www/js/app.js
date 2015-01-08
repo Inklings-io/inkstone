@@ -7,6 +7,7 @@
     var newNoteTpl = Handlebars.compile($("#new-note-tpl").html());
     var cameraTpl = Handlebars.compile($("#camera-tpl").html());
     var palette = 'shine'; //dark, light, or shine
+    var config;
 
     /* --------------------------------- Event Registration -------------------------------- */
 
@@ -115,8 +116,8 @@
               sourceType : Camera.PictureSourceType.PHOTOLIBRARY, // or SAVEDPHOTOALBUM not sure what the difference is
               allowEdit : true,
               encodingType: Camera.EncodingType.JPEG,
-              targetWidth: 512,
-              targetHeight: 512,
+              targetWidth: config.photo_width,
+              targetHeight: config.photo_height,
               popoverOptions: CameraPopoverOptions,
               correctOrientation: true,
               saveToPhotoAlbum: false
@@ -128,8 +129,8 @@
               sourceType : Camera.PictureSourceType.CAMERA,
               allowEdit : true,
               encodingType: Camera.EncodingType.JPEG,
-              targetWidth: 512,
-              targetHeight: 512,
+              targetWidth: config.photo_width,
+              targetHeight: config.photo_height,
               popoverOptions: CameraPopoverOptions,
               correctOrientation: true,
               saveToPhotoAlbum: false
@@ -163,7 +164,7 @@
                 data_obj['syndicate-to['+i+']'] = syndicate[i];
             }
         }
-        mp_uploadFile(data_obj, "image/jpeg", photo_uri,
+        mp_uploadFile(data_obj, "photo", "image/jpeg", photo_uri,
             function(r){ 
                 alert('Posted!');
                 $('#input-content').val('');
@@ -194,4 +195,12 @@
         renderLoginView();
     }
 
+    config = window.localStores.getItem("config");
+    if(!config){
+        config = {
+            photo_width: 512,
+            photo_height: 512
+        }
+        window.localStores.setItem("config", config);
+    }
 }());

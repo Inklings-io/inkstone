@@ -1,6 +1,9 @@
 
     function mp_logout(){
-        window.localStorage.clear();
+        //window.localStorage.clear();
+        window.localStorage.removeItem("micropub");
+        window.localStorage.removeItem("token");
+        window.localStorage.removeItem("me");
     }
     function mp_logged_in(){
         return(window.localStorage.getItem("micropub") && window.localStorage.getItem("token"));
@@ -78,7 +81,7 @@
         url=site.authorization_endpoint+'?me='+site.url+'&client_id=MobilePub&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post'
 
         //wnd = window.open(url, "_blank", 'toolbar=yes,closebuttoncaption=Back,presentationstyle=formsheet,toolbarposition=top,clearsessioncache=yes,clearcache=yes');
-        wnd = window.open(url, "_blank", 'toolbar=no,location=yes');
+        wnd = window.open(url, "_blank", 'toolbar=no,location=yes,clearcache=yes');
 
         wnd.addEventListener("loadstart", function(ev) {
             var results;
@@ -218,7 +221,7 @@
         
     } // end mp_send
 
-    function mp_uploadFile(data_obj, mimeType, fileUriToUpload, success, failure) {
+    function mp_uploadFile(data_obj, fileKey, mimeType, fileUriToUpload, success, failure) {
         micropub = window.localStorage.getItem("micropub");
         token = window.localStorage.getItem("token");
 
@@ -227,7 +230,7 @@
         var url=encodeURI(micropub);
         var options = new FileUploadOptions();
         options.headers={Connection: "close", Authorization: 'Bearer ' + token };
-        options.fileKey = "file"; //depends on the api
+        options.fileKey = fileKey; //depends on the api
         options.fileName = fileUriToUpload.substr(fileUriToUpload.lastIndexOf('/')+1);
         options.mimeType =  mimeType;
         options.chunkedMode = false; //this is important to send both data and files
