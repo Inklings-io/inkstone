@@ -68,6 +68,29 @@
   </div>
 </script>
 
+<script id="video-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Microphone.png" />Video Record</h1>
+      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <button id="video-btn">Record Video</button>
+      <div id="VideoFile"></div>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <span id="upload-status"></span>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
+    </div>
+  </div>
+</script>
+
 <script id="audio-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
@@ -143,6 +166,15 @@
     </header>
     <div class="screen-main">
 
+      <div class="setting">
+        <div class="switch-desc">Support Video:</div>
+        <div id="support_video" class="onoffswitch {{#if support_video}}on{{/if}}">
+          <div class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </div>
+        </div> 
+      </div> 
       <div class="setting">
         <div class="switch-desc">Support Audio:</div>
         <div id="support_audio" class="onoffswitch {{#if support_audio}}on{{/if}}">

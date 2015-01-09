@@ -8,26 +8,43 @@
     var newCheckinTpl = Handlebars.compile($("#new-checkin-tpl").html());
     var cameraTpl = Handlebars.compile($("#camera-tpl").html());
     var audioTpl = Handlebars.compile($("#audio-tpl").html());
+    var videoTpl = Handlebars.compile($("#video-tpl").html());
     var settingsTpl = Handlebars.compile($("#settings-tpl").html());
     var config;
     var photoData;
     var audioData;
+    var videoData;
 
     if(window.localStorage.getItem("config")){
         config = JSON.parse(window.localStorage.getItem("config"));
     } else {
-        config = {
-            'photo_width': 512,
-            'photo_height': 512,
-            'photo_edit': true,
-            'support_photo': true,
-            'support_video': true,
-            'support_audio': true,
-            'geo_high_accuracy': true,
-            'palette': 'shine' //dark, light, or shine
-        }
-        window.localStorage.setItem("config", JSON.stringify(config));
+        config = {}
     }
+    if(!config['photo_width']){
+        config['photo_width']= 512;
+    }
+    if(!config['photo_height']){
+        config['photo_height']= 512;
+    }
+    if(!config['photo_edit']){
+        config['photo_edit']= true;
+    }
+    if(!config['support_photo']){
+        config['support_photo']= true;
+    }
+    if(!config['support_video']){
+        config['support_video']= true;
+    }
+    if(!config['support_audio']){
+        config['support_audio']= true;
+    }
+    if(!config['geo_high_accuracy']){
+        config['geo_high_accuracy']= true;
+    }
+    if(!config['palette']){
+        config['palette']= 'shine';//dark, light, or shine
+    }
+    window.localStorage.setItem("config", JSON.stringify(config));
 
     /* --------------------------------- Event Registration -------------------------------- */
 
@@ -47,14 +64,17 @@
     /* ---------------------------------- Local Functions ---------------------------------- */
     function renderHomeView() {
         icons = [];
-        icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Speech-Bubble.png', 'label':'New Note', 'id':'newnote'});
-        icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Marker.png', 'label':'New Checkin', 'id':'newcheckin'});
+        icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Speech-Bubble.png', 'label':'Note', 'id':'newnote'});
+        icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Marker.png', 'label':'Checkin', 'id':'newcheckin'});
 
         if(config['support_photo']){
-            icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Camera.png', 'label':'New Photo', 'id':'newphoto'});
+            icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Camera.png', 'label':'Photo', 'id':'newphoto'});
         }
         if(config['support_audio']){
-            icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Microphone.png', 'label':'New Audio', 'id':'newaudio'});
+            icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Microphone.png', 'label':'Audio', 'id':'newaudio'});
+        }
+        if(config['support_video']){
+            icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Film-Strip.png', 'label':'Video', 'id':'newvideo'});
         }
 
         //icons.push({'image':'icons-nonfree/iconSweets2/'+config['palette']+'/64-Day-Calendar.png', 'label':'New Event', 'id':'newevent'});
@@ -68,6 +88,7 @@
         $('#homeicon_exit').on('click', logout);
         $('#homeicon_newphoto').on('click', renderNewPhotoView);
         $('#homeicon_newaudio').on('click', renderNewAudioView);
+        $('#homeicon_newvideo').on('click', renderNewVideoView);
         $('#homeicon_settings').on('click', renderSettingsView);
     }
 
@@ -92,6 +113,24 @@
         });
     }
 
+    function renderNewVideoView() {
+        $('body').html(videoTpl(config));
+        $('#home-btn').on('click', renderHomeView);
+        $('#post-btn').on('click', postVideo);
+        $('#video-btn').on('click', recordVideo);
+        getSyndicationTargets(function(targets){
+            targets_array = targets.split(',');
+            if(!targets_array){
+                $('#input-syndication-wrapper').hide();
+            } else {
+                $('#input-syndicateto').html('');
+                for (i = 0; i < targets_array.length; i++) {
+                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
+                }
+                $('#input-syndication-wrapper').show();
+            }
+        });
+    }
     function renderNewAudioView() {
         $('body').html(audioTpl(config));
         $('#home-btn').on('click', renderHomeView);
@@ -281,6 +320,17 @@
     }
 
 
+    function recordVideo(){
+        navigator.device.capture.captureVideo( function(mediaFiles){
+            //if there are somehow multiple files, only take the last one
+            videoData = mediaFiles[mediaFiles.length -1];
+            $('#VideoFile').html(videoData.name);
+        },
+        function(message){
+            alert('Failed: ' + message);
+        });
+    }
+
     function recordAudio(){
         navigator.device.capture.captureAudio( function(mediaFiles){
             //if there are somehow multiple files, only take the last one
@@ -303,6 +353,33 @@
         alert('Failed: ' + message);
         //i don't think you need this if it failed to capture
         //navigator.camera.cleanup(function(){}, function(){});
+    }
+
+    function postVideo(){
+        content = $('#input-content').val();
+        syndicate = $('#input-syndicateto').val();
+
+        data_obj = { 'h': 'entry',
+            'type':'video',
+            'operation':'create',
+            'content': content
+        }
+        // todo escape content and syndicate
+        if(syndicate){
+            for (i = 0; i < syndicate.length; i++) {
+                data_obj['syndicate-to['+i+']'] = syndicate[i];
+            }
+        }
+        mp_uploadFile(data_obj, "video", videoData.type, videoData.fullPath,
+            function(r){ 
+                alert('Posted!');
+                $('#input-content').val('');
+                $('#input-syndicateto').val('');
+                videoData = null;
+                $('#videoFile').html('');
+            },
+            function(error){ alert("An error has occurred: Code = " + error.code); 
+        });
     }
 
     function postAudio(){
@@ -330,8 +407,8 @@
             },
             function(error){ alert("An error has occurred: Code = " + error.code); 
         });
-
     }
+
     function postPhoto(){
         content = $('#input-content').val();
         photo_uri = photoData;
