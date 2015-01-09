@@ -31,6 +31,10 @@
                         {
                             "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Capture\"><param name=\"android-package\" value=\"org.apache.cordova.mediacapture.Capture\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -40,7 +44,7 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 3
+                            "count": 4
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
@@ -48,6 +52,14 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECORD_VIDEO\" />",
                             "count": 1
                         }
                     ]
@@ -75,6 +87,9 @@
             "PACKAGE_NAME": "me.thatmustbe.mobilepub"
         },
         "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "me.thatmustbe.mobilepub"
+        },
+        "org.apache.cordova.media-capture": {
             "PACKAGE_NAME": "me.thatmustbe.mobilepub"
         }
     },

@@ -16,7 +16,12 @@
     <div class="screen-main">
         <input class='me' id="login-url" type="text" value="" placeholder="Enter domain"/>
         <button id="login-btn">Login</button>
+        <div>
+        <a href="http://indiewebcamp.com/How_to_set_up_web_sign-in_on_your_own_domain">What is Web Sign-In?</a><br>
+        <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
+        </div>
     </div>
+    
   </div>
 </script>
 
@@ -42,15 +47,14 @@
 <script id="camera-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Camera.png" />Post a Photo
-        </h1>
+        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Camera.png" />Post a Photo</h1>
       <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
       <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
       <button id="camera-btn">Take A Photo</button>
       <button id="gallery-btn">Select Photo</button>
-      <img id="MyImage" />
+      <img id="PhotoPreview" />
 
       <p id="input-syndication-wrapper" style="display:none">
         <label for="input-syndicateto">Syndicate To</label>
@@ -64,11 +68,57 @@
   </div>
 </script>
 
+<script id="audio-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Microphone.png" />Audio Record</h1>
+      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <button id="audio-btn">Record Audio</button>
+      <div id="AudioFile"></div>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <span id="upload-status"></span>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
+    </div>
+  </div>
+</script>
+
+<script id="new-checkin-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Speech-Bubble.png" />Create Checkin</h1>
+      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="location" placeholder="Geo Location" id="geoloc"/>
+      <button id="geo-btn">Use GPS</button><br>
+      <input name="place_name" placeholder="Location Name" id="loc_name"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
+    </div>
+  </div>
+</script>
+
 <script id="new-note-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Speech-Bubble.png" />Create Note
-        </h1>
+        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Speech-Bubble.png" />Create Note</h1>
       <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
@@ -81,6 +131,71 @@
       </p>
       <p><button id="post-btn">Post</button></p>
       <div id='success'></div>
+    </div>
+  </div>
+</script>
+
+<script id="settings-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Settings-2.png" />Settings</h1>
+      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+
+      <div class="setting">
+        <div class="switch-desc">Support Audio:</div>
+        <div id="support_audio" class="onoffswitch {{#if support_audio}}on{{/if}}">
+          <div class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </div>
+        </div> 
+      </div> 
+      <div class="setting">
+        <div class="switch-desc">Support Photo:</div>
+        <div id="support_photo" class="onoffswitch {{#if support_photo}}on{{/if}}">
+          <div class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </div>
+        </div> 
+      </div> 
+      {{#if support_photo}}
+        <div class="setting">
+          <div class="switch-desc">Crop Photos after taking them:</div>
+          <div id="photo_edit" class="onoffswitch {{#if photo_edit}}on{{/if}}">
+            <div class="onoffswitch-label">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+            </div>
+          </div> 
+        </div> 
+
+        <div class="setting">
+          <div class="switch-desc">Resulting Photo Target Height</div>
+            <div class="input-label">
+              <input type="number" name="photo_height" value="{{photo_height}}"/>
+            </div> 
+        </div> 
+
+        <div class="setting">
+          <div class="switch-desc">Resulting Photo Target Width</div>
+            <div class="input-label">
+              <input type="number" name="photo_width" value="{{photo_width}}"/>
+            </div> 
+        </div> 
+      {{/if}}
+      <div class="setting">
+        <div class="switch-desc">High Accuracy GeoLocation:</div>
+        <div id="geo_high_accuracy" class="onoffswitch {{#if geo_high_accuracy}}on{{/if}}">
+          <div class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </div>
+        </div> 
+      </div> 
+      
     </div>
   </div>
 </script>
