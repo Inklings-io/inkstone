@@ -281,13 +281,9 @@
     }
 
     function get_a_picture(){
-        navigator.camera.getPicture(onPhotoSuccess, onPhotoFail, { quality: 50,
-              destinationType: Camera.DestinationType.FILE_URI,
-              sourceType : Camera.PictureSourceType.SAVEDPHOTOALBUM, // not sure what the difference is
-              //sourceType : Camera.PictureSourceType.PHOTOLIBRARY, // or SAVEDPHOTOALBUM not sure what the difference is
-              mediaType : PICTURE,
-              encodingType: Camera.EncodingType.JPEG,
-              correctOrientation: true,
+        navigator.camera.getPicture(onPhotoSuccess, onPhotoFail, {
+              destinationType: Camera.DestinationType.NATIVE_URI,
+              sourceType: Camera.PictureSourceType.PHOTOLIBRARY
         });
     }
     function take_a_picture(){
