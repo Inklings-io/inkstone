@@ -20,28 +20,28 @@
     } else {
         config = {}
     }
-    if(!config['photo_width']){
+    if(config['photo_width'] === undefined){
         config['photo_width']= 512;
     }
-    if(!config['photo_height']){
+    if(config['photo_height'] === undefined){
         config['photo_height']= 512;
     }
-    if(!config['photo_edit']){
+    if(config['photo_edit'] === undefined){
         config['photo_edit']= true;
     }
-    if(!config['support_photo']){
+    if(config['support_photo'] === undefined){
         config['support_photo']= true;
     }
-    if(!config['support_video']){
+    if(config['support_video'] === undefined){
         config['support_video']= true;
     }
-    if(!config['support_audio']){
+    if(config['support_audio'] === undefined){
         config['support_audio']= true;
     }
-    if(!config['geo_high_accuracy']){
+    if(config['geo_high_accuracy'] === undefined){
         config['geo_high_accuracy']= true;
     }
-    if(!config['palette']){
+    if(config['palette'] === undefined){
         config['palette']= 'shine';//dark, light, or shine
     }
     window.localStorage.setItem("config", JSON.stringify(config));
@@ -110,6 +110,19 @@
             theInput = $(this);
             config[theInput.attr('name')] = theInput.val(); 
             window.localStorage.setItem("config", JSON.stringify(config));
+        });
+        $('#btn-reset').on('click', function(ev){
+            config = {
+                'photo_width': 512,
+                'photo_height': 512,
+                'photo_edit': true,
+                'support_photo': true,
+                'support_video': true,
+                'support_audio': true,
+                'geo_high_accuracy': true,
+                'palette': 'shine'//dark, light, or shine
+            };
+          window.localStorage.setItem("config", JSON.stringify(config));
         });
     }
 
@@ -270,15 +283,11 @@
     function get_a_picture(){
         navigator.camera.getPicture(onPhotoSuccess, onPhotoFail, { quality: 50,
               destinationType: Camera.DestinationType.FILE_URI,
-              sourceType : Camera.PictureSourceType.PHOTOLIBRARY, // or SAVEDPHOTOALBUM not sure what the difference is
+              sourceType : Camera.PictureSourceType.SAVEDPHOTOALBUM, // not sure what the difference is
+              //sourceType : Camera.PictureSourceType.PHOTOLIBRARY, // or SAVEDPHOTOALBUM not sure what the difference is
               mediaType : PICTURE,
-              allowEdit : config['photo_edit'],
               encodingType: Camera.EncodingType.JPEG,
-              targetWidth: config['photo_width'],
-              targetHeight: config['photo_height'],
-              popoverOptions: CameraPopoverOptions,
               correctOrientation: true,
-              saveToPhotoAlbum: false
         });
     }
     function take_a_picture(){
