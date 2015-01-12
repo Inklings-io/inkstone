@@ -6,6 +6,8 @@
     var homeTpl = Handlebars.compile($("#home-tpl").html());
     var newNoteTpl = Handlebars.compile($("#new-note-tpl").html());
     var newReplyTpl = Handlebars.compile($("#new-reply-tpl").html());
+    var newLikeTpl = Handlebars.compile($("#new-like-tpl").html());
+    var newBookmarkTpl = Handlebars.compile($("#new-bookmark-tpl").html());
     var newCheckinTpl = Handlebars.compile($("#new-checkin-tpl").html());
     var cameraTpl = Handlebars.compile($("#camera-tpl").html());
     var audioTpl = Handlebars.compile($("#audio-tpl").html());
@@ -78,6 +80,8 @@
         if(config['support_video']){
             icons.push({'image':'svg/film.png', 'label':'Video', 'id':'newvideo'});
         }
+        icons.push({'image':'svg/bookmark.png', 'label':'Bookmark', 'id':'newbookmark'});
+        icons.push({'image':'svg/heart.png', 'label':'Like', 'id':'newlike'});
 
         //icons.push({'image':'svg/daycalendar.png', 'label':'New Event', 'id':'newevent'});
         icons.push({'image':'svg/gear.png', 'label':'Settings', 'id':'settings'});
@@ -86,6 +90,8 @@
         $('body').html(homeTpl(icons));
         $('#homeicon_newnote').on('click', renderNewNoteView);
         $('#homeicon_newreply').on('click', renderNewReplyView);
+        $('#homeicon_newlike').on('click', renderNewLikeView);
+        $('#homeicon_newbookmark').on('click', renderNewBookmarkView);
         $('#homeicon_newcheckin').on('click', renderNewCheckinView);
         $('#homeicon_exit').on('click', logout);
         $('#homeicon_newphoto').on('click', renderNewPhotoView);
@@ -239,6 +245,40 @@
             }
         });
     }
+    function renderNewBookmarkView() {
+        $('body').html(newBookmarkTpl(config));
+        $('#home-btn').on('click', renderHomeView);
+        $('#post-btn').on('click', sendNote);
+        getSyndicationTargets(function(targets){
+            targets_array = targets.split(',');
+            if(!targets_array){
+                $('#input-syndication-wrapper').hide();
+            } else {
+                $('#input-syndicateto').html('');
+                for (i = 0; i < targets_array.length; i++) {
+                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
+                }
+                $('#input-syndication-wrapper').show();
+            }
+        });
+    }
+    function renderNewLikeView() {
+        $('body').html(newLikeTpl(config));
+        $('#home-btn').on('click', renderHomeView);
+        $('#post-btn').on('click', sendNote);
+        getSyndicationTargets(function(targets){
+            targets_array = targets.split(',');
+            if(!targets_array){
+                $('#input-syndication-wrapper').hide();
+            } else {
+                $('#input-syndicateto').html('');
+                for (i = 0; i < targets_array.length; i++) {
+                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
+                }
+                $('#input-syndication-wrapper').show();
+            }
+        });
+    }
 
     function sendCheckin(){
         content = $('#input-content').val();
@@ -270,6 +310,8 @@
             alert('Posted!');
             $('#input-content').val('');
             $('#inreplyto').val('');
+            $('#like').val('');
+            $('#bookmark').val('');
             $('#category').val('');
             $('#input-syndicateto').val('');
             $('#geoloc').val('');
@@ -287,10 +329,12 @@
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
         replyurl = $('#inreplyto').val();
+        like = $('#like').val();
+        bookmark = $('#bookmark').val();
         category = $('#category').val();
 
         // todo escapte content and syndicate
-        data = 'type=reply&h=entry&operation=create&content='+encodeURIComponent(content);
+        data = 'type=note&h=entry&operation=create&content='+encodeURIComponent(content);
         
         if(category){
             data += '&category=' + encodeURIComponent(category);
@@ -298,6 +342,14 @@
 
         if(replyurl){
             data += '&in-reply-to=' + encodeURIComponent(replyurl);
+        }
+
+        if(like){
+            data += '&like=' + encodeURIComponent(like);
+        }
+
+        if(bookmark){
+            data += '&bookmark=' + encodeURIComponent(bookmark);
         }
 
         if(syndicate){
@@ -310,6 +362,8 @@
             alert('Posted!');
             $('#input-content').val('');
             $('#inreplyto').val('');
+            $('#bookmark').val('');
+            $('#like').val('');
             $('#category').val('');
             $('#input-syndicateto').val('');
             //$('#success').html('Posted!');

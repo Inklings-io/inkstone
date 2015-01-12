@@ -162,16 +162,60 @@
   </div>
 </script>
 
+<script id="new-like-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/heart.png" />Create Like</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="like" placeholder="http://something.to/like/" id="like"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
+    </div>
+  </div>
+</script>
+
 <script id="new-reply-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="svg/bubbles.png" />Create Note</h1>
+        <h1 class="title"><img src="svg/bubbles.png" />Create Reply</h1>
       <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
       <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
 
       <input name="inreplyto" placeholder="http://something.to/reply/to" id="inreplyto"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
+    </div>
+  </div>
+</script>
+
+<script id="new-bookmark-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/bookmark.png" />Create Bookmark</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="bookmark" placeholder="http://something.to/bookmark/" id="bookmark"/><br>
 
       <p id="input-syndication-wrapper" style="display:none">
         <label for="input-syndicateto">Syndicate To</label>
