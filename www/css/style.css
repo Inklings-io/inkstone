@@ -144,3 +144,6 @@ h1 {padding:21px 0; margin:0;}
   font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
   margin-right:10px;
 }
+#PhotoPreview {
+  width:90%;
+}

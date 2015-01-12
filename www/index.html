@@ -47,11 +47,12 @@
 <script id="camera-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Camera.png" />Post a Photo</h1>
-      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+        <h1 class="title"><img src="svg/camera.png" />Post a Photo</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
       <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <input name="category" placeholder="Category1, Category2" id="inreplyto"/><br>
       <button id="camera-btn">Take A Photo</button>
       <button id="gallery-btn">Select Photo</button>
       <img id="PhotoPreview" />
@@ -71,11 +72,12 @@
 <script id="video-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Microphone.png" />Video Record</h1>
-      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+        <h1 class="title"><img src="svg/film.png" />Video Record</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
       <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <input name="category" placeholder="Category1, Category2" id="inreplyto"/><br>
       <button id="video-btn">Record Video</button>
       <div id="VideoFile"></div>
 
@@ -94,11 +96,12 @@
 <script id="audio-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Microphone.png" />Audio Record</h1>
-      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+        <h1 class="title"><img src="svg/microphone.png" />Audio Record</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
       <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <input name="category" placeholder="Category1, Category2" id="inreplyto"/><br>
       <button id="audio-btn">Record Audio</button>
       <div id="AudioFile"></div>
 
@@ -117,8 +120,8 @@
 <script id="new-checkin-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Speech-Bubble.png" />Create Checkin</h1>
-      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+        <h1 class="title"><img src="svg/marker.png" />Create Checkin</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
       <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
@@ -141,11 +144,34 @@
 <script id="new-note-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Speech-Bubble.png" />Create Note</h1>
-      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+        <h1 class="title"><img src="svg/bubble.png" />Create Note</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
       <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+      <input name="category" placeholder="Category1, Category2" id="inreplyto"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
+    </div>
+  </div>
+</script>
+
+<script id="new-reply-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/bubbles.png" />Create Note</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="inreplyto" placeholder="http://something.to/reply/to" id="inreplyto"/><br>
 
       <p id="input-syndication-wrapper" style="display:none">
         <label for="input-syndicateto">Syndicate To</label>
@@ -161,8 +187,8 @@
 <script id="settings-tpl" type="text/template">
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Settings-2.png" />Settings</h1>
-      <div id="home-btn"><img src="icons-nonfree/iconSweets2/{{palette}}/64-Home.png" /><span>Home</span></div>
+        <h1 class="title"><img src="svg/gear.png" />Settings</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
     </header>
     <div class="screen-main">
 
@@ -231,10 +257,48 @@
       <div id="btn-reset" class="setting">
           <div class="switch-desc">Reset:</div>
           <div>
-            <img src="icons-nonfree/iconSweets2/{{palette}}/64-Refresh-3.png" />
+            <img src="svg/reload.png" />
         </div>
       </div>
       
+    </div>
+  </div>
+</script>
+
+<script id="unified-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/bubble.png" />Create Post</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="location" placeholder="geo:Long,Lat" id="geoloc"/>
+      <button id="geo-btn">Use GPS</button><br>
+      <input name="place_name" placeholder="Location Name" id="loc_name"/><br>
+
+      {{#if support_photo}}
+      <button id="camera-btn">Take A Photo</button>
+      <button id="gallery-btn">Select Photo</button>
+      <img id="PhotoPreview" />
+      {{/if}}
+      {{#if support_audio}}
+      <button id="audio-btn">Record Audio</button>
+      <div id="AudioFile"></div>
+      {{/if}}
+      {{#if support_video}}
+      <button id="video-btn">Record Video</button>
+      <div id="VideoFile"></div>
+      {{/if}}
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn">Post</button></p>
+      <div id='success'></div>
     </div>
   </div>
 </script>

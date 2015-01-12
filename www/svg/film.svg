@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox = "0 0 32 32" version = "1.1">
+    <path id = "s3" d = "
+    M27.188,4.875v1.094h-4.5V4.875H8.062v1.094h-4.5V4.875h-1v21.25h1v-1.094h4.5v1.094h14.625v-1.094h4.5v1.094h1.25V4.875H27.188z
+    M8.062,23.719h-4.5v-3.125h4.5V23.719z
+    M8.062,19.281h-4.5v-3.125h4.5V19.281z
+    M8.062,14.844h-4.5v-3.125h4.5V14.844z
+    M8.062,10.406h-4.5V7.281h4.5V10.406z
+    M27.188,23.719h-4.5v-3.125h4.5V23.719z
+    M27.188,19.281h-4.5v-3.125h4.5V19.281z
+    M27.188,14.844h-4.5v-3.125h4.5V14.844z
+    M27.188,10.406h-4.5V7.281h4.5V10.406z
+" fill = "#33ee33" stroke = "black" stroke-width = "0.1"/>
+</svg>
