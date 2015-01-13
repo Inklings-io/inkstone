@@ -299,6 +299,9 @@
         if(category){
             data += '&category=' + encodeURIComponent(category);
         }
+        if(replyurl){
+            data += '&in-reply-to=' + encodeURIComponent(replyurl);
+        }
 
         if(syndicate){
             for (i = 0; i < syndicate.length; i++) {
@@ -459,6 +462,7 @@
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
+        replyurl = $('#inreplyto').val();
 
         data_obj = { 'h': 'entry',
             'type':'video',
@@ -468,6 +472,9 @@
 
         if(category){
             data_obj['category'] = encodeURIComponent(category);
+        }
+        if(replyurl){
+            data += '&in-reply-to=' + encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
         if(syndicate){
@@ -479,8 +486,8 @@
             function(r){ 
                 alert('Posted!');
                 $('#input-content').val('');
-            $('#inreplyto').val('');
-            $('#category').val('');
+                $('#inreplyto').val('');
+                $('#category').val('');
                 $('#input-syndicateto').val('');
                 videoData = null;
                 $('#videoFile').html('');
@@ -493,6 +500,7 @@
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
+        replyurl = $('#inreplyto').val();
 
         data_obj = { 'h': 'entry',
             'type':'audio',
@@ -501,6 +509,9 @@
         }
         if(category){
             data_obj['category'] = encodeURIComponent(category);
+        }
+        if(replyurl){
+            data += '&in-reply-to=' + encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
         if(syndicate){
@@ -512,8 +523,8 @@
             function(r){ 
                 alert('Posted!');
                 $('#input-content').val('');
-            $('#inreplyto').val('');
-            $('#category').val('');
+                $('#inreplyto').val('');
+                $('#category').val('');
                 $('#input-syndicateto').val('');
                 audioData = null;
                 $('#AudioFile').html('');
@@ -527,6 +538,7 @@
         photo_uri = photoData;
         syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
+        replyurl = $('#inreplyto').val();
 
         data_obj = { 'h': 'entry',
             'type':'photo',
@@ -535,6 +547,9 @@
         }
         if(category){
             data_obj['category'] = encodeURIComponent(category);
+        }
+        if(replyurl){
+            data += '&in-reply-to=' + encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
         if(syndicate){
@@ -546,8 +561,8 @@
             function(r){ 
                 alert('Posted!');
                 $('#input-content').val('');
-            $('#inreplyto').val('');
-            $('#category').val('');
+                $('#inreplyto').val('');
+                $('#category').val('');
                 $('#input-syndicateto').val('');
                 photoData = null;
                 $('#PhotoPreview').attr('src', '');
