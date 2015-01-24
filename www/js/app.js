@@ -18,6 +18,8 @@
     var audioData;
     var videoData;
 
+    //var isOnline;
+
     if(window.localStorage.getItem("config")){
         config = JSON.parse(window.localStorage.getItem("config"));
     } else {
@@ -44,9 +46,6 @@
     if(config['geo_high_accuracy'] === undefined){
         config['geo_high_accuracy']= true;
     }
-    if(config['palette'] === undefined){
-        config['palette']= 'shine';//dark, light, or shine
-    }
     window.localStorage.setItem("config", JSON.stringify(config));
 
     /* --------------------------------- Event Registration -------------------------------- */
@@ -64,7 +63,33 @@
       }
     }, false);
 
+    document.addEventListener("deviceready", function () {
+        if(navigator.connection.type == Connection.NONE){
+            setOffline();
+        } else {
+            setOnline();
+        }
+    }, false);
+
+    document.addEventListener("offline", networkChange, false);
+    document.addEventListener("online", networkChange, false);
+
     /* ---------------------------------- Local Functions ---------------------------------- */
+    function networkChange(){
+        if(navigator.connection.type == Connection.NONE){
+            setOffline();
+        } else {
+            setOnline();
+        }
+    }
+    function setOnline(){
+        config['isOnline'] = true;
+        $('.online-only').attr("disabled","disabled");
+    }
+    function setOffline(){
+        config['isOnline'] = false;
+        $('.online-only').removeAttr("disabled");
+    }
     function renderHomeView() {
         icons = [];
         icons.push({'image':'svg/bubble.png', 'label':'Note', 'id':'newnote'});
@@ -86,6 +111,16 @@
         //icons.push({'image':'svg/daycalendar.png', 'label':'New Event', 'id':'newevent'});
         icons.push({'image':'svg/gear.png', 'label':'Settings', 'id':'settings'});
         icons.push({'image':'svg/power.png', 'label':'Logout', 'id':'exit'});
+
+
+        saved = window.localStorage.getItem("saved");
+        if(saved){
+            saved = JSON.parse(saved);
+            if(saved.length > 0 ){
+                icons.push({'image':'svg/reload.png', 'label':'Post Saved Data ('+saved.length+')', 'id':'saved'});
+            }
+        }
+
         
         $('body').html(homeTpl(icons));
         $('#homeicon_newnote').on('click', renderNewNoteView);
@@ -98,6 +133,11 @@
         $('#homeicon_newaudio').on('click', renderNewAudioView);
         $('#homeicon_newvideo').on('click', renderNewVideoView);
         $('#homeicon_settings').on('click', renderSettingsView);
+        $('#homeicon_saved').on('click', upload_all_saved);
+
+
+    
+
     }
 
     function renderLoginView() {
@@ -127,8 +167,7 @@
                 'support_photo': true,
                 'support_video': true,
                 'support_audio': true,
-                'geo_high_accuracy': true,
-                'palette': 'shine'//dark, light, or shine
+                'geo_high_accuracy': true
             };
           window.localStorage.setItem("config", JSON.stringify(config));
         });
@@ -138,6 +177,7 @@
         $('body').html(videoTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', postVideo);
+        $('#save-btn').on('click', saveVideo);
         $('#video-btn').on('click', recordVideo);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
@@ -156,6 +196,7 @@
         $('body').html(audioTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', postAudio);
+        $('#save-btn').on('click', saveAudio);
         $('#audio-btn').on('click', recordAudio);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
@@ -175,6 +216,7 @@
         $('body').html(cameraTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', postPhoto);
+        $('#save-btn').on('click', savePhoto);
         $('#camera-btn').on('click', take_a_picture);
         $('#gallery-btn').on('click', get_a_picture);
         getSyndicationTargets(function(targets){
@@ -195,6 +237,7 @@
         $('body').html(newCheckinTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendCheckin);
+        $('#save-btn').on('click', saveCheckin);
         $('#geo-btn').on('click', getGeo);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
@@ -214,6 +257,7 @@
         $('body').html(newNoteTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendNote);
+        $('#save-btn').on('click', saveNote);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
             if(!targets_array){
@@ -232,6 +276,7 @@
         $('body').html(newReplyTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendNote);
+        $('#save-btn').on('click', saveNote);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
             if(!targets_array){
@@ -249,6 +294,7 @@
         $('body').html(newBookmarkTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendNote);
+        $('#save-btn').on('click', saveNote);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
             if(!targets_array){
@@ -266,6 +312,7 @@
         $('body').html(newLikeTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendNote);
+        $('#save-btn').on('click', saveNote);
         getSyndicationTargets(function(targets){
             targets_array = targets.split(',');
             if(!targets_array){
@@ -280,12 +327,57 @@
         });
     }
 
+    function saveCheckin(){
+        content = $('#input-content').val();
+        syndicate = $('#input-syndicateto').val();
+        category = $('#category').val();
+        geo_location = $('#geoloc').val();
+        geo_place_name = $('#loc_name').val();
+        $('#save-btn').attr("disabled", "disabled");
+
+        // todo escapte content and syndicate
+        data = 'type=checkin&h=entry&operation=create&content='+content;
+        if(geo_location != ''){
+            data += '&location='+geo_location
+        }
+        if(geo_place_name != ''){
+            data += '&place_name='+geo_place_name
+        }
+        if(category){
+            data += '&category=' + encodeURIComponent(category);
+        }
+        if(replyurl){
+            data += '&in-reply-to=' + encodeURIComponent(replyurl);
+        }
+        if(syndicate){
+            for (i = 0; i < syndicate.length; i++) {
+                    data += '&syndicate-to[]='+syndicate[i];
+            }
+        }
+        data += '&published='+get_formatted_date();
+        savePost({'type':'simple', 'data':data});
+
+        success('Saved!');
+
+        $('#input-content').val('');
+        $('#inreplyto').val('');
+        $('#like').val('');
+        $('#bookmark').val('');
+        $('#category').val('');
+        $('#input-syndicateto').val('');
+        $('#geoloc').val('');
+        $('#loc_name').val('');
+        $('#save-btn').removeAttr('disabled');
+    }
+
+
     function sendCheckin(){
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         geo_location = $('#geoloc').val();
         geo_place_name = $('#loc_name').val();
+        $('#post-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
         data = 'type=checkin&h=entry&operation=create&content='+content;
@@ -309,8 +401,10 @@
             }
         }
 
+        data += '&published='+get_formatted_date();
+
         mp_send(data, function(){
-            alert('Posted!');
+            success('Posted!');
             $('#input-content').val('');
             $('#inreplyto').val('');
             $('#like').val('');
@@ -319,15 +413,60 @@
             $('#input-syndicateto').val('');
             $('#geoloc').val('');
             $('#loc_name').val('');
+            $('#post-btn').removeAttr('disabled');
             //$('#success').html('Posted!');
             //$('#success').show();
             //setTimeout(function() {
                     //$('#success').fadeOut('fast');
             //}, 2000);
 
+        }, function(){
+            error('Error');
+            $('#post-btn').removeAttr('disabled')
         });
     }
 
+    function saveNote(){
+        content = $('#input-content').val();
+        syndicate = $('#input-syndicateto').val();
+        replyurl = $('#inreplyto').val();
+        like = $('#like').val();
+        bookmark = $('#bookmark').val();
+        category = $('#category').val();
+        $('#save-btn').attr("disabled", "disabled");
+
+        // todo escapte content and syndicate
+        data = 'type=note&h=entry&operation=create&content='+encodeURIComponent(content);
+        if(category){
+            data += '&category=' + encodeURIComponent(category);
+        }
+        if(replyurl){
+            data += '&in-reply-to=' + encodeURIComponent(replyurl);
+        }
+        if(like){
+            data += '&like=' + encodeURIComponent(like);
+        }
+        if(bookmark){
+            data += '&bookmark=' + encodeURIComponent(bookmark);
+        }
+        if(syndicate){
+            for (i = 0; i < syndicate.length; i++) {
+                    data += '&syndicate-to[]='+syndicate[i];
+            }
+        }
+        data += '&published='+get_formatted_date();
+
+        savePost({'type':'simple', 'data':data});
+
+        success('Saved!');
+        $('#input-content').val('');
+        $('#inreplyto').val('');
+        $('#bookmark').val('');
+        $('#like').val('');
+        $('#category').val('');
+        $('#input-syndicateto').val('');
+        $('#save-btn').removeAttr('disabled');
+    }
     function sendNote(){
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
@@ -335,6 +474,7 @@
         like = $('#like').val();
         bookmark = $('#bookmark').val();
         category = $('#category').val();
+        $('#post-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
         data = 'type=note&h=entry&operation=create&content='+encodeURIComponent(content);
@@ -361,20 +501,27 @@
             }
         }
 
+        data += '&published='+get_formatted_date();
+
         mp_send(data, function(){
-            alert('Posted!');
+            $('#post-btn').attr("disabled", "disabled");
+            success('Posted!');
             $('#input-content').val('');
             $('#inreplyto').val('');
             $('#bookmark').val('');
             $('#like').val('');
             $('#category').val('');
             $('#input-syndicateto').val('');
+            $('#post-btn').removeAttr('disabled');
             //$('#success').html('Posted!');
             //$('#success').show();
             //setTimeout(function() {
                     //$('#success').fadeOut('fast');
             //}, 2000);
 
+        }, function(){
+            error('Error');
+            $('#post-btn').removeAttr('disabled')
         });
     }
 
@@ -415,7 +562,7 @@
 
          },
          function(message){
-            alert('error: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+            error('error: ' + error.code + '\n' + 'message: ' + error.message + '\n');
          },
          {
             maximumAge: 3000, timeout: 5000, enableHighAccuracy: config['geo_high_accuracy'] 
@@ -430,7 +577,7 @@
             $('#VideoFile').html(videoData.name);
         },
         function(message){
-            alert('Failed: ' + message);
+            error('Failed: ' + message);
         });
     }
 
@@ -441,7 +588,7 @@
             $('#AudioFile').html(audioData.name);
         },
         function(message){
-            alert('Failed: ' + message);
+            error('Failed: ' + message);
         });
     }
 
@@ -453,16 +600,54 @@
     }
 
     function onPhotoFail(message) {
-        alert('Failed: ' + message);
+        error('Failed: ' + message);
         //i don't think you need this if it failed to capture
         //navigator.camera.cleanup(function(){}, function(){});
     }
 
+    function saveVideo(){
+        content = $('#input-content').val();
+        syndicate = $('#input-syndicateto').val();
+        category = $('#category').val();
+        replyurl = $('#inreplyto').val();
+        $('#save-btn').attr("disabled", "disabled");
+
+        data_obj = { 'h': 'entry',
+            'type':'video',
+            'operation':'create',
+            'content': content
+        }
+        if(category){
+            data_obj['category'] = encodeURIComponent(category);
+        }
+        if(replyurl){
+            data_obj['in-reply-to'] = encodeURIComponent(replyurl);
+        }
+        // todo escape content and syndicate
+        if(syndicate){
+            for (i = 0; i < syndicate.length; i++) {
+                data_obj['syndicate-to['+i+']'] = syndicate[i];
+            }
+        }
+        data_obj['published'] = get_formatted_date();
+
+        savePost({'type':'video', 'format':videoData.type, 'file':videoData.fullPath, 'data_obj':data_obj});
+        success('Saved!');
+
+        $('#input-content').val('');
+        $('#inreplyto').val('');
+        $('#category').val('');
+        $('#input-syndicateto').val('');
+        videoData = null;
+        $('#videoFile').html('');
+        $('#save-btn').removeAttr('disabled');
+    }
     function postVideo(){
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
+        $('#post-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
             'type':'video',
@@ -474,7 +659,7 @@
             data_obj['category'] = encodeURIComponent(category);
         }
         if(replyurl){
-            data += '&in-reply-to=' + encodeURIComponent(replyurl);
+            data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
         if(syndicate){
@@ -482,25 +667,32 @@
                 data_obj['syndicate-to['+i+']'] = syndicate[i];
             }
         }
+
+        data_obj['published'] = get_formatted_date();
+
         mp_uploadFile(data_obj, "video", videoData.type, videoData.fullPath,
             function(r){ 
-                alert('Posted!');
+                success('Posted!');
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
                 $('#input-syndicateto').val('');
                 videoData = null;
                 $('#videoFile').html('');
+                $('#post-btn').removeAttr('disabled');
             },
-            function(error){ alert("An error has occurred: Code = " + error.code); 
+            function(error){ 
+                error("An error has occurred: Code = " + error.code); 
+                $('#post-btn').removeAttr('disabled');
         });
     }
 
-    function postAudio(){
+    function saveAudio(){
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
+        $('#save-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
             'type':'audio',
@@ -511,7 +703,7 @@
             data_obj['category'] = encodeURIComponent(category);
         }
         if(replyurl){
-            data += '&in-reply-to=' + encodeURIComponent(replyurl);
+            data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
         if(syndicate){
@@ -519,26 +711,72 @@
                 data_obj['syndicate-to['+i+']'] = syndicate[i];
             }
         }
+
+        data_obj['published'] = get_formatted_date();
+
+        savePost({'type':'audio', 'format':audioData.type, 'file':audioData.fullPath, 'data_obj':data_obj});
+        success('Saved!');
+
+        $('#input-content').val('');
+        $('#inreplyto').val('');
+        $('#category').val('');
+        $('#input-syndicateto').val('');
+        audioData = null;
+        $('#AudioFile').html('');
+        $('#save-btn').removeAttr('disabled');
+
+    }
+    function postAudio(){
+        content = $('#input-content').val();
+        syndicate = $('#input-syndicateto').val();
+        category = $('#category').val();
+        replyurl = $('#inreplyto').val();
+        $('#post-btn').attr("disabled", "disabled");
+
+        data_obj = { 'h': 'entry',
+            'type':'audio',
+            'operation':'create',
+            'content': content
+        }
+        if(category){
+            data_obj['category'] = encodeURIComponent(category);
+        }
+        if(replyurl){
+            data_obj['in-reply-to'] = encodeURIComponent(replyurl);
+        }
+        // todo escape content and syndicate
+        if(syndicate){
+            for (i = 0; i < syndicate.length; i++) {
+                data_obj['syndicate-to['+i+']'] = syndicate[i];
+            }
+        }
+
+        data_obj['published'] = get_formatted_date();
+
         mp_uploadFile(data_obj, "audio", audioData.type, audioData.fullPath,
             function(r){ 
-                alert('Posted!');
+                success('Posted!');
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
                 $('#input-syndicateto').val('');
                 audioData = null;
                 $('#AudioFile').html('');
+                $('#post-btn').removeAttr('disabled');
             },
-            function(error){ alert("An error has occurred: Code = " + error.code); 
+            function(error){ 
+                error("An error has occurred: Code = " + error.code); 
+                $('#post-btn').removeAttr('disabled');
         });
     }
 
-    function postPhoto(){
+    function savePhoto(){
         content = $('#input-content').val();
         photo_uri = photoData;
         syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
+        $('#save-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
             'type':'photo',
@@ -549,7 +787,7 @@
             data_obj['category'] = encodeURIComponent(category);
         }
         if(replyurl){
-            data += '&in-reply-to=' + encodeURIComponent(replyurl);
+            data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
         if(syndicate){
@@ -557,19 +795,184 @@
                 data_obj['syndicate-to['+i+']'] = syndicate[i];
             }
         }
+
+        data_obj['published'] = get_formatted_date();
+
+        savePost({'type':'photo', 'format':"image/jpeg", 'file':photo_uri, 'data_obj':data_obj});
+
+        success('Saved!');
+        $('#input-content').val('');
+        $('#inreplyto').val('');
+        $('#category').val('');
+        $('#input-syndicateto').val('');
+        photoData = null;
+        $('#PhotoPreview').attr('src', '');
+        $('#save-btn').removeAttr('disabled');
+    }
+    function postPhoto(){
+        content = $('#input-content').val();
+        photo_uri = photoData;
+        syndicate = $('#input-syndicateto').val();
+        category = $('#category').val();
+        replyurl = $('#inreplyto').val();
+        $('#post-btn').attr("disabled", "disabled");
+
+        data_obj = { 'h': 'entry',
+            'type':'photo',
+            'operation':'create',
+            'content': content
+        }
+        if(category){
+            data_obj['category'] = encodeURIComponent(category);
+        }
+        if(replyurl){
+            data_obj['in-reply-to'] = encodeURIComponent(replyurl);
+        }
+        // todo escape content and syndicate
+        if(syndicate){
+            for (i = 0; i < syndicate.length; i++) {
+                data_obj['syndicate-to['+i+']'] = syndicate[i];
+            }
+        }
+
+        data_obj['published'] = get_formatted_date();
+
         mp_uploadFile(data_obj, "photo", "image/jpeg", photo_uri,
             function(r){ 
-                alert('Posted!');
+                success('Posted!');
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
                 $('#input-syndicateto').val('');
                 photoData = null;
                 $('#PhotoPreview').attr('src', '');
+                $('#post-btn').removeAttr('disabled');
             },
-            function(error){ alert("An error has occurred: Code = " + error.code); 
+            function(error){ 
+                error("An error has occurred: Code = " + error.code); 
+                $('#post-btn').removeAttr('disabled');
         });
 
+    }
+    function get_formatted_date(){
+        var now = new Date();
+
+        var formatted_out = now.getFullYear() + "-";
+
+        if(now.getMonth() <= 10){
+            formatted_out += "0";
+        }
+        formatted_out += (now.getMonth()+1) + "-";
+
+        if(now.getDate() < 10){
+            formatted_out += "0";
+        }
+        formatted_out += now.getDate() + "T";
+
+        if(now.getHours() < 10){
+            formatted_out += "0";
+        }
+        formatted_out += now.getHours() + ":";
+ 
+        if(now.getMinutes() < 10){
+            formatted_out += "0";
+        }
+        formatted_out += now.getMinutes() + ":";
+ 
+        if(now.getSeconds() < 10){
+            formatted_out += "0";
+        }
+        formatted_out += now.getSeconds();
+
+        tz_offset = now.getTimezoneOffset();
+
+        if(tz_offset > 0){
+            formatted_out += "-";
+        } else {
+            formatted_out += "+";
+        }
+        
+        offset_hours = Math.abs(tz_offset) / 60;
+        offset_mins = Math.abs(tz_offset) % 60;
+
+        if(offset_hours < 10){
+            formatted_out += "0";
+        }
+        formatted_out += offset_hours + ":";
+        
+
+        if(offset_mins < 10){
+            formatted_out += "0";
+        }
+        formatted_out += offset_mins ;
+ 
+        return formatted_out
+    }
+
+    function upload_all_saved(){
+        list_processing = true;
+        var obj;
+        while( list_processing ){
+            obj = getFirstSavedPost();
+            if(obj === null){
+                list_processing = false;
+                continue;
+            }
+            type = obj['type'];
+            if(type == 'photo' || type == 'audio' || type == 'video'){
+                data_obj = obj['data_obj'];
+                format = obj['format'];
+                file_uri = obj['file'];
+                mp_uploadFile(data_obj, type, format, file_uri,
+                    function(r){ 
+                    },
+                    function(error){ 
+                        error("An error has occurred: Code = " + error.code); 
+                        savePost(obj);
+                        list_processing = false;
+                });
+            } else {
+                data = obj['data'];
+                mp_send(data, 
+                    function(r){
+                    },
+                    function(error){ 
+                        error("An error has occurred: Code = " + error.code); 
+                        savePost(obj);
+                        list_processing = false;
+                });
+            }
+            
+        }
+    }
+
+    function savePost(data){
+        saved = window.localStorage.getItem("saved");
+        if(saved){
+            saved = JSON.parse(saved);
+        } else {
+            saved = [];
+        }
+        saved.push(data);
+        window.localStorage.setItem("saved", JSON.stringify(saved));
+    }
+
+    function getFirstSavedPost(){
+        saved = window.localStorage.getItem("saved");
+        if(!saved){
+            return null;
+        } 
+        saved = JSON.parse(saved);
+        if(saved == [] ){
+            return null;
+        }
+        result = saved.shift();
+        if(saved == []){
+            window.localStorage.removeItem("saved");
+        } else {
+            window.localStorage.setItem("saved", JSON.stringify(saved));
+        }
+        return result;
     }
 
 
@@ -583,6 +986,22 @@
             renderHomeView();
         });
     } // end login()
+
+    function success(message){
+        $('#success').html('<span>'+message+'</span>');
+        $('#success').show();
+        setTimeout(function() {
+            $('#success').fadeOut('fast');
+        }, 2000);
+    }
+
+    function error(message){
+        $('#error').html('<span>'+message+'</span>');
+        $('#error').show();
+        setTimeout(function() {
+            $('#error').fadeOut('fast');
+        }, 2000);
+    }
 
     if(mp_logged_in()){
         renderHomeView();

@@ -15,7 +15,8 @@
     </header>
     <div class="screen-main">
         <input class='me' id="login-url" type="text" value="" placeholder="Enter domain"/>
-        <button id="login-btn">Login</button>
+        <button id="login-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Login</button>
+        {{#unless isOnline}}<div class="offline-only-view">Login Require Internet Access.</div>{{/unless}}
         <div>
         <a href="http://indiewebcamp.com/How_to_set_up_web_sign-in_on_your_own_domain">What is Web Sign-In?</a><br>
         <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
@@ -64,8 +65,10 @@
         </select>
       </p>
       <span id="upload-status"></span>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only" {{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>
@@ -89,8 +92,10 @@
         </select>
       </p>
       <span id="upload-status"></span>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>
@@ -114,8 +119,10 @@
         </select>
       </p>
       <span id="upload-status"></span>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>
@@ -138,8 +145,10 @@
         <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
         </select>
       </p>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>
@@ -159,8 +168,10 @@
         <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
         </select>
       </p>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>
@@ -181,8 +192,10 @@
         <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
         </select>
       </p>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>
@@ -203,8 +216,10 @@
         <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
         </select>
       </p>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>
@@ -225,8 +240,10 @@
         <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
         </select>
       </p>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>
@@ -345,8 +362,10 @@
         <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
         </select>
       </p>
-      <p><button id="post-btn">Post</button></p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
+      <div id='error'></div>
     </div>
   </div>
 </script>

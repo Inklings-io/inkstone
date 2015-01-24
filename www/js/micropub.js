@@ -202,7 +202,7 @@
     } // end getSiteObject
 
 
-    function mp_send(data, success_callback){
+    function mp_send(data, success_callback, failure_callback){
         token = window.localStorage.getItem("token");
         micropub = window.localStorage.getItem("micropub");
 
@@ -216,6 +216,9 @@
             },
             success: function(data){
                 success_callback();
+            },
+            error: function(){
+                failure_callback();
             }
         });
         
@@ -249,7 +252,9 @@
 
                     status.html(perc+'%'+ '('+progressEvent.total+')');
 
-            }else{alert('not computable');}
+            }else{
+                status.html('not computable');
+            }
         };
 
         ft.upload(fileUriToUpload, url, success, failure, options);
