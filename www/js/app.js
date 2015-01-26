@@ -917,6 +917,7 @@
             if(obj === null){
                 list_processing = false;
                 continue;
+                success('Posts submitted');
             }
             type = obj['type'];
             if(type == 'photo' || type == 'audio' || type == 'video'){
