@@ -361,7 +361,7 @@
 
         $('#input-content').val('');
         $('#inreplyto').val('');
-        $('#like').val('');
+        $('#like-of').val('');
         $('#bookmark').val('');
         $('#category').val('');
         $('#input-syndicateto').val('');
@@ -407,7 +407,7 @@
             success('Posted!');
             $('#input-content').val('');
             $('#inreplyto').val('');
-            $('#like').val('');
+            $('#like-of').val('');
             $('#bookmark').val('');
             $('#category').val('');
             $('#input-syndicateto').val('');
@@ -430,7 +430,7 @@
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
         replyurl = $('#inreplyto').val();
-        like = $('#like').val();
+        like = $('#like-of').val();
         bookmark = $('#bookmark').val();
         category = $('#category').val();
         $('#save-btn').attr("disabled", "disabled");
@@ -444,7 +444,7 @@
             data += '&in-reply-to=' + encodeURIComponent(replyurl);
         }
         if(like){
-            data += '&like=' + encodeURIComponent(like);
+            data += '&like-of=' + encodeURIComponent(like);
         }
         if(bookmark){
             data += '&bookmark=' + encodeURIComponent(bookmark);
@@ -462,7 +462,7 @@
         $('#input-content').val('');
         $('#inreplyto').val('');
         $('#bookmark').val('');
-        $('#like').val('');
+        $('#like-of').val('');
         $('#category').val('');
         $('#input-syndicateto').val('');
         $('#save-btn').removeAttr('disabled');
@@ -471,7 +471,7 @@
         content = $('#input-content').val();
         syndicate = $('#input-syndicateto').val();
         replyurl = $('#inreplyto').val();
-        like = $('#like').val();
+        like = $('#like-of').val();
         bookmark = $('#bookmark').val();
         category = $('#category').val();
         $('#post-btn').attr("disabled", "disabled");
@@ -488,7 +488,7 @@
         }
 
         if(like){
-            data += '&like=' + encodeURIComponent(like);
+            data += '&like-of=' + encodeURIComponent(like);
         }
 
         if(bookmark){
@@ -509,7 +509,7 @@
             $('#input-content').val('');
             $('#inreplyto').val('');
             $('#bookmark').val('');
-            $('#like').val('');
+            $('#like-of').val('');
             $('#category').val('');
             $('#input-syndicateto').val('');
             $('#post-btn').removeAttr('disabled');
