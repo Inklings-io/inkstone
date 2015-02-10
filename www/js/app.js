@@ -75,6 +75,11 @@
     document.addEventListener("online", networkChange, false);
 
     /* ---------------------------------- Local Functions ---------------------------------- */
+    function noSpacesInUrl(){
+        if($('#login-url').val().match(/\s/g)){
+           $('#login-url').val($('#login-url').val().replace(/\s/g,''));
+        }
+    }
     function networkChange(){
         if(navigator.connection.type == Connection.NONE){
             setOffline();
@@ -84,11 +89,11 @@
     }
     function setOnline(){
         config['isOnline'] = true;
-        $('.online-only').attr("disabled","disabled");
+        $('.online-only').removeAttr("disabled");
     }
     function setOffline(){
         config['isOnline'] = false;
-        $('.online-only').removeAttr("disabled");
+        $('.online-only').attr("disabled","disabled");
     }
     function renderHomeView() {
         icons = [];
@@ -143,6 +148,7 @@
     function renderLoginView() {
         $('body').html(loginTpl(config));
         $('#login-btn').on('click', login);
+        $('#login-url').on('keyup', noSpacesInUrl);
     }
 
     function renderSettingsView() {
