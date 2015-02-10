@@ -65,6 +65,7 @@
 
     document.addEventListener("deviceready", function () {
         if(navigator.connection.type == Connection.NONE){
+            alert(navigator.connection.type);
             setOffline();
         } else {
             setOnline();
@@ -92,6 +93,7 @@
         $('.online-only').removeAttr("disabled");
     }
     function setOffline(){
+        alert('Offline');
         config['isOnline'] = false;
         $('.online-only').attr("disabled","disabled");
     }
