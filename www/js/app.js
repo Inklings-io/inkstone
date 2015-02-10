@@ -65,7 +65,7 @@
 
     document.addEventListener("deviceready", function () {
         if(navigator.connection.type == Connection.NONE){
-            alert(navigator.connection.type);
+            //alert(navigator.connection.type);
             setOffline();
         } else {
             setOnline();
@@ -91,11 +91,13 @@
     function setOnline(){
         config['isOnline'] = true;
         $('.online-only').removeAttr("disabled");
+        $('.offline-only').hide();
     }
     function setOffline(){
-        alert('Offline');
+        //alert('Offline');
         config['isOnline'] = false;
         $('.online-only').attr("disabled","disabled");
+        $('.offline-only').show();
     }
     function renderHomeView() {
         icons = [];

@@ -16,7 +16,7 @@
     <div class="screen-main">
         <input class='me' id="login-url" type="text" value="" placeholder="Enter domain"/>
         <button id="login-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Login</button>
-        {{#unless isOnline}}<div class="offline-only-view">Login Require Internet Access.</div>{{/unless}}
+        {{#unless isOnline}}<div class="offline-only">Login requires internet access.</div>{{/unless}}
         <div>
         <a href="http://indiewebcamp.com/How_to_set_up_web_sign-in_on_your_own_domain">What is Web Sign-In?</a><br>
         <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
