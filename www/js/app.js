@@ -346,7 +346,7 @@
         $('#save-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
-        data = 'type=checkin&h=entry&action=create&content='+content;
+        data = 'mp-type=checkin&h=entry&mp-action=create&content='+content;
         if(geo_location != ''){
             data += '&location='+geo_location
         }
@@ -390,7 +390,7 @@
         $('#post-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
-        data = 'type=checkin&h=entry&action=create&content='+content;
+        data = 'mp-type=checkin&h=entry&mp-action=create&content='+content;
         if(geo_location != ''){
             data += '&location='+geo_location
         }
@@ -446,7 +446,7 @@
         $('#save-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
-        data = 'type=note&h=entry&action=create&content='+encodeURIComponent(content);
+        data = 'mp-type=note&h=entry&mp-action=create&content='+encodeURIComponent(content);
         if(category){
             data += '&category=' + encodeURIComponent(category);
         }
@@ -487,7 +487,7 @@
         $('#post-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
-        data = 'type=note&h=entry&action=create&content='+encodeURIComponent(content);
+        data = 'mp-type=note&h=entry&mp-action=create&content='+encodeURIComponent(content);
         
         if(category){
             data += '&category=' + encodeURIComponent(category);
@@ -623,8 +623,8 @@
         $('#save-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
-            'type':'video',
-            'action':'create',
+            'mp-type':'video',
+            'mp-action':'create',
             'content': content
         }
         if(category){
@@ -660,8 +660,8 @@
         $('#post-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
-            'type':'video',
-            'action':'create',
+            'mp-type':'video',
+            'mp-action':'create',
             'content': content
         }
 
@@ -705,8 +705,8 @@
         $('#save-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
-            'type':'audio',
-            'action':'create',
+            'mp-type':'audio',
+            'mp-action':'create',
             'content': content
         }
         if(category){
@@ -744,8 +744,8 @@
         $('#post-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
-            'type':'audio',
-            'action':'create',
+            'mp-type':'audio',
+            'mp-action':'create',
             'content': content
         }
         if(category){
@@ -789,8 +789,8 @@
         $('#save-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
-            'type':'photo',
-            'action':'create',
+            'mp-type':'photo',
+            'mp-action':'create',
             'content': content
         }
         if(category){
@@ -828,8 +828,8 @@
         $('#post-btn').attr("disabled", "disabled");
 
         data_obj = { 'h': 'entry',
-            'type':'photo',
-            'action':'create',
+            'mp-type':'photo',
+            'mp-action':'create',
             'content': content
         }
         if(category){
