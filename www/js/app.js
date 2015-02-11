@@ -346,7 +346,7 @@
         $('#save-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
-        data = 'type=checkin&h=entry&operation=create&content='+content;
+        data = 'type=checkin&h=entry&action=create&content='+content;
         if(geo_location != ''){
             data += '&location='+geo_location
         }
@@ -390,7 +390,7 @@
         $('#post-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
-        data = 'type=checkin&h=entry&operation=create&content='+content;
+        data = 'type=checkin&h=entry&action=create&content='+content;
         if(geo_location != ''){
             data += '&location='+geo_location
         }
@@ -446,7 +446,7 @@
         $('#save-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
-        data = 'type=note&h=entry&operation=create&content='+encodeURIComponent(content);
+        data = 'type=note&h=entry&action=create&content='+encodeURIComponent(content);
         if(category){
             data += '&category=' + encodeURIComponent(category);
         }
@@ -487,7 +487,7 @@
         $('#post-btn').attr("disabled", "disabled");
 
         // todo escapte content and syndicate
-        data = 'type=note&h=entry&operation=create&content='+encodeURIComponent(content);
+        data = 'type=note&h=entry&action=create&content='+encodeURIComponent(content);
         
         if(category){
             data += '&category=' + encodeURIComponent(category);
@@ -624,7 +624,7 @@
 
         data_obj = { 'h': 'entry',
             'type':'video',
-            'operation':'create',
+            'action':'create',
             'content': content
         }
         if(category){
@@ -661,7 +661,7 @@
 
         data_obj = { 'h': 'entry',
             'type':'video',
-            'operation':'create',
+            'action':'create',
             'content': content
         }
 
@@ -706,7 +706,7 @@
 
         data_obj = { 'h': 'entry',
             'type':'audio',
-            'operation':'create',
+            'action':'create',
             'content': content
         }
         if(category){
@@ -745,7 +745,7 @@
 
         data_obj = { 'h': 'entry',
             'type':'audio',
-            'operation':'create',
+            'action':'create',
             'content': content
         }
         if(category){
@@ -790,7 +790,7 @@
 
         data_obj = { 'h': 'entry',
             'type':'photo',
-            'operation':'create',
+            'action':'create',
             'content': content
         }
         if(category){
@@ -829,7 +829,7 @@
 
         data_obj = { 'h': 'entry',
             'type':'photo',
-            'operation':'create',
+            'action':'create',
             'content': content
         }
         if(category){
