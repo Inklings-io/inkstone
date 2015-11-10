@@ -78,7 +78,7 @@
 
     function auth_and_token(site,callback) {
 
-        url=site.authorization_endpoint+'?me='+site.url+'&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post'
+        url=site.authorization_endpoint+'?me='+site.url+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post'
 
         //wnd = window.open(url, "_blank", 'toolbar=yes,closebuttoncaption=Back,presentationstyle=formsheet,toolbarposition=top,clearsessioncache=yes,clearcache=yes');
         wnd = window.open(url, "_blank", 'toolbar=no,location=yes,clearcache=yes');
@@ -92,7 +92,7 @@
             wnd.close();
             if (results && results[1]) {
                 code = results[1];
-                $.post(site.authorization_endpoint, 'code='+code+'&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post', function(data){
+                $.post(site.authorization_endpoint, 'code='+code+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post', function(data){
                     results = /me=([^&]*)/.exec(data);
                     if (results && results[1]) {
                         site.me = results[1];
@@ -102,8 +102,7 @@
                         site.scope = results[1];
                     }
                     if(site.scope && site.me){
-                        $.post(site.token_endpoint, 'grant_type=authorization_code&code='+code+'&client_id=MobilePub&redirect_uri=http%3A%2F%2Flocalhost%2F&me='+site.me, function(data){
-                            //alert(data);
+                        $.post(site.token_endpoint, 'grant_type=authorization_code&code='+code+'&state=88332&client_id=mobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&me='+site.me, function(data){
                             results = /access_token=([^&]*)/.exec(data);
                             if (results && results[1]) {
                                 site.token = results[1];
