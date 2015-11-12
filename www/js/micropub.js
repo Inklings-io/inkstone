@@ -20,6 +20,8 @@
                 site.token_endpoint='https://tokens.indieauth.com/token';
             }
             //TODO: FAIL if no MP endpoint
+            $('#debugger').append('<li>'+site.authorization_endpoint+'</li>');
+            $('#debugger').append('<li>'+site.token_endpoint+'</li>');
                 
             auth_and_token(site, function (site) {
                 $('#debugger').append('<li>token:'+site.token+'</li>');
@@ -85,15 +87,18 @@
         wnd = window.open(url, "_blank", 'toolbar=no,location=yes,clearcache=yes');
 
         wnd.addEventListener("loadstart", function(ev) {
+            $('#debugger').append('<li>debug 1</li>');
             var results;
             if (ev.url.substr(0, 17) !== "http://localhost/") {
                 return;
             }
             results = /\?code=([^&]*)/.exec(ev.url);
+            $('#debugger').append('<li>results: ' + results + '</li>');
             wnd.close();
             if (results && results[1]) {
                 code = results[1];
                 $.post(site.authorization_endpoint, 'code='+code+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post', function(data){
+                    $('#debugger').append('<li>debug 3</li>');
                     results = /me=([^&]*)/.exec(data);
                     if (results && results[1]) {
                         site.me = results[1];
