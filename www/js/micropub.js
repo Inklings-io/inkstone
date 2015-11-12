@@ -20,7 +20,6 @@
                 site.token_endpoint='https://tokens.indieauth.com/token';
             }
             //TODO: FAIL if no MP endpoint
-            $('#debugger').append('<li>authorization_endpoint:'+site.authorization_endpoint+'</li>');
                 
             auth_and_token(site, function (site) {
                 $('#debugger').append('<li>token:'+site.token+'</li>');
@@ -104,9 +103,12 @@
                         site.scope = results[1];
                     }
                     if(site.scope && site.me){
+                        $('#debugger').append('<li>attempting verification</li>');
                         $.post(site.token_endpoint, 'grant_type=authorization_code&code='+code+'&state=88332&client_id=mobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&me='+site.me, function(data){
                             results = /access_token=([^&]*)/.exec(data);
+                            $('#debugger').append('<li>response: '+data+'</li>');
                             if (results && results[1]) {
+                            $('#debugger').append('<li>debug 5</li>');
                                 site.token = results[1];
                                 callback(site);
                             }
