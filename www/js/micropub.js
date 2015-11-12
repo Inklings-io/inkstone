@@ -20,8 +20,8 @@
                 site.token_endpoint='https://tokens.indieauth.com/token';
             }
             //TODO: FAIL if no MP endpoint
-            $('#debugger').append('<li>'+site.authorization_endpoint+'</li>');
-            $('#debugger').append('<li>'+site.token_endpoint+'</li>');
+            //$('#debugger').append('<li>'+site.authorization_endpoint+'</li>');
+            //$('#debugger').append('<li>'+site.token_endpoint+'</li>');
                 
             auth_and_token(site, function (site) {
                 $('#debugger').append('<li>token:'+site.token+'</li>');
@@ -92,13 +92,15 @@
                 return;
             }
             results = /\?code=([^&]*)/.exec(ev.url);
-            $('#debugger').append('<li>results: ' + results + '</li>');
+            //$('#debugger').append('<li>results: ' + results + '</li>');
             wnd.close();
             if (results && results[1]) {
                 code = results[1];
                 $.ajax({
                     type: 'POST',
                     data: 'code='+code+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post',
+                    datatype: 'json',
+                    crossdomain: true,
                     url: site.authorization_endpoint, 
                     success:  function(data){
                         $('#debugger').append('<li>debug 3</li>');
@@ -125,7 +127,7 @@
                         }
                     },
                     error:  function(data){
-                        $('#debugger').append('<li>error debug 2</li>');
+                        $('#debugger').append('<li>error debug 2' + data + '</li>');
                     }
                 });
             } else if (callback && typeof callback === "function") {
