@@ -83,7 +83,6 @@
 
         url=site.authorization_endpoint+'?me='+site.url+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post';
 
-        var auth = authorization_endpoint;
         //wnd = window.open(url, "_blank", 'toolbar=yes,closebuttoncaption=Back,presentationstyle=formsheet,toolbarposition=top,clearsessioncache=yes,clearcache=yes');
         wnd = window.open(url, "_blank", 'toolbar=no,location=yes,clearcache=yes');
 
@@ -102,7 +101,7 @@
                     data: 'code='+code+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post',
                     datatype: 'json',
                     crossdomain: true,
-                    url: auth,
+                    url: site.authorization_endpoint,
                     success:  function(data){
                         $('#debugger').append('<li>debug 3</li>');
                         results = /me=([^&]*)/.exec(data);
@@ -128,7 +127,6 @@
                         }
                     },
                     error:  function(request, stat, error){
-                        $('#debugger').append('<li>error debug 2' + auth + '</li>');
                         $('#debugger').append('<li>error debug 2' + request.responseText + '</li>');
                         $('#debugger').append('<li>error debug 2' + error + '</li>');
                     }

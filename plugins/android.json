@@ -99,6 +99,9 @@
         },
         "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "me.thatmustbe.mobilepub"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "me.thatmustbe.mobilepub"
         }
     },
     "dependent_plugins": {
