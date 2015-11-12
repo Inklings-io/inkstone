@@ -869,7 +869,8 @@
 
         var formatted_out = now.getFullYear() + "-";
 
-        if(now.getMonth() <= 10){
+        // ugh zero indexed months
+        if(now.getMonth() < 9){
             formatted_out += "0";
         }
         formatted_out += (now.getMonth()+1) + "-";
