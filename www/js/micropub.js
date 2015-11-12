@@ -126,8 +126,9 @@
                             });
                         }
                     },
-                    error:  function(data){
-                        $('#debugger').append('<li>error debug 2' + data + '</li>');
+                    error:  function(request, stat, error){
+                        $('#debugger').append('<li>error debug 2' + request.responseText + '</li>');
+                        $('#debugger').append('<li>error debug 2' + error + '</li>');
                     }
                 });
             } else if (callback && typeof callback === "function") {
