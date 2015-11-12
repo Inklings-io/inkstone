@@ -87,7 +87,6 @@
         wnd = window.open(url, "_blank", 'toolbar=no,location=yes,clearcache=yes');
 
         wnd.addEventListener("loadstart", function(ev) {
-            $('#debugger').append('<li>debug 1</li>');
             var results;
             if (ev.url.substr(0, 17) !== "http://localhost/") {
                 return;
@@ -97,28 +96,36 @@
             wnd.close();
             if (results && results[1]) {
                 code = results[1];
-                $.post(site.authorization_endpoint, 'code='+code+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post', function(data){
-                    $('#debugger').append('<li>debug 3</li>');
-                    results = /me=([^&]*)/.exec(data);
-                    if (results && results[1]) {
-                        site.me = results[1];
-                    }
-                    results = /scope=([^&]*)/.exec(data);
-                    if (results && results[1]) {
-                        site.scope = results[1];
-                    }
-                    if(site.scope && site.me){
-                        $('#debugger').append('<li>attempting verification</li>');
-                        $.post(site.token_endpoint, 'grant_type=authorization_code&code='+code+'&state=88332&client_id=mobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&me='+site.me, function(data){
-                            results = /access_token=([^&]*)/.exec(data);
-                            $('#debugger').append('<li>response: '+data+'</li>');
-                            if (results && results[1]) {
-                            $('#debugger').append('<li>debug 5</li>');
-                                site.token = results[1];
-                                callback(site);
-                            }
+                $.ajax({
+                    type: 'POST',
+                    data: 'code='+code+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post'
+                    url: site.authorization_endpoint, 
+                    success:  function(data){
+                        $('#debugger').append('<li>debug 3</li>');
+                        results = /me=([^&]*)/.exec(data);
+                        if (results && results[1]) {
+                            site.me = results[1];
+                        }
+                        results = /scope=([^&]*)/.exec(data);
+                        if (results && results[1]) {
+                            site.scope = results[1];
+                        }
+                        if(site.scope && site.me){
+                            $('#debugger').append('<li>attempting verification</li>');
+                            $.post(site.token_endpoint, 'grant_type=authorization_code&code='+code+'&state=88332&client_id=mobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&me='+site.me, function(data){
+                                results = /access_token=([^&]*)/.exec(data);
+                                $('#debugger').append('<li>response: '+data+'</li>');
+                                if (results && results[1]) {
+                                $('#debugger').append('<li>debug 5</li>');
+                                    site.token = results[1];
+                                    callback(site);
+                                }
 
-                        });
+                            });
+                        }
+                    },
+                    error:  function(data){
+                        $('#debugger').append('<li>error debug 2</li>');
                     }
                 })
             } else if (callback && typeof callback === "function") {
