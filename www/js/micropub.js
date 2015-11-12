@@ -98,7 +98,7 @@
                 code = results[1];
                 $.ajax({
                     type: 'POST',
-                    data: 'code='+code+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post'
+                    data: 'code='+code+'&state=88332&client_id=http%3A%2F%2Fmobilepub.thatmustbe.me&redirect_uri=http%3A%2F%2Flocalhost%2F&scope=post',
                     url: site.authorization_endpoint, 
                     success:  function(data){
                         $('#debugger').append('<li>debug 3</li>');
@@ -127,7 +127,7 @@
                     error:  function(data){
                         $('#debugger').append('<li>error debug 2</li>');
                     }
-                })
+                });
             } else if (callback && typeof callback === "function") {
                 callback(new Error("unable to receive token"));
             }
