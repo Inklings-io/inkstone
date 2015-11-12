@@ -20,13 +20,15 @@
                 site.token_endpoint='https://tokens.indieauth.com/token';
             }
             //TODO: FAIL if no MP endpoint
-            //$('.debugger').append('<li>authorization_endpoint:'+site.authorization_endpoint+'</li>');
+            $('#debugger').append('<li>authorization_endpoint:'+site.authorization_endpoint+'</li>');
                 
             auth_and_token(site, function (site) {
-                //$('.debugger').append('<li>token:'+site.token+'</li>');
+                $('#debugger').append('<li>token:'+site.token+'</li>');
                 window.localStorage.setItem("token", site.token);
                 window.localStorage.setItem("me", site.me);
                 window.localStorage.setItem("micropub", site.micropub);
+
+                //success('logged in as ' + site.me);
 
                 success_callback();
                 

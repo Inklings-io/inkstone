@@ -996,6 +996,7 @@
     function login() {
         mp_login($('.me').val(), function(){
             renderHomeView();
+            success('logged in');
         });
     } // end login()
 
