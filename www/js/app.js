@@ -1,6 +1,7 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
+
     /* ---------------------------------- Local Variables ---------------------------------- */
     var loginTpl = Handlebars.compile($("#login-tpl").html());
     var homeTpl = Handlebars.compile($("#home-tpl").html());
@@ -50,30 +51,18 @@
 
     /* --------------------------------- Event Registration -------------------------------- */
 
-    document.addEventListener('deviceready', function () {
-      if (navigator.notification) { // Override default HTML alert with native dialog
-          window.alert = function (message) {
-              navigator.notification.alert(
-                  message,    // message
-                  null,       // callback
-                  "Workshop", // title
-                  'OK'        // buttonName
-              );
-          };
-      }
-    }, false);
+    window.addEventListener('load', function() {
 
-    document.addEventListener("deviceready", function () {
-        if(navigator.connection.type == Connection.NONE){
-            //alert(navigator.connection.type);
-            setOffline();
-        } else {
+        if(navigator.onLine ){
             setOnline();
+        } else {
+            setOffline();
         }
     }, false);
 
     document.addEventListener("offline", networkChange, false);
     document.addEventListener("online", networkChange, false);
+
 
     /* ---------------------------------- Local Functions ---------------------------------- */
     function noSpacesInUrl(){
@@ -82,12 +71,13 @@
         }
     }
     function networkChange(){
-        if(navigator.connection.type == Connection.NONE){
-            setOffline();
-        } else {
+        if(navigator.onLine ){
             setOnline();
+        } else {
+            setOffline();
         }
     }
+    
     function setOnline(){
         config['isOnline'] = true;
         $('.online-only').removeAttr("disabled");
