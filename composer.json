@@ -1,0 +1,10 @@
+{
+    "require": {
+        "mf2/mf2": "*",
+        "indieweb/link-rel-parser": "^0.1.2",
+        "indieauth/client": "^0.1.16"
+    },
+	"autoload": {
+		"files": ["config.php", "php/tools.php"]
+	}
+}

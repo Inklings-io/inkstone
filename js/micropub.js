@@ -10,21 +10,37 @@
     }
 
     function mp_login(me, success_callback) {
+
+        $.ajax({
+            url: 'php/discoverEndpoint.php',
+            type: 'post',
+            data: 'me='+me,
+            datatype: 'json',
+            success: function(data){
+                if(data.success){
+                    auth_endpoint=data.auth_endpoint;
+                    token_endpoint=data.token_endpoint;
+                    mp_endpoint=data.mp_endpoint;
+
+                    //window.localStorage.setItem("token", site.token);
+                    window.localStorage.setItem("me", me);
+                    window.localStorage.setItem("micropub", mp_endpoint);
+                    window.localStorage.setItem("auth", auth_endpoint);
+                    window.localStorage.setItem("token", token_endpoint);
+
+                    redirect(data.auth_endpoint)
+
+                } else {
+                    failure_callback();
+                }
+
+            },
+            error: function(){
+                failure_callback();
+            }
+        });
+
         getSiteObject(me, function(site){
-            if(!site.authorization_endpoint){
-                //TODO: warn about this
-                site.authorization_endpoint='https://indieauth.com/auth';
-            }
-            if(!site.token_endpoint){
-                //TODO: warn about this
-                site.token_endpoint='https://tokens.indieauth.com/token';
-            }
-            //TODO: FAIL if no MP endpoint
-            //$('#debugger').append('<li>'+site.authorization_endpoint+'</li>');
-            //$('#debugger').append('<li>'+site.token_endpoint+'</li>');
-                
-            auth_and_token(site, function (site) {
-                $('#debugger').append('<li>token:'+site.token+'</li>');
                 window.localStorage.setItem("token", site.token);
                 window.localStorage.setItem("me", site.me);
                 window.localStorage.setItem("micropub", site.micropub);
@@ -138,75 +154,34 @@
     } //end auth_and_token()
 
     function getSiteObject(url,callback){
+        $.ajax({
+            url: 'php/discoverEndpoint.php',
+            type: 'post',
+            data: data,
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+            success: function(data){
+                success_callback();
+            },
+            error: function(){
+                failure_callback();
+            }
+        });
+
       if (url.substr(0, 7) !== "http://" && url.substr(0, 8) !== "https://") {
         url = 'http://' + url;
       }
       var site = {url:url};
       var xmlhttp=new XMLHttpRequest();
 
-      xmlhttp.open("GET", url );
+      xmlhttp.open("GET", 'php/discoverEndpoint.php' );
       xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4){
           if(xmlhttp.status==200){
             var html = xmlhttp.responseText;
             var headers = xmlhttp.getAllResponseHeaders();
             
-            //hopefully this will get supported soon
-            if(xmlhttp.responseURL){
-               site.url=xmlhttp.responseURL;
-            }
-
-            //do our best to find authorization_endpoint, token_endpoint, and micropub values
-            results = /<([^>]*)>; +rel=["']authorization_endpoint["']/i.exec(headers)
-            if(results && results[1]){
-              site.authorization_endpoint = results[1];
-            }
-            if(!site.authorization_endpoint){
-              results = /<link +rel=["']authorization_endpoint["'] +href=["']([^"']*)["']/i.exec(html)
-              if(results && results[1]){
-                site.authorization_endpoint = results[1];
-              }
-            }
-            if(!site.authorization_endpoint){
-              results = /<link +href=["']([^"']*)["'] +rel=["']authorization_endpoint["']/i.exec(html)
-              if(results && results[1]){
-                site.authorization_endpoint = results[1];
-              }
-            }
-
-            results = /<([^>]*)>; +rel=["']token_endpoint["']/i.exec(headers)
-            if(results && results[1]){
-              site.token_endpoint = results[1];
-            }
-            if(!site.token_endpoint){
-              results = /<link +rel=["']token_endpoint["'] +href=["']([^"']*)["']/i.exec(html)
-              if(results && results[1]){
-                site.token_endpoint = results[1];
-              }
-            }
-            if(!site.token_endpoint){
-              results = /<link +href=["']([^"']*)["'] +rel=["']token_endpoint["']/i.exec(html)
-              if(results && results[1]){
-                site.token_endpoint = results[1];
-              }
-            }
-
-            results = /<([^>]*)>; +rel=["']micropub["']/i.exec(headers)
-            if(results && results[1]){
-              site.micropub = results[1];
-            }
-            if(!site.micropub){
-              results = /<link +rel=["']micropub["'] +href=["']([^"']*)["']/i.exec(html)
-              if(results && results[1]){
-                site.micropub = results[1];
-              }
-            }
-            if(!site.micropub){
-              results = /<link +href=["']([^"']*)["'] +rel=["']micropub["']/i.exec(html)
-              if(results && results[1]){
-                site.micropub = results[1];
-              }
-            }
             
           }else{
            //console.log('error')}
