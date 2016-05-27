@@ -1,6 +1,7 @@
 <html>
 <head>
   <script>
+/*
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./worker.js').then(function(registration) {
         // Registration was successful
@@ -10,9 +11,386 @@
         console.log('ServiceWorker registration failed: ', err);
       });
     }
+*/
   </script>
 </head>
 <body>
+
+
+<script id="login-tpl" type="text/template">
+  <div class="login-screen-wrapper">
+    <header>
+        <h1 class="title">Welcome to MobilePub</h1>
+        <h2 class="title">Please Login</h2>
+    </header>
+    <div class="screen-main">
+        <input class='me' id="login-url" type="text" value="" placeholder="Enter domain"/>
+        <button id="login-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Login</button>
+        {{#unless isOnline}}<div class="offline-only">Login requires internet access.</div>{{/unless}}
+        <div>
+        <a href="http://indiewebcamp.com/How_to_set_up_web_sign-in_on_your_own_domain">What is Web Sign-In?</a><br>
+        <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
+        </div>
+      <div><ol id='debugger'></ol></div>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+    
+  </div>
+</script>
+
+<script id="home-tpl" type="text/template">
+  <div class="home-screen-wrapper">
+    <header>
+        <h1 class="title">Welcome to MobilePub</h1>
+    </header>
+    <ol class="home-screen-main">
+      {{#each this}}
+      <li class="homescreenIcon" id="homeicon_{{id}}">
+          <img src="{{image}}"/>
+          <span>{{label}}</span>
+      </li> 
+      {{/each}}
+      <div class="clear"></div>
+      <div id='success'></div>
+      <div id='error'></div>
+    </ol> 
+        
+  </div>
+</script>
+
+
+<script id="camera-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/camera.png" />Post a Photo</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <input name="category" placeholder="Category1, Category2" id="category"/><br>
+      <input name="inreplyto" placeholder="http://something.to/reply/to" id="inreplyto"/><br>
+      <button id="camera-btn">Take A Photo</button>
+      <button id="gallery-btn">Select Photo</button>
+      <img id="PhotoPreview" />
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <span id="upload-status"></span>
+      <p><button id="post-btn" class="online-only" {{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+<script id="video-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/film.png" />Video Record</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <input name="category" placeholder="Category1, Category2" id="category"/><br>
+      <input name="inreplyto" placeholder="http://something.to/reply/to" id="inreplyto"/><br>
+      <button id="video-btn">Record Video</button>
+      <div id="VideoFile"></div>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <span id="upload-status"></span>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+<script id="audio-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/microphone.png" />Audio Record</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post (optional)" id="input-content"></textarea><br>
+      <input name="category" placeholder="Category1, Category2" id="category"/><br>
+      <input name="inreplyto" placeholder="http://something.to/reply/to" id="inreplyto"/><br>
+      <button id="audio-btn">Record Audio</button>
+      <div id="AudioFile"></div>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <span id="upload-status"></span>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+<script id="new-checkin-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/marker.png" />Create Checkin</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="location" placeholder="Geo Location" id="geoloc"/>
+      <button id="geo-btn">Use GPS</button><br>
+      <input name="place_name" placeholder="Location Name" id="loc_name"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+<script id="new-note-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/bubble.png" />Create Note</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+      <input name="category" placeholder="Category1, Category2" id="category"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+<script id="new-like-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/heart.png" />Create Like</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="like-of" placeholder="http://something.to/like/" id="like-of"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+<script id="new-reply-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/bubbles.png" />Create Reply</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="inreplyto" placeholder="http://something.to/reply/to" id="inreplyto"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+<script id="new-bookmark-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/bookmark.png" />Create Bookmark</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="bookmark" placeholder="http://something.to/bookmark/" id="bookmark"/><br>
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+<script id="settings-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/gear.png" />Settings</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+
+      <div class="setting">
+        <div class="switch-desc">Support Video:</div>
+        <div id="support_video" class="onoffswitch {{#if support_video}}on{{/if}}">
+          <div class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </div>
+        </div> 
+      </div> 
+      <div class="setting">
+        <div class="switch-desc">Support Audio:</div>
+        <div id="support_audio" class="onoffswitch {{#if support_audio}}on{{/if}}">
+          <div class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </div>
+        </div> 
+      </div> 
+      <div class="setting">
+        <div class="switch-desc">Support Photo:</div>
+        <div id="support_photo" class="onoffswitch {{#if support_photo}}on{{/if}}">
+          <div class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </div>
+        </div> 
+      </div> 
+      {{#if support_photo}}
+        <div class="setting">
+          <div class="switch-desc">Crop Photos after taking them:</div>
+          <div id="photo_edit" class="onoffswitch {{#if photo_edit}}on{{/if}}">
+            <div class="onoffswitch-label">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+            </div>
+          </div> 
+        </div> 
+
+        <div class="setting">
+          <div class="switch-desc">Resulting Photo Target Height</div>
+            <div class="input-label">
+              <input type="number" name="photo_height" value="{{photo_height}}"/>
+            </div> 
+        </div> 
+
+        <div class="setting">
+          <div class="switch-desc">Resulting Photo Target Width</div>
+            <div class="input-label">
+              <input type="number" name="photo_width" value="{{photo_width}}"/>
+            </div> 
+        </div> 
+      {{/if}}
+      <div class="setting">
+        <div class="switch-desc">High Accuracy GeoLocation:</div>
+        <div id="geo_high_accuracy" class="onoffswitch {{#if geo_high_accuracy}}on{{/if}}">
+          <div class="onoffswitch-label">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </div>
+        </div> 
+      </div> 
+
+      <div id="btn-reset" class="setting">
+          <div class="switch-desc">Reset:</div>
+          <div>
+            <img src="svg/reload.png" />
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</script>
+
+<script id="unified-tpl" type="text/template">
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="svg/bubble.png" />Create Post</h1>
+      <div id="home-btn"><img src="svg/home.png" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
+
+      <input name="location" placeholder="geo:Long,Lat" id="geoloc"/>
+      <button id="geo-btn">Use GPS</button><br>
+      <input name="place_name" placeholder="Location Name" id="loc_name"/><br>
+      <input name="inreplyto" placeholder="http://something.to/reply/to" id="inreplyto"/><br>
+
+      {{#if support_photo}}
+      <button id="camera-btn">Take A Photo</button>
+      <button id="gallery-btn">Select Photo</button>
+      <img id="PhotoPreview" />
+      {{/if}}
+      {{#if support_audio}}
+      <button id="audio-btn">Record Audio</button>
+      <div id="AudioFile"></div>
+      {{/if}}
+      {{#if support_video}}
+      <button id="video-btn">Record Video</button>
+      <div id="VideoFile"></div>
+      {{/if}}
+
+      <p id="input-syndication-wrapper" style="display:none">
+        <label for="input-syndicateto">Syndicate To</label>
+        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
+        </select>
+      </p>
+      <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
+      <p><button id="save-btn">Save</button></p>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</script>
+
+
+<script src="lib/jquery.js"></script>
+<script src="lib/handlebars.js"></script>
+<script src="js/micropub.js"></script>
+<script src="js/app.js"></script>
+
 
 </body>
 </html>
