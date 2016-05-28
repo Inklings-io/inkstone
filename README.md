@@ -1,26 +1,9 @@
 
-# How to build
+# MobilePub 3
 
-Assuming you have nodejs, npm, and a development environment already installed, building MobilePub is quite simple.
+Mobilepub 3 is a web based micropub client that uses a service worker to allow for full offline editing.
 
+Mobilepub is no longer a cordova app, that has been moved to a branch 'cordova' but will no longer be updated.  T
 
-1. Install Cordova
-```
-sudo npm install -g cordova
-```
-
-2. Install your target platform(s)
-```
-cordova platforms add android
-cordova platforms add ios
-```
-
-3. Build for your target platforms
-```
-cordova build android
-cordova build ios
-```
-
-Your built files will be stored under /platforms, and the output will tell you the exact location.
-
+To install simply place all files in a folder and adjust configs.php to your system.
 
