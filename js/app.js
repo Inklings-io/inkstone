@@ -984,8 +984,7 @@
 
     function login() {
         mp_login($('.me').val(), function(){
-            renderHomeView();
-            success('logged in');
+            error('Failed to Log In');
         });
     } // end login()
 

@@ -26,29 +26,18 @@ require '../vendor/autoload.php';
 
 
         <?php
-        //$myself = trim($this->normalizeUrl(HTTP_SERVER), '/');
-        //$myself = trim(str_replace(array('http://', 'https://'), array('',''), $myself), '/');
-
-        //if ($token_user == $myself) {
-            //$this->session->data['is_owner'] = true;
-        //}
-
-        //$this->session->data['success'] = "You are now logged in as " . $this->request->get['me'];
     } else {
-        //$this->session->data['error'] = 'Authorization Step Failed.';
-        //$this->log->write('error authorizing');
         ?>
         <html>
         <body>
         <script>
-            //setTimeout("location.href = '<?php echo CLIENT_URL;?>';", 1500);
+            setTimeout("location.href = '<?php echo CLIENT_URL;?>';", 1500);
         </script>
             <h1>Login Failed, Redirecting back to main application;</h1>
         </body>
         </html>
         <?php
 
-        //$this->log->write(print_r($this->request->get, true));
     }
 
 ?>
