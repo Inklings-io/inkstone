@@ -8,8 +8,8 @@ $json = array( 'success' => true);
 
 if(!isset($_POST['me'])){
     $json['success'] = false;
+    $json['error'] = 'URL not provided';
     echo json_encode($json);
-    //TODO else add some error message
     exit();
 }
 $me = normalizeUrl($_POST['me']);
@@ -49,7 +49,6 @@ if (!$syn_arr) {
 if (!isset($syn_arr['syndicate-to'])) {
     $json['success'] = false;
     echo json_encode($json);
-    //TODO else add some error message
     exit();
 }
 

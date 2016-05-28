@@ -8,8 +8,8 @@ $json = array( 'success' => true);
 
 if(!isset($_POST['me']) || !isset($_POST['token'])){
     $json['success'] = false;
+    $json['error'] = 'URL or token seems to be missing';
     echo json_encode($json);
-    //TODO else add some error message
     exit();
 }
 $me = normalizeUrl($_POST['me']);
@@ -48,6 +48,7 @@ $ch = curl_init($micropub_endpoint);
 if (!$ch) {
     //$this->log->write('error with curl_init');
     $json['success'] = false;
+    $json['error'] = 'Failure posting to your micropub endpoint.';
     echo json_encode($json);
     //TODO else add some error message
     exit();
@@ -72,9 +73,8 @@ if (in_array($result, array(200,201,204,301,302))) {
         $json['url'] = $target_url;
     }
 } else {
-    $json['error'] = 'Error:  Return code ' . $result . '.';
+    $json['error'] = 'Micropub Endpoint returned code ' . $result . '.';
     $json['success'] = false;
-    //TODO else add some error message
 }
 
 echo json_encode($json);

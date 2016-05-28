@@ -31,9 +31,9 @@ require '../vendor/autoload.php';
         <html>
         <body>
         <script>
-            setTimeout("location.href = '<?php echo CLIENT_URL;?>';", 1500);
+            setTimeout("location.href = '<?php echo CLIENT_URL;?>';", 3000);
         </script>
-            <h1>Login Failed, Redirecting back to main application;</h1>
+            <h1>IndieAuth Failed, Redirecting back to main application</h1>
         </body>
         </html>
         <?php

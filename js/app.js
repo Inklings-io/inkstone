@@ -404,8 +404,8 @@
 
         data += '&published='+get_formatted_date();
 
-        mp_send(data, function(){
-            success('Posted!');
+        mp_send(data, function(url){
+            success('Posted at ' + url);
             $('#input-content').val('');
             $('#inreplyto').val('');
             $('#like-of').val('');
@@ -504,9 +504,9 @@
 
         data += '&published='+get_formatted_date();
 
-        mp_send(data, function(){
+        mp_send(data, function(url){
             $('#post-btn').attr("disabled", "disabled");
-            success('Posted!');
+            success('Posted at ' + url);
             $('#input-content').val('');
             $('#inreplyto').val('');
             $('#bookmark').val('');
@@ -672,8 +672,8 @@
         data_obj['published'] = get_formatted_date();
 
         mp_uploadFile(data_obj, "video", videoData.type, videoData.fullPath,
-            function(r){ 
-                success('Posted!');
+            function(url){ 
+                success('Posted at ' + url);
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
@@ -755,8 +755,8 @@
         data_obj['published'] = get_formatted_date();
 
         mp_uploadFile(data_obj, "audio", audioData.type, audioData.fullPath,
-            function(r){ 
-                success('Posted!');
+            function(url){ 
+                success('Posted at ' + url);
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
@@ -839,8 +839,8 @@
         data_obj['published'] = get_formatted_date();
 
         mp_uploadFile(data_obj, "photo", "image/jpeg", photo_uri,
-            function(r){ 
-                success('Posted!');
+            function(url){ 
+                success('Posted at ' + url);
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
@@ -927,7 +927,7 @@
                 format = obj['format'];
                 file_uri = obj['file'];
                 mp_uploadFile(data_obj, type, format, file_uri,
-                    function(r){ 
+                    function(url){ 
                     },
                     function(error){ 
                         error("An error has occurred: Code = " + error.code); 
@@ -937,7 +937,7 @@
             } else {
                 data = obj['data'];
                 mp_send(data, 
-                    function(r){
+                    function(url){
                     },
                     function(error){ 
                         error("An error has occurred: Code = " + error.code); 
@@ -985,8 +985,8 @@
     }
 
     function login() {
-        mp_login($('.me').val(), function(){
-            error('Failed to Log In');
+        mp_login($('.me').val(), function(err){
+            error('Failed to Log In: ' + err);
         });
     } // end login()
 

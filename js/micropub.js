@@ -21,12 +21,12 @@ function mp_login(me, failure_callback) {
                 location.href = data.auth_endpoint
 
             } else {
-                failure_callback();
+                failure_callback(data.error);
             }
 
         },
         error: function(){
-            failure_callback();
+            failure_callback('Failed connecting to mobilepub server');
         }
     });
 
@@ -79,10 +79,14 @@ function mp_send(data, success_callback, failure_callback){
         data: data+'&me='+me+'&token='+token  ,
         datatype: 'json',
         success: function(data){
-            success_callback();
+            if(data.success){
+                success_callback(data.url);
+            } else {
+                failure_callback(data.error);
+            }
         },
         error: function(){
-            failure_callback();
+            failure_callback('error 10: failed connecting to MobilePub server');
         }
     });
     

@@ -8,8 +8,8 @@ $json = array( 'success' => true);
 
 if(!isset($_POST['me'])){
     $json['success'] = false;
+    $json['error'] = 'please enter your url';
     echo json_encode($json);
-    //TODO else add some error message
     exit();
 }
 $me = normalizeUrl($_POST['me']);
@@ -45,9 +45,9 @@ $json['auth_endpoint'] = $auth_endpoint . (strpos($auth_endpoint, '?') === false
 $micropub_endpoint = IndieAuth\Client::discoverMicropubEndpoint($me);
 if(!$micropub_endpoint){
     $json['success'] = false;
+    $json['error'] = 'You do not seem to have a Micropub Endpoint.  Cancelling Login.';
 } else {
     $json['mp_endpoint'] = $micropub_endpoint;
 }
-
 
 echo json_encode($json);
