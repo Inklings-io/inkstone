@@ -15,7 +15,7 @@ if(!isset($_POST['me'])){
 $me = normalizeUrl($_POST['me']);
 
 $auth_endpoint = IndieAuth\Client::discoverAuthorizationEndpoint($me);
-if(!$auth_endponit){
+if(!$auth_endpoint){
     $auth_endpoint = DEFAULT_AUTH_ENDPOINT;
 }
 
