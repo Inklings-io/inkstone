@@ -1,12 +1,12 @@
 
     function mp_logout(){
         //window.localStorage.clear();
-        window.localStorage.removeItem("micropub");
+        window.localStorage.removeItem("scope");
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("me");
     }
     function mp_logged_in(){
-        return(window.localStorage.getItem("micropub") && window.localStorage.getItem("token"));
+        return(window.localStorage.getItem("me") && window.localStorage.getItem("token"));
     }
 
     function mp_login(me, success_callback) {
@@ -18,17 +18,17 @@
             datatype: 'json',
             success: function(data){
                 if(data.success){
-                    auth_endpoint=data.auth_endpoint;
-                    token_endpoint=data.token_endpoint;
-                    mp_endpoint=data.mp_endpoint;
+                    //auth_endpoint=data.auth_endpoint;
+                    //token_endpoint=data.token_endpoint;
+                    //mp_endpoint=data.mp_endpoint;
 
                     //window.localStorage.setItem("token", site.token);
-                    window.localStorage.setItem("me", me);
-                    window.localStorage.setItem("micropub", mp_endpoint);
-                    window.localStorage.setItem("auth", auth_endpoint);
-                    window.localStorage.setItem("token", token_endpoint);
+                    //window.localStorage.setItem("me", me);
+                    //window.localStorage.setItem("micropub", mp_endpoint);
+                    //window.localStorage.setItem("auth", auth_endpoint);
+                    //window.localStorage.setItem("token", token_endpoint);
 
-                    redirect(data.auth_endpoint)
+                    location.href = data.auth_endpoint
 
                 } else {
                     failure_callback();

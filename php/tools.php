@@ -41,10 +41,12 @@ function confirmAuth($me, $code, $redir, $state = null)
     $results['me'] = normalizeUrl($results['me']);
 
     $trimmed_me = trim($me, '/');
+    //echo '1: ' .$trimmed_me;
     $trimmed_result_me = trim($results['me'], '/');
+    //echo '2: '.$trimmed_result_me;
 
     if ($state) {
-        return ($trimmed_result_me == $trimmed_me && $state == substr(md5($trimmed_me . $client_id), 0, 8));
+        return ($trimmed_result_me == $trimmed_me && $state == $_SESSION['state']);
     } else {
         return $trimmed_result_me == $trimmed_me ;
     }
