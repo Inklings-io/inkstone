@@ -40,17 +40,6 @@
             }
         });
 
-        getSiteObject(me, function(site){
-                window.localStorage.setItem("token", site.token);
-                window.localStorage.setItem("me", site.me);
-                window.localStorage.setItem("micropub", site.micropub);
-
-                //success('logged in as ' + site.me);
-
-                success_callback();
-                
-            });
-        });
         
     } // end mp_login()
 

@@ -1,7 +1,6 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
 
-
     /* ---------------------------------- Local Variables ---------------------------------- */
     var loginTpl = Handlebars.compile($("#login-tpl").html());
     var homeTpl = Handlebars.compile($("#home-tpl").html());

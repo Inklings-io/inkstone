@@ -97,9 +97,9 @@ function getToken($me, $code, $redir, $state = null)
 
 function normalizeUrl($url)
 {
-        $url = trim($url);
+    $url = trim($url);
     if (strpos($url, 'http') !== 0) {
         $url = 'http://' . $url;
     }
-        return $url;
+    return $url;
 }
