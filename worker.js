@@ -1,4 +1,4 @@
-var CACHE_NAME = 'mobilepub-v3.0.0';
+var CACHE_NAME = 'mobilepub-v3.0.1';
 var BASE_DIR = '/mobilepub';
 
 // The files we want to cache
@@ -8,7 +8,21 @@ var urlsToCache = [
   BASE_DIR + '/lib/jquery.js',
   BASE_DIR + '/lib/handlebars.js',
   BASE_DIR + '/js/micropub.js',
-  BASE_DIR + '/js/app.js'
+  BASE_DIR + '/js/app.js',
+  BASE_DIR + '/svg/bookmark.png',
+  BASE_DIR + '/svg/bubble.png',
+  BASE_DIR + '/svg/bubbles.png',
+  BASE_DIR + '/svg/camera.png',
+  BASE_DIR + '/svg/daycalendar.png',
+  BASE_DIR + '/svg/film.png',
+  BASE_DIR + '/svg/gear.png',
+  BASE_DIR + '/svg/heart.png',
+  BASE_DIR + '/svg/home.png',
+  BASE_DIR + '/svg/marker.png',
+  BASE_DIR + '/svg/microphone.png',
+  BASE_DIR + '/svg/power.png',
+  BASE_DIR + '/svg/quote.png',
+  BASE_DIR + '/svg/reload.png'
 ];
 
 // Set the callback for the install step

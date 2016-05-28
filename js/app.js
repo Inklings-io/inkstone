@@ -94,6 +94,7 @@
         icons.push({'image':'svg/bubbles.png', 'label':'Reply', 'id':'newreply'});
         icons.push({'image':'svg/marker.png', 'label':'Checkin', 'id':'newcheckin'});
 
+        /*
         if(config['support_photo']){
             icons.push({'image':'svg/camera.png', 'label':'Photo', 'id':'newphoto'});
         }
@@ -103,6 +104,7 @@
         if(config['support_video']){
             icons.push({'image':'svg/film.png', 'label':'Video', 'id':'newvideo'});
         }
+        */
         icons.push({'image':'svg/bookmark.png', 'label':'Bookmark', 'id':'newbookmark'});
         icons.push({'image':'svg/heart.png', 'label':'Like', 'id':'newlike'});
 
