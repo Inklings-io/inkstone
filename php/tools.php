@@ -18,8 +18,6 @@ function confirmAuth($me, $code, $redir, $state = null)
     }
 
     $post_data = http_build_query($post_array);
-    //$this->log->write('post_data: '.print_r($post_array,true));
-    //$this->log->write('endpoint: '.$auth_endpoint);
 
     $ch = curl_init($auth_endpoint);
 

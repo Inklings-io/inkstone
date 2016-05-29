@@ -2,18 +2,18 @@ html,body{
   margin:0;
   padding:0;
   border:0;
-  background-color: black;  
+  background-color: #d2d2d2;  
 }
 .login-screen-wrapper,
 .home-screen-wrapper,
 .create-screen-wrapper{
-  background-color:black;
+  background-color:#d2d2d2;
   padding-bottom:50px;
 }
 .login-screen-wrapper header,
 .home-screen-wrapper header,
 .create-screen-wrapper header{
-  color:white; text-align:center;
+  color:black; text-align:center;
 }
 .login-screen-wrapper h1 img,
 .home-screen-wrapper h1 img,
@@ -22,13 +22,13 @@ html,body{
   margin-right:10px;
 }
 .screen-main {
-  background-color:grey;
+  background-color:white;
   margin: auto 10% ;
   position:relative;
-  background: none repeat scroll 0 0 #4e4e50;
+  background: none repeat scroll 0 0 white;
   border-radius: 32px;
   list-style: outside none none;
-  color:white;
+  color:black;
   padding: 20px 3%;
   text-align:center;
 }
@@ -57,10 +57,10 @@ html,body{
   background-color:grey;
   margin: auto 10% ;
   position:relative;
-  background: none repeat scroll 0 0 #4e4e50;
+  background: none repeat scroll 0 0 white;
   border-radius: 32px;
   list-style: outside none none;
-  color:white;
+  color:black;
   padding: 20px 3%
 }
 .homescreenIcon {
@@ -141,7 +141,7 @@ h1 {padding:21px 0; margin:0;}
   margin-top:auto;
   margin-bottom:auto;
   height: 30px; padding: 0; line-height: 35px;
-  font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  font-size: 14px; color: black; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
   margin-right:10px;
 }
 #PhotoPreview {

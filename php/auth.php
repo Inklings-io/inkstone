@@ -7,37 +7,32 @@ require '../vendor/autoload.php';
     $state = $_GET['state'];
     $redir_url = CLIENT_URL . '/php/auth.php';
 
-    //$result = confirmAuth($me, $code, $redir_url, $state);
-    $token_results = getToken($me, $code, $redir_url, $state);
-    if ($token_results) {
-        ?>
-
-        <html>
-        <body>
-        <script>
-            window.localStorage.setItem("me", '<?php echo $me?>');
-            window.localStorage.setItem("token", '<?php echo $token_results['access_token']?>');
-            window.localStorage.setItem("scope", '<?php echo $token_results['scope']?>');
-            setTimeout("location.href = '<?php echo CLIENT_URL;?>';", 1500);
-        </script>
-        <h1>Please wait, while your login is completed.</h1>
-        </body>
-        </html>
-
-
-        <?php
+    $error = null;
+    if($state != $_SESSION['state']){
+        $error = 'Error with authorization: State does not match';
     } else {
-        ?>
-        <html>
-        <body>
-        <script>
-            setTimeout("location.href = '<?php echo CLIENT_URL;?>';", 3000);
-        </script>
-            <h1>IndieAuth Failed, Redirecting back to main application</h1>
-        </body>
-        </html>
-        <?php
-
+        $token_results = getToken($me, $code, $redir_url, $state);
+        if (!$token_results) {
+            $error = 'Error getting Token';
+        }
     }
-
 ?>
+
+<html>
+<body>
+<script>
+<?php if(!$error): ?>
+    window.localStorage.setItem("me", '<?php echo $me?>');
+    window.localStorage.setItem("token", '<?php echo $token_results['access_token']?>');
+    window.localStorage.setItem("scope", '<?php echo $token_results['scope']?>');
+<?php endif ?>
+    setTimeout("location.href = '<?php echo CLIENT_URL;?>';", 3000);
+</script>
+<?php if(!$error): ?>
+    <h1>Please wait, while your login is completed.</h1>
+<?php else: ?>
+    <h1><?php echo $error?>, Redirecting to main application.</h1>
+<?php endif ?>
+
+</body>
+</html>

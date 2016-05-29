@@ -64,11 +64,6 @@
 
 
     /* ---------------------------------- Local Functions ---------------------------------- */
-    function noSpacesInUrl(){
-        if($('#login-url').val().match(/\s/g)){
-           $('#login-url').val($('#login-url').val().replace(/\s/g,''));
-        }
-    }
     function networkChange(){
         if(navigator.onLine ){
             setOnline();
@@ -109,7 +104,7 @@
         icons.push({'image':'svg/heart.png', 'label':'Like', 'id':'newlike'});
 
         //icons.push({'image':'svg/daycalendar.png', 'label':'New Event', 'id':'newevent'});
-        icons.push({'image':'svg/gear.png', 'label':'Settings', 'id':'settings'});
+        //icons.push({'image':'svg/gear.png', 'label':'Settings', 'id':'settings'});
         icons.push({'image':'svg/power.png', 'label':'Logout', 'id':'exit'});
 
 
@@ -142,8 +137,7 @@
 
     function renderLoginView() {
         $('body').html(loginTpl(config));
-        $('#login-btn').on('click', login);
-        $('#login-url').on('keyup', noSpacesInUrl);
+        $('#login-form').submit(login);
     }
 
     function renderSettingsView() {
@@ -912,14 +906,17 @@
     }
 
     function upload_all_saved(){
+        success('subitting saved posts');
+        $('#homeicon_saved').hide();
         list_processing = true;
         var obj;
         while( list_processing ){
             obj = getFirstSavedPost();
             if(obj === null){
                 list_processing = false;
-                continue;
                 success('Posts submitted');
+                $('#homeicon_saved').hide();
+                break;
             }
             type = obj['type'];
             if(type == 'photo' || type == 'audio' || type == 'video'){
@@ -938,6 +935,7 @@
                 data = obj['data'];
                 mp_send(data, 
                     function(url){
+                        ;
                     },
                     function(error){ 
                         error("An error has occurred: Code = " + error.code); 
@@ -988,6 +986,7 @@
         mp_login($('.me').val(), function(err){
             error('Failed to Log In: ' + err);
         });
+        return false;
     } // end login()
 
     function success(message){
