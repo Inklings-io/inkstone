@@ -1,0 +1,35 @@
+{
+    "short_name": "MobilePub",
+    "name": "MobilePub",
+    "icons": [
+        {
+            "src": "icons/note.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/note192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/note144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/note96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/note64.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/mobilepub/index.html",
+    "display": "standalone"
+}
+
+

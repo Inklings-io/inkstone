@@ -254,7 +254,7 @@
         $('#post-btn').on('click', sendNote);
         $('#save-btn').on('click', saveNote);
         getSyndicationTargets(function(targets){
-            targets_array = targets.split(',');
+            targets_array = targets.toString().split(',');
             if(!targets_array){
                 $('#input-syndication-wrapper').hide();
             } else {

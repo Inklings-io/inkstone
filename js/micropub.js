@@ -41,6 +41,8 @@ function mp_login(me, failure_callback) {
  *
  */
 function getSyndicationTargets(callback){
+    token = window.localStorage.getItem("token");
+    me = window.localStorage.getItem("me");
     syndications = window.localStorage.getItem("syndications");
     if(syndications){
         callback(syndications);

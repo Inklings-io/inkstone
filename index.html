@@ -1,6 +1,8 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link hre="manifest.json" rel="manifest">
     <link href="css/style.css" rel="stylesheet">
   <script>
 
@@ -8,11 +10,6 @@
       navigator.serviceWorker.register('./worker.js').then(function(registration) {
         // Registration was successful
         console.log('ServiceWorker registration successful with scope: ',    registration.scope);
-        $('#success').html('<span>App now stored offline!</span>');
-        $('#success').show();
-        setTimeout(function() {
-            $('#success').fadeOut('fast');
-        }, 3000);
       }).catch(function(err) {
         // registration failed :(
         console.log('ServiceWorker registration failed: ', err);
