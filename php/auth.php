@@ -7,9 +7,9 @@ require '../vendor/autoload.php';
     $state = $_GET['state'];
     $redir_url = CLIENT_URL . '/php/auth.php';
 
-    $result = confirmAuth($me, $code, $redir_url, $state);
-    if ($result) {
-        $token_results = getToken($me, $code, $redir_url, $state);
+    //$result = confirmAuth($me, $code, $redir_url, $state);
+    $token_results = getToken($me, $code, $redir_url, $state);
+    if ($token_results) {
         ?>
 
         <html>
