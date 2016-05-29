@@ -1,12 +1,11 @@
 {
-    "short_name": "MobilePub",
+    "manifest_version": 2,
+    "version": "mobilepub-3.1.1",
     "name": "MobilePub",
+    "short_name": "MobilePub",
+    "default_locale": "en",
+    "description": "micropub posting application",,
     "icons": [
-        {
-            "src": "icons/note.png",
-            "sizes": "256x256",
-            "type": "image/png"
-        },
         {
             "src": "icons/note192.png",
             "sizes": "192x192",
