@@ -1,6 +1,6 @@
 {
-    "manifest_version": 2,
-    "version": "mobilepub-3.1.1",
+    "manifest_version": 4,
+    "version": "mobilepub-3.1.3",
     "name": "MobilePub",
     "short_name": "MobilePub",
     "default_locale": "en",
@@ -15,19 +15,9 @@
             "src": "icons/note144.png",
             "sizes": "144x144",
             "type": "image/png"
-        },
-        {
-            "src": "icons/note96.png",
-            "sizes": "96x96",
-            "type": "image/png"
-        },
-        {
-            "src": "icons/note64.png",
-            "sizes": "64x64",
-            "type": "image/png"
         }
     ],
-    "start_url": "/mobilepub/index.html",
+    "start_url": "index.html",
     "display": "standalone"
 }
 

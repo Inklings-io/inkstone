@@ -1,4 +1,4 @@
-var CACHE_NAME = 'mobilepub-v3.1.1';
+var CACHE_NAME = 'mobilepub-v3.1.3';
 var BASE_DIR = '/mobilepub';
 
 // The files we want to cache
@@ -7,8 +7,6 @@ var urlsToCache = [
   BASE_DIR + '/manifest.json',
   BASE_DIR + '/icons/note144.png',
   BASE_DIR + '/icons/note192.png',
-  BASE_DIR + '/icons/note64.png',
-  BASE_DIR + '/icons/note96.png',
   BASE_DIR + '/css/style.css',
   BASE_DIR + '/lib/jquery.js',
   BASE_DIR + '/lib/handlebars.js',
