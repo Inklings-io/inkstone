@@ -17,7 +17,7 @@ $me = normalizeUrl($_POST['me']);
 
 
 
-$syn_arr = $_SESSION['syndication_' . $me];
+$syn_arr = null;//$_SESSION['syndication_' . $me];
 if (!$syn_arr) {
     $micropub_endpoint = $_SESSION['micropub_' . $me];
     if (!$micropub_endpoint) {
@@ -46,7 +46,7 @@ if (!$syn_arr) {
 
     $response = curl_exec($ch);
     $syn_arr = json_decode($response, true);
-    $_SESSION['syndication_' . $me] = $syn_arr;
+    //$_SESSION['syndication_' . $me] = $syn_arr;
 }
 
 if (!isset($syn_arr['syndicate-to'])) {

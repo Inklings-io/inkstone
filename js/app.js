@@ -270,7 +270,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
         data += '&published='+get_formatted_date();
@@ -284,7 +284,7 @@
         $('#bookmark').val('');
         $('#category').val('');
         for (i = 0; i < syndicate.length; i++) {
-            syndicate[i] = false;
+            syndicate[i].checked = false;
         }
         $('#geoloc').val('');
         $('#loc_name').val('');
@@ -317,7 +317,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
 
@@ -331,7 +331,7 @@
             $('#bookmark').val('');
             $('#category').val('');
             for (i = 0; i < syndicate.length; i++) {
-                syndicate[i] = false;
+                syndicate[i].checked = false;
             }
             $('#geoloc').val('');
             $('#loc_name').val('');
@@ -373,7 +373,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
         data += '&published='+get_formatted_date();
@@ -387,7 +387,7 @@
         $('#like-of').val('');
         $('#category').val('');
         for (i = 0; i < syndicate.length; i++) {
-            syndicate[i] = false;
+            syndicate[i].checked = false;
         }
         $('#save-btn').removeAttr('disabled');
     }
@@ -421,7 +421,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
 
@@ -436,7 +436,7 @@
             $('#like-of').val('');
             $('#category').val('');
             for (i = 0; i < syndicate.length; i++) {
-                syndicate[i] = false;
+                syndicate[i].checked = false;
             }
             $('#post-btn').removeAttr('disabled');
             //$('#success').html('Posted!');
@@ -552,7 +552,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
         data_obj['published'] = get_formatted_date();
@@ -564,7 +564,7 @@
         $('#inreplyto').val('');
         $('#category').val('');
         for (i = 0; i < syndicate.length; i++) {
-            syndicate[i] = false;
+            syndicate[i].checked = false;
         }
         videoData = null;
         $('#videoFile').html('');
@@ -592,7 +592,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
 
@@ -605,7 +605,7 @@
                 $('#inreplyto').val('');
                 $('#category').val('');
                 for (i = 0; i < syndicate.length; i++) {
-                    syndicate[i] = false;
+                    syndicate[i].checked = false;
                 }
                 videoData = null;
                 $('#videoFile').html('');
@@ -638,7 +638,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
 
@@ -651,7 +651,7 @@
         $('#inreplyto').val('');
         $('#category').val('');
         for (i = 0; i < syndicate.length; i++) {
-            syndicate[i] = false;
+            syndicate[i].checked = false;
         }
         audioData = null;
         $('#AudioFile').html('');
@@ -679,7 +679,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
 
@@ -692,7 +692,7 @@
                 $('#inreplyto').val('');
                 $('#category').val('');
                 for (i = 0; i < syndicate.length; i++) {
-                    syndicate[i] = false;
+                    syndicate[i].checked = false;
                 }
                 audioData = null;
                 $('#AudioFile').html('');
@@ -726,7 +726,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
 
@@ -739,7 +739,7 @@
         $('#inreplyto').val('');
         $('#category').val('');
         for (i = 0; i < syndicate.length; i++) {
-            syndicate[i] = false;
+            syndicate[i].checked = false;
         }
         photoData = null;
         $('#PhotoPreview').attr('src', '');
@@ -767,7 +767,7 @@
         syndicate = $("input[name='syndicate-to']");
         for (i = 0; i < syndicate.length; i++) {
             if(syndicate[i].checked){
-                data += '&syndicate-to[]='+syndicate[i];
+                data += '&syndicate-to[]='+syndicate[i].value;
             }
         }
 
@@ -780,7 +780,7 @@
                 $('#inreplyto').val('');
                 $('#category').val('');
                 for (i = 0; i < syndicate.length; i++) {
-                    syndicate[i] = false;
+                    syndicate[i].checked = false;
                 }
                 photoData = null;
                 $('#PhotoPreview').attr('src', '');

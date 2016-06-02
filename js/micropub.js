@@ -4,6 +4,7 @@ function mp_logout(){
     window.localStorage.removeItem("scope");
     window.localStorage.removeItem("token");
     window.localStorage.removeItem("me");
+    window.localStorage.removeItem('syndications');
 }
 function mp_logged_in(){
     return(window.localStorage.getItem("me") && window.localStorage.getItem("token"));
@@ -45,16 +46,16 @@ function getSyndicationTargets(callback){
     me = window.localStorage.getItem("me");
     syndications = window.localStorage.getItem("syndications");
     if(syndications){
-        callback(syndications);
+        callback(JSON.parse(syndications));
     } else {
         $.ajax({
             url: 'php/syndicationTargets.php',
             type: 'post',
-            data: 'me='+ me + 'token='+token,
+            data: {me: me , token: token},
             datatype: 'json',
             success: function(data){
                 if(data.success){
-                    window.localStorage.setItem("syndications", data.targets);
+                    window.localStorage.setItem("syndications", JSON.stringify(data.targets));
                     callback(data.targets);
                 } else {
                     callback();
