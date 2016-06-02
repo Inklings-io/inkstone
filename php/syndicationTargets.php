@@ -33,7 +33,9 @@ if (!$syn_arr) {
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     if(isset($_POST['token'])){
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_POST['token']));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $_POST['token'], 'Accept: application/json'));
+    } else {
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
     }
 
 
@@ -43,9 +45,10 @@ if (!$syn_arr) {
     /////////////////////////////////////////////////
 
     $response = curl_exec($ch);
-    parse_str($response, $syn_arr);
+    $syn_arr = json_decode($response, true);
     $_SESSION['syndication_' . $me] = $syn_arr;
 }
+
 if (!isset($syn_arr['syndicate-to'])) {
     $json['success'] = false;
     echo json_encode($json);

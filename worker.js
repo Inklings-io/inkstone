@@ -1,4 +1,4 @@
-var CACHE_NAME = 'mobilepub-v3.1.3';
+var CACHE_NAME = 'mobilepub-v3.1.4';
 var BASE_DIR = '/mobilepub';
 
 // The files we want to cache

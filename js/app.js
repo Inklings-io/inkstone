@@ -64,6 +64,19 @@
 
 
     /* ---------------------------------- Local Functions ---------------------------------- */
+    function display_syndication_targets(targets)
+    {
+        if(!targets){
+            $('#input-syndication-wrapper').hide();
+        } else {
+            $('#input-syndication-wrapper').html('');
+            for (i = 0; i < targets.length; i++) {
+                $('#input-syndication-wrapper').append('<div class="switch"><input name="syndicate-to" type="checkbox" id="syndicate-'+i+'" value="'+targets[i]['uid']+'"><label for="syndicate-'+i+'">'+targets[i]['name']+'</label></div>');
+            }
+            $('#input-syndication-wrapper').show();
+        }
+    }
+
     function networkChange(){
         if(navigator.onLine ){
             setOnline();
@@ -131,8 +144,6 @@
         $('#homeicon_saved').on('click', upload_all_saved);
 
 
-    
-
     }
 
     function renderLoginView() {
@@ -174,18 +185,7 @@
         $('#post-btn').on('click', postVideo);
         $('#save-btn').on('click', saveVideo);
         $('#video-btn').on('click', recordVideo);
-        getSyndicationTargets(function(targets){
-            targets_array = targets.split(',');
-            if(!targets_array){
-                $('#input-syndication-wrapper').hide();
-            } else {
-                $('#input-syndicateto').html('');
-                for (i = 0; i < targets_array.length; i++) {
-                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
-                }
-                $('#input-syndication-wrapper').show();
-            }
-        });
+        getSyndicationTargets(display_syndication_targets);
     }
     function renderNewAudioView() {
         $('body').html(audioTpl(config));
@@ -193,18 +193,7 @@
         $('#post-btn').on('click', postAudio);
         $('#save-btn').on('click', saveAudio);
         $('#audio-btn').on('click', recordAudio);
-        getSyndicationTargets(function(targets){
-            targets_array = targets.split(',');
-            if(!targets_array){
-                $('#input-syndication-wrapper').hide();
-            } else {
-                $('#input-syndicateto').html('');
-                for (i = 0; i < targets_array.length; i++) {
-                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
-                }
-                $('#input-syndication-wrapper').show();
-            }
-        });
+        getSyndicationTargets(display_syndication_targets);
     }
 
     function renderNewPhotoView() {
@@ -214,18 +203,7 @@
         $('#save-btn').on('click', savePhoto);
         $('#camera-btn').on('click', take_a_picture);
         $('#gallery-btn').on('click', get_a_picture);
-        getSyndicationTargets(function(targets){
-            targets_array = targets.split(',');
-            if(!targets_array){
-                $('#input-syndication-wrapper').hide();
-            } else {
-                $('#input-syndicateto').html('');
-                for (i = 0; i < targets_array.length; i++) {
-                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
-                }
-                $('#input-syndication-wrapper').show();
-            }
-        });
+        getSyndicationTargets(display_syndication_targets);
     }
 
     function renderNewCheckinView() {
@@ -234,18 +212,7 @@
         $('#post-btn').on('click', sendCheckin);
         $('#save-btn').on('click', saveCheckin);
         $('#geo-btn').on('click', getGeo);
-        getSyndicationTargets(function(targets){
-            targets_array = targets.split(',');
-            if(!targets_array){
-                $('#input-syndication-wrapper').hide();
-            } else {
-                $('#input-syndicateto').html('');
-                for (i = 0; i < targets_array.length; i++) {
-                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
-                }
-                $('#input-syndication-wrapper').show();
-            }
-        });
+        getSyndicationTargets(display_syndication_targets);
     }
 
     function renderNewNoteView() {
@@ -253,18 +220,7 @@
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendNote);
         $('#save-btn').on('click', saveNote);
-        getSyndicationTargets(function(targets){
-            targets_array = targets.toString().split(',');
-            if(!targets_array){
-                $('#input-syndication-wrapper').hide();
-            } else {
-                $('#input-syndicateto').html('');
-                for (i = 0; i < targets_array.length; i++) {
-                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
-                }
-                $('#input-syndication-wrapper').show();
-            }
-        });
+        getSyndicationTargets(display_syndication_targets);
     }
 
     function renderNewReplyView() {
@@ -272,59 +228,25 @@
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendNote);
         $('#save-btn').on('click', saveNote);
-        getSyndicationTargets(function(targets){
-            targets_array = targets.split(',');
-            if(!targets_array){
-                $('#input-syndication-wrapper').hide();
-            } else {
-                $('#input-syndicateto').html('');
-                for (i = 0; i < targets_array.length; i++) {
-                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
-                }
-                $('#input-syndication-wrapper').show();
-            }
-        });
+        getSyndicationTargets(display_syndication_targets);
     }
     function renderNewBookmarkView() {
         $('body').html(newBookmarkTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendNote);
         $('#save-btn').on('click', saveNote);
-        getSyndicationTargets(function(targets){
-            targets_array = targets.split(',');
-            if(!targets_array){
-                $('#input-syndication-wrapper').hide();
-            } else {
-                $('#input-syndicateto').html('');
-                for (i = 0; i < targets_array.length; i++) {
-                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
-                }
-                $('#input-syndication-wrapper').show();
-            }
-        });
+        getSyndicationTargets(display_syndication_targets);
     }
     function renderNewLikeView() {
         $('body').html(newLikeTpl(config));
         $('#home-btn').on('click', renderHomeView);
         $('#post-btn').on('click', sendNote);
         $('#save-btn').on('click', saveNote);
-        getSyndicationTargets(function(targets){
-            targets_array = targets.split(',');
-            if(!targets_array){
-                $('#input-syndication-wrapper').hide();
-            } else {
-                $('#input-syndicateto').html('');
-                for (i = 0; i < targets_array.length; i++) {
-                    $('#input-syndicateto').append('<option value="'+targets_array[i]+'">'+targets_array[i]+'</option');
-                }
-                $('#input-syndication-wrapper').show();
-            }
-        });
+        getSyndicationTargets(display_syndication_targets);
     }
 
     function saveCheckin(){
         content = $('#input-content').val();
-        syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         geo_location = $('#geoloc').val();
         geo_place_name = $('#loc_name').val();
@@ -344,9 +266,11 @@
         if(replyurl){
             data += '&in-reply-to=' + encodeURIComponent(replyurl);
         }
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                    data += '&syndicate-to[]='+syndicate[i];
+
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
         data += '&published='+get_formatted_date();
@@ -359,7 +283,9 @@
         $('#like-of').val('');
         $('#bookmark').val('');
         $('#category').val('');
-        $('#input-syndicateto').val('');
+        for (i = 0; i < syndicate.length; i++) {
+            syndicate[i] = false;
+        }
         $('#geoloc').val('');
         $('#loc_name').val('');
         $('#save-btn').removeAttr('disabled');
@@ -368,7 +294,6 @@
 
     function sendCheckin(){
         content = $('#input-content').val();
-        syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         geo_location = $('#geoloc').val();
         geo_place_name = $('#loc_name').val();
@@ -389,10 +314,10 @@
         if(replyurl){
             data += '&in-reply-to=' + encodeURIComponent(replyurl);
         }
-
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                    data += '&syndicate-to[]='+syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
 
@@ -405,7 +330,9 @@
             $('#like-of').val('');
             $('#bookmark').val('');
             $('#category').val('');
-            $('#input-syndicateto').val('');
+            for (i = 0; i < syndicate.length; i++) {
+                syndicate[i] = false;
+            }
             $('#geoloc').val('');
             $('#loc_name').val('');
             $('#post-btn').removeAttr('disabled');
@@ -423,7 +350,6 @@
 
     function saveNote(){
         content = $('#input-content').val();
-        syndicate = $('#input-syndicateto').val();
         replyurl = $('#inreplyto').val();
         like = $('#like-of').val();
         bookmark = $('#bookmark').val();
@@ -444,9 +370,10 @@
         if(bookmark){
             data += '&bookmark=' + encodeURIComponent(bookmark);
         }
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                    data += '&syndicate-to[]='+syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
         data += '&published='+get_formatted_date();
@@ -459,12 +386,13 @@
         $('#bookmark').val('');
         $('#like-of').val('');
         $('#category').val('');
-        $('#input-syndicateto').val('');
+        for (i = 0; i < syndicate.length; i++) {
+            syndicate[i] = false;
+        }
         $('#save-btn').removeAttr('disabled');
     }
     function sendNote(){
         content = $('#input-content').val();
-        syndicate = $('#input-syndicateto').val();
         replyurl = $('#inreplyto').val();
         like = $('#like-of').val();
         bookmark = $('#bookmark').val();
@@ -490,9 +418,10 @@
             data += '&bookmark=' + encodeURIComponent(bookmark);
         }
 
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                    data += '&syndicate-to[]='+syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
 
@@ -506,7 +435,9 @@
             $('#bookmark').val('');
             $('#like-of').val('');
             $('#category').val('');
-            $('#input-syndicateto').val('');
+            for (i = 0; i < syndicate.length; i++) {
+                syndicate[i] = false;
+            }
             $('#post-btn').removeAttr('disabled');
             //$('#success').html('Posted!');
             //$('#success').show();
@@ -602,7 +533,6 @@
 
     function saveVideo(){
         content = $('#input-content').val();
-        syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
         $('#save-btn').attr("disabled", "disabled");
@@ -619,9 +549,10 @@
             data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                data_obj['syndicate-to['+i+']'] = syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
         data_obj['published'] = get_formatted_date();
@@ -632,14 +563,15 @@
         $('#input-content').val('');
         $('#inreplyto').val('');
         $('#category').val('');
-        $('#input-syndicateto').val('');
+        for (i = 0; i < syndicate.length; i++) {
+            syndicate[i] = false;
+        }
         videoData = null;
         $('#videoFile').html('');
         $('#save-btn').removeAttr('disabled');
     }
     function postVideo(){
         content = $('#input-content').val();
-        syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
         $('#post-btn').attr("disabled", "disabled");
@@ -657,9 +589,10 @@
             data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                data_obj['syndicate-to['+i+']'] = syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
 
@@ -671,7 +604,9 @@
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
-                $('#input-syndicateto').val('');
+                for (i = 0; i < syndicate.length; i++) {
+                    syndicate[i] = false;
+                }
                 videoData = null;
                 $('#videoFile').html('');
                 $('#post-btn').removeAttr('disabled');
@@ -684,7 +619,6 @@
 
     function saveAudio(){
         content = $('#input-content').val();
-        syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
         $('#save-btn').attr("disabled", "disabled");
@@ -701,9 +635,10 @@
             data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                data_obj['syndicate-to['+i+']'] = syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
 
@@ -715,7 +650,9 @@
         $('#input-content').val('');
         $('#inreplyto').val('');
         $('#category').val('');
-        $('#input-syndicateto').val('');
+        for (i = 0; i < syndicate.length; i++) {
+            syndicate[i] = false;
+        }
         audioData = null;
         $('#AudioFile').html('');
         $('#save-btn').removeAttr('disabled');
@@ -723,7 +660,6 @@
     }
     function postAudio(){
         content = $('#input-content').val();
-        syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
         $('#post-btn').attr("disabled", "disabled");
@@ -740,9 +676,10 @@
             data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                data_obj['syndicate-to['+i+']'] = syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
 
@@ -754,7 +691,9 @@
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
-                $('#input-syndicateto').val('');
+                for (i = 0; i < syndicate.length; i++) {
+                    syndicate[i] = false;
+                }
                 audioData = null;
                 $('#AudioFile').html('');
                 $('#post-btn').removeAttr('disabled');
@@ -768,7 +707,6 @@
     function savePhoto(){
         content = $('#input-content').val();
         photo_uri = photoData;
-        syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
         $('#save-btn').attr("disabled", "disabled");
@@ -785,9 +723,10 @@
             data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                data_obj['syndicate-to['+i+']'] = syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
 
@@ -799,7 +738,9 @@
         $('#input-content').val('');
         $('#inreplyto').val('');
         $('#category').val('');
-        $('#input-syndicateto').val('');
+        for (i = 0; i < syndicate.length; i++) {
+            syndicate[i] = false;
+        }
         photoData = null;
         $('#PhotoPreview').attr('src', '');
         $('#save-btn').removeAttr('disabled');
@@ -807,7 +748,6 @@
     function postPhoto(){
         content = $('#input-content').val();
         photo_uri = photoData;
-        syndicate = $('#input-syndicateto').val();
         category = $('#category').val();
         replyurl = $('#inreplyto').val();
         $('#post-btn').attr("disabled", "disabled");
@@ -824,9 +764,10 @@
             data_obj['in-reply-to'] = encodeURIComponent(replyurl);
         }
         // todo escape content and syndicate
-        if(syndicate){
-            for (i = 0; i < syndicate.length; i++) {
-                data_obj['syndicate-to['+i+']'] = syndicate[i];
+        syndicate = $("input[name='syndicate-to']");
+        for (i = 0; i < syndicate.length; i++) {
+            if(syndicate[i].checked){
+                data += '&syndicate-to[]='+syndicate[i];
             }
         }
 
@@ -838,7 +779,9 @@
                 $('#input-content').val('');
                 $('#inreplyto').val('');
                 $('#category').val('');
-                $('#input-syndicateto').val('');
+                for (i = 0; i < syndicate.length; i++) {
+                    syndicate[i] = false;
+                }
                 photoData = null;
                 $('#PhotoPreview').attr('src', '');
                 $('#post-btn').removeAttr('disabled');

@@ -4,6 +4,9 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <link hre="manifest.json" rel="manifest">
     <link href="css/style.css" rel="stylesheet">
+    <link href="icons/note144.png" rel="icon shortcut" />
+    <link rel="apple-touch-icon-precomposed" href="icons/note144.png"/>
+
   <script>
 
     if ('serviceWorker' in navigator) {
@@ -80,11 +83,8 @@
       <button id="gallery-btn">Select Photo</button>
       <img id="PhotoPreview" />
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <span id="upload-status"></span>
       <p><button id="post-btn" class="online-only" {{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
@@ -107,11 +107,8 @@
       <button id="video-btn">Record Video</button>
       <div id="VideoFile"></div>
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <span id="upload-status"></span>
       <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
@@ -134,11 +131,8 @@
       <button id="audio-btn">Record Audio</button>
       <div id="AudioFile"></div>
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <span id="upload-status"></span>
       <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
@@ -161,11 +155,8 @@
       <button id="geo-btn">Use GPS</button><br>
       <input name="place_name" placeholder="Location Name" id="loc_name"/><br>
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
@@ -184,11 +175,8 @@
       <textarea name="content" placeholder="Body of Post" id="input-content"></textarea><br>
       <input name="category" placeholder="Category1, Category2" id="category"/><br>
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
@@ -208,11 +196,8 @@
 
       <input name="like-of" placeholder="http://something.to/like/" id="like-of"/><br>
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
@@ -232,11 +217,8 @@
 
       <input name="inreplyto" placeholder="http://something.to/reply/to" id="inreplyto"/><br>
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
@@ -256,11 +238,8 @@
 
       <input name="bookmark" placeholder="http://something.to/bookmark/" id="bookmark"/><br>
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
@@ -378,11 +357,8 @@
       <div id="VideoFile"></div>
       {{/if}}
 
-      <p id="input-syndication-wrapper" style="display:none">
-        <label for="input-syndicateto">Syndicate To</label>
-        <select name="syndicate-to[]" id="input-syndicateto" multiple="multiple">
-        </select>
-      </p>
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
       <p><button id="post-btn" class="online-only"{{#unless isOnline}} disabled="disabled" {{/unless}}>Post</button></p>
       <p><button id="save-btn">Save</button></p>
       <div id='success'></div>
