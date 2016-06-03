@@ -933,7 +933,7 @@
     } // end login()
 
     function success(message){
-        $('#success').html('<span>'+message+'</span>');
+        $('#success').html('<div>'+message+'</div>');
         $('#success').show();
         setTimeout(function() {
             $('#success').fadeOut('fast');
@@ -941,7 +941,7 @@
     }
 
     function error(message){
-        $('#error').html('<span>'+message+'</span>');
+        $('#error').html('<div>'+message+'</div>');
         $('#error').show();
         setTimeout(function() {
             $('#error').fadeOut('fast');

@@ -150,12 +150,12 @@ h1 {padding:21px 0; margin:0;}
 #PhotoPreview {
   width:90%;
 }
-#success span {
+#success div {
     background-color:#8ce196;
     border-radius:10px;
     padding: 5px 20px;
 }
-#error span {
+#error div {
     background-color:#e18c96;
     border-radius:10px;
     padding: 5px 20px;
