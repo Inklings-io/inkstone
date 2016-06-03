@@ -151,12 +151,12 @@ h1 {padding:21px 0; margin:0;}
   width:90%;
 }
 #success span {
-    background-color:green;
+    background-color:#8ce196;
     border-radius:10px;
     padding: 5px 20px;
 }
 #error span {
-    background-color:darkred;
+    background-color:#e18c96;
     border-radius:10px;
     padding: 5px 20px;
 }
@@ -213,3 +213,21 @@ h1 {padding:21px 0; margin:0;}
 .switch input:checked + label:after {
   margin-left: 30px;
 }
+input, textarea{
+  margin:5px;
+  border-radius: 4px;
+}
+#control-buttons button {
+  background-color: #8ce196;
+  border-color: #8ce196;
+  border-radius: 30px;
+  height:30px;
+  min-width:60px;       
+  margin-right:20px;
+} 
+#control-buttons button[disabled] {
+  background-color: lightgray;
+  border-color: lightgray;
+}
+
+
