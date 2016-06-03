@@ -3,6 +3,13 @@ html,body{
   padding:0;
   border:0;
   background-color: #d2d2d2;  
+  font-family: "Gill Sans", Roboto,Verdana, sans-serif;
+}
+input, textarea{
+  margin:5px;
+  border-radius: 15px;
+  min-height:30px;
+  padding:7px 12px;
 }
 .login-screen-wrapper,
 .home-screen-wrapper,
@@ -99,7 +106,7 @@ h1 {padding:21px 0; margin:0;}
 }
 .onoffswitch-inner:before, .onoffswitch-inner:after {
   display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-  font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  font-size: 14px; color: white; font-weight: bold;
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
 .onoffswitch-inner:before {
@@ -144,7 +151,7 @@ h1 {padding:21px 0; margin:0;}
   margin-top:auto;
   margin-bottom:auto;
   height: 30px; padding: 0; line-height: 35px;
-  font-size: 14px; color: black; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  font-size: 14px; color: black; font-weight: bold;
   margin-right:10px;
 }
 #PhotoPreview {
@@ -212,10 +219,6 @@ h1 {padding:21px 0; margin:0;}
 }
 .switch input:checked + label:after {
   margin-left: 30px;
-}
-input, textarea{
-  margin:5px;
-  border-radius: 4px;
 }
 #control-buttons button {
   background-color: #8ce196;

@@ -98,34 +98,34 @@
     }
     function renderHomeView() {
         icons = [];
-        icons.push({'image':'svg/bubble.png', 'label':'Note', 'id':'newnote'});
-        icons.push({'image':'svg/bubbles.png', 'label':'Reply', 'id':'newreply'});
-        icons.push({'image':'svg/marker.png', 'label':'Checkin', 'id':'newcheckin'});
+        icons.push({'image':'icons/circle-icons/pencil.svg', 'label':'Note', 'id':'newnote'});
+        icons.push({'image':'icons/circle-icons/bubble.svg', 'label':'Reply', 'id':'newreply'});
+        icons.push({'image':'icons/circle-icons/location.svg', 'label':'Checkin', 'id':'newcheckin'});
 
         /*
         if(config['support_photo']){
-            icons.push({'image':'svg/camera.png', 'label':'Photo', 'id':'newphoto'});
+            icons.push({'image':'icons/circle-icons/photo.svg', 'label':'Photo', 'id':'newphoto'});
         }
         if(config['support_audio']){
-            icons.push({'image':'svg/microphone.png', 'label':'Audio', 'id':'newaudio'});
+            icons.push({'image':'icons/circle-icons/mic.svg', 'label':'Audio', 'id':'newaudio'});
         }
         if(config['support_video']){
-            icons.push({'image':'svg/film.png', 'label':'Video', 'id':'newvideo'});
+            icons.push({'image':'icons/circle-icons/film.svg', 'label':'Video', 'id':'newvideo'});
         }
         */
-        icons.push({'image':'svg/bookmark.png', 'label':'Bookmark', 'id':'newbookmark'});
-        icons.push({'image':'svg/heart.png', 'label':'Like', 'id':'newlike'});
+        icons.push({'image':'icons/circle-icons/bookmark.svg', 'label':'Bookmark', 'id':'newbookmark'});
+        icons.push({'image':'icons/circle-icons/heart.svg', 'label':'Like', 'id':'newlike'});
 
-        //icons.push({'image':'svg/daycalendar.png', 'label':'New Event', 'id':'newevent'});
-        //icons.push({'image':'svg/gear.png', 'label':'Settings', 'id':'settings'});
-        icons.push({'image':'svg/power.png', 'label':'Logout', 'id':'exit'});
+        //icons.push({'image':'icons/circle-icons/calendar.svg', 'label':'New Event', 'id':'newevent'});
+        //icons.push({'image':'icons/circle-icons/settings.svg', 'label':'Settings', 'id':'settings'});
+        icons.push({'image':'icons/circle-icons/power.svg', 'label':'Logout', 'id':'exit'});
 
 
         saved = window.localStorage.getItem("saved");
         if(saved){
             saved = JSON.parse(saved);
             if(saved.length > 0 ){
-                icons.push({'image':'svg/reload.png', 'label':'Post Saved Data ('+saved.length+')', 'id':'saved'});
+                icons.push({'image':'icons/circle-icons/memcard.svg', 'label':'Post Saved Data ('+saved.length+')', 'id':'saved'});
             }
         }
 
@@ -261,7 +261,10 @@
             data += '&place_name='+geo_place_name
         }
         if(category){
-            data += '&category=' + encodeURIComponent(category);
+            split_cat = category.split(',');
+            for (i = 0; i < split_cat.length; i++) {
+                data += '&category[]=' + encodeURIComponent(split_cat[i].trim());
+            }
         }
         if(replyurl){
             data += '&in-reply-to=' + encodeURIComponent(replyurl);

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
     $me = normalizeUrl($_GET['me']);
     $code = $_GET['code'];
@@ -12,7 +12,7 @@ require '../vendor/autoload.php';
         $error = 'Error with authorization: State does not match';
     } else {
         $token_results = getToken($me, $code, $redir_url, $state);
-        if (!$token_results) {
+        if (!$token_results || empty($token_results)) {
             $error = 'Error getting Token';
         }
     }

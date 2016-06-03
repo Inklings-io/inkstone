@@ -1,4 +1,4 @@
-var CACHE_NAME = 'mobilepub-v3.1.10';
+var CACHE_NAME = 'mobilepub-v3.2.4';
 var BASE_DIR = '/mobilepub';
 
 // The files we want to cache
@@ -12,20 +12,23 @@ var urlsToCache = [
   BASE_DIR + '/lib/handlebars.js',
   BASE_DIR + '/js/micropub.js',
   BASE_DIR + '/js/app.js',
-  BASE_DIR + '/svg/bookmark.png',
-  BASE_DIR + '/svg/bubble.png',
-  BASE_DIR + '/svg/bubbles.png',
-  BASE_DIR + '/svg/camera.png',
-  BASE_DIR + '/svg/daycalendar.png',
-  BASE_DIR + '/svg/film.png',
-  BASE_DIR + '/svg/gear.png',
-  BASE_DIR + '/svg/heart.png',
-  BASE_DIR + '/svg/home.png',
-  BASE_DIR + '/svg/marker.png',
-  BASE_DIR + '/svg/microphone.png',
-  BASE_DIR + '/svg/power.png',
-  BASE_DIR + '/svg/quote.png',
-  BASE_DIR + '/svg/reload.png'
+  BASE_DIR + '/icons/circle-icons/audio.svg',
+  BASE_DIR + '/icons/circle-icons/bookmark.svg',
+  BASE_DIR + '/icons/circle-icons/bubble.svg',
+  BASE_DIR + '/icons/circle-icons/calendar.svg',
+  BASE_DIR + '/icons/circle-icons/film.svg',
+  BASE_DIR + '/icons/circle-icons/heart.svg',
+  BASE_DIR + '/icons/circle-icons/lens.svg',
+  BASE_DIR + '/icons/circle-icons/location.svg',
+  BASE_DIR + '/icons/circle-icons/mic.svg',
+  BASE_DIR + '/icons/circle-icons/pencil.svg',
+  BASE_DIR + '/icons/circle-icons/person.svg',
+  BASE_DIR + '/icons/circle-icons/photo.svg',
+  BASE_DIR + '/icons/circle-icons/power.svg',
+  BASE_DIR + '/icons/circle-icons/settings.svg',
+  BASE_DIR + '/icons/circle-icons/uparrow.svg',
+  BASE_DIR + '/icons/circle-icons/recycle.svg',
+  BASE_DIR + '/icons/circle-icons/memcard.svg'
 ];
 
 // Set the callback for the install step
@@ -54,6 +57,7 @@ self.addEventListener('fetch', function(event) {
     )
   );
 });
+/*
 
 self.addEventListener('activate', function(event) {
 
@@ -68,4 +72,4 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-
+*/
