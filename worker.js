@@ -1,4 +1,4 @@
-var CACHE_NAME = 'mobilepub-v3.2.4';
+var CACHE_NAME = 'mobilepub-v3.2.9';
 var BASE_DIR = '/mobilepub';
 
 // The files we want to cache
@@ -57,7 +57,6 @@ self.addEventListener('fetch', function(event) {
     )
   );
 });
-/*
 
 self.addEventListener('activate', function(event) {
 
@@ -65,11 +64,14 @@ self.addEventListener('activate', function(event) {
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
-            return caches.delete(cacheName);
+            if(cacheName !== CACHE_DIR) {
+                return caches.delete(cacheName);
+            }
         })
       );
     })
+
   );
 });
 
-*/
+

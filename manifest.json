@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "version": "mobilepub-3.2.4",
+    "version": "mobilepub-3.2.9",
     "name": "MobilePub",
     "short_name": "MobilePub",
     "default_locale": "en",
