@@ -1,4 +1,8 @@
 node_modules
 .idea
 .DS_STORE
-node_modules
+.swp
+
+scripts/app-bundle.js
+scripts/app-bundle.js.map
+scripts/vendor-bundle.js
