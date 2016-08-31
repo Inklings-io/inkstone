@@ -2,7 +2,7 @@ import {HttpClient} from 'aurelia-http-client';
 
 let client = new HttpClient();
 
-export class MicrpubAPI {
+export class MicropubAPI {
     isRequesting = false;
 
     logout(){

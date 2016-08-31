@@ -1,3 +1,4 @@
+import {MicropubAPI} from './micropub';
 import {Router, RouterConfiguration, Redirect} from 'aurelia-router';
 
 export class App {
@@ -20,9 +21,11 @@ export class App {
 }
 
 class AuthorizeStep {
+
   run(navigationInstruction, next) {
     if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
-      var isLoggedIn = false ;// insert magic here;
+      var mp = new MicropubAPI;
+      var isLoggedIn = mp.logged_in();
       if (!isLoggedIn) {
         return next.cancel(new Redirect('login'));
       }
