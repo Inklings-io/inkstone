@@ -1,0 +1,25 @@
+<template>
+  <div class="login-screen-wrapper">
+    <header>
+        <h1 class="title">Welcome to MobilePub</h1>
+        <h2 class="title">Please Login</h2>
+    </header>
+    <div class="screen-main">
+        <form id='login-form'>
+          <input class='me' id="login-url" type="text" value="" placeholder="Enter domain"/>
+          <button type='submit' id="login-btn" class="online-only">Login</button>
+          <div class="offline-only">Login requires internet access.</div>
+        </form>
+        <div>
+        <a href="http://indiewebcamp.com/How_to_set_up_web_sign-in_on_your_own_domain">What is Web Sign-In?</a>
+        </div>
+        <div>
+        <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
+        </div>
+      <div><ol id='debugger'></ol></div>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+    
+  </div>
+</template>
