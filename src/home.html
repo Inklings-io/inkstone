@@ -1,0 +1,15 @@
+<template>
+  <div class="home-screen-wrapper">
+    <header>
+        <h1 class="title">Welcome to MobilePub</h1>
+    </header>
+    <ol class="home-screen-main">
+      <li repeat.for="icon of icons" class="homescreenIcon">
+        <a href="/post/new">
+          <img src="${icon.image}"/>
+          <span>${icon.label}</span>
+        </a>
+      </li>
+    </ol>
+  </div>
+</template>
