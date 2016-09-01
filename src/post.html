@@ -1,0 +1,21 @@
+<template>
+  <div class="create-screen-wrapper">
+    <header>
+        <h1 class="title"><img src="icons/circle-icons/pencil.svg" />Create Note</h1>
+      <div id="home-btn"><img src="icons/circle-icons/uparrow.svg" /><span>Home</span></div>
+    </header>
+    <div class="screen-main">
+      <textarea name="content" placeholder="Body of Post" value.bind="post.content" ></textarea><br>
+      <input name="category" placeholder="Category1, Category2" value.bind="post.category"/><br>
+
+      <div id="input-syndication-wrapper" style="display:none">
+      </div>
+      <div id="control-buttons">
+        <button id="post-btn" class="online-only" click.trigger="do_post()" >Post</button>
+        <button id="save-btn" click.trigger="save()" >Save</button>
+      </div>
+      <div id='success'></div>
+      <div id='error'></div>
+    </div>
+  </div>
+</template>

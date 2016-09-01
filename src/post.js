@@ -1,13 +1,41 @@
 import {MicropubAPI} from './micropub';
-import {areEqual} from './utility';
+//import {areEqual} from './utility';
 
 export class PostDetails {
   static inject() { return [MicropubAPI]; }
 
   constructor(mp){
     this.mp = mp;
+    this.post = {
+      content  :'',
+      category :''
+    }
   }
 
+  save() {
+    
+    this.mp.save(this.post);
+    this.post = {
+      content  :'',
+      category :''
+    }
+
+    //this.mp.saveContact(this.contact).then(contact => {
+      //this.contact = contact;
+      //this.routeConfig.navModel.setTitle(contact.firstName);
+      //this.originalContact = JSON.parse(JSON.stringify(contact));
+    //});
+  }
+
+  do_post(){
+    this.post = {
+      content  :'',
+      category :''
+    }
+
+  }
+
+  /*
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
 
@@ -19,17 +47,11 @@ export class PostDetails {
   }
 
   get canSave() {
-    return this.contact.firstName && this.contact.lastName && !this.mp.isRequesting;
+    //return this.contact.firstName && this.contact.lastName && !this.mp.isRequesting;
   }
 
-  save() {
-    this.mp.saveContact(this.contact).then(contact => {
-      this.contact = contact;
-      this.routeConfig.navModel.setTitle(contact.firstName);
-      this.originalContact = JSON.parse(JSON.stringify(contact));
-    });
-  }
 
+  /*
   canDeactivate() {
     if (!areEqual(this.originalContact, this.contact)){
       return confirm('You have unsaved changes. Are you sure you wish to leave?');
@@ -37,4 +59,5 @@ export class PostDetails {
 
     return true;
   }
+  */
 }

@@ -3,10 +3,11 @@
     <header>
         <h1 class="title">Welcome to MobilePub</h1>
         <h2 class="title">Please Login</h2>
+        ${loginUrl}
     </header>
     <div class="screen-main">
-        <form id='login-form'>
-          <input class='me' id="login-url" type="text" value="" placeholder="Enter domain"/>
+        <form submit.trigger="submit_login()" target="/">
+          <input class='me' id="login-url" type="text" value.bind="loginUrl" placeholder="Enter domain"/>
           <button type='submit' id="login-btn" class="online-only">Login</button>
           <div class="offline-only">Login requires internet access.</div>
         </form>

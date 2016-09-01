@@ -6,14 +6,14 @@ export class App {
 
   configureRouter(config: RouterConfiguration, router: Router){
     config.title = 'Mobilepub';
-	var step = new AuthorizeStep;
-    config.addAuthorizeStep(step);
+    config.addAuthorizeStep(AuthorizeStep);
     config.map([
-      { route: '',           moduleId: 'home',   	  title: 'Home',		auth: true  },
-      { route: 'login',      moduleId: 'login',  	  title: 'Login',		auth: false },
-      { route: 'settings',   moduleId: 'settings',    title: 'Settings',	auth: true  },
-      { route: 'post/:num',  moduleId: 'post-detail', name:'post',			auth: true  },
-      { route: 'post/new',   moduleId: 'post-detail', name:'newpost',		auth: true  }
+      { route: '',           moduleId: 'home',   	  title: 'Home',		loggedIn: true  },
+      { route: 'home',       moduleId: 'home',   	  title: 'Home',		loggedIn: true  },
+      { route: 'login',      moduleId: 'login',  	  title: 'Login',		loggedOut: true },
+      { route: 'settings',   moduleId: 'settings',    title: 'Settings',	loggedIn: true  },
+      //{ route: 'post/:num',  moduleId: 'post-detail', name:'post',			loggedIn: true  },
+      { route: 'post/new',   moduleId: 'post',        name:'newpost',		loggedIn: true  }
     ]);
 
     this.router = router;
@@ -23,11 +23,15 @@ export class App {
 class AuthorizeStep {
 
   run(navigationInstruction, next) {
-    if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
-      var mp = new MicropubAPI;
-      var isLoggedIn = mp.logged_in();
+    var mp = new MicropubAPI;
+    var isLoggedIn = mp.logged_in();
+    if (navigationInstruction.getAllInstructions().some(i => i.config.loggedIn)) {
       if (!isLoggedIn) {
         return next.cancel(new Redirect('login'));
+      }
+    } else if (navigationInstruction.getAllInstructions().some(i => i.config.loggedOut)) {
+      if (isLoggedIn) {
+        return next.cancel(new Redirect('home'));
       }
     }
 

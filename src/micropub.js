@@ -16,6 +16,10 @@ export class MicropubAPI {
     logged_in(){
         return(window.localStorage.getItem("me") && window.localStorage.getItem("token"));
     }
+    login_test(me){
+        window.localStorage.setItem("me", me);
+        window.localStorage.setItem("token", me + 'asdf');
+    }
 
     get_login_redirect(me){
         this.isRequesting = true;
@@ -83,6 +87,36 @@ export class MicropubAPI {
             });
 
         });
+    }
+
+    save(data){
+        var saved = window.localStorage.getItem("saved");
+        if(saved){
+            saved = JSON.parse(saved);
+        } else {
+            saved = [];
+        }
+        saved.push(data);
+        window.localStorage.setItem("saved", JSON.stringify(saved));
+    }
+
+    has_saved(){
+        if( window.localStorage.getItem("saved")){
+            return true;
+        }
+        return false;
+    }
+
+    send_all_saved(){
+        var saved = window.localStorage.getItem("saved");
+        if(saved){
+            saved = JSON.parse(saved);
+            for(var i = 0; i < saved.length; i++){
+                this.send(saved[i]);
+            }
+        } 
+        window.localStorage.removeItem("saved");
+
     }
     
 }

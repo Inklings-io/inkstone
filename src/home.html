@@ -4,10 +4,40 @@
         <h1 class="title">Welcome to MobilePub</h1>
     </header>
     <ol class="home-screen-main">
-      <li repeat.for="icon of icons" class="homescreenIcon">
+      <li class="homescreenIcon">
         <a href="/post/new">
-          <img src="${icon.image}"/>
-          <span>${icon.label}</span>
+          <img src="icons/circle-icons/pencil.svg"/>
+          <span>Note</span>
+        </a>
+      </li>
+      <li class="homescreenIcon">
+        <a href="/post/new">
+          <img src="icons/circle-icons/bubble.svg"/>
+          <span>Reply</span>
+        </a>
+      </li>
+      <li class="homescreenIcon">
+        <a href="/post/new">
+          <img src="icons/circle-icons/location.svg"/>
+          <span>Checkin</span>
+        </a>
+      </li>
+      <li class="homescreenIcon">
+        <a href="/post/new">
+          <img src="icons/circle-icons/bookmark.svg"/>
+          <span>Bookmark</span>
+        </a>
+      </li>
+      <li class="homescreenIcon">
+        <a href="/post/new">
+          <img src="icons/circle-icons/heart.svg"/>
+          <span>Like</span>
+        </a>
+      </li>
+      <li class="homescreenIcon">
+        <a click.trigger="logout()" href="/">
+          <img src="icons/circle-icons/power.svg"/>
+          <span>Logout</span>
         </a>
       </li>
     </ol>
