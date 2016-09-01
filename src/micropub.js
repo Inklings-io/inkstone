@@ -1,4 +1,5 @@
 import {HttpClient} from 'aurelia-http-client';
+import {getFormattedDate} from './utility';
 
 let client = new HttpClient();
 
@@ -90,6 +91,8 @@ export class MicropubAPI {
     }
 
     save(data){
+        data.published = getFormattedDate();
+
         var saved = window.localStorage.getItem("saved");
         if(saved){
             saved = JSON.parse(saved);
@@ -117,6 +120,31 @@ export class MicropubAPI {
         } 
         window.localStorage.removeItem("saved");
 
+    }
+    recall_saved(index){
+        var saved = window.localStorage.getItem("saved");
+        if(saved){
+          saved = JSON.parse(saved);
+          if(saved[index]){
+              return saved[index];
+          } else {
+            return null;
+          }
+        } else {
+          return null;
+        }
+
+    }
+
+    remove_saved(index){
+        var saved = window.localStorage.getItem("saved");
+        if(saved){
+          saved = JSON.parse(saved);
+          if(saved[index]){
+            saved.splice(index, 1);
+            window.localStorage.setItem("saved", JSON.stringify(saved));
+          }
+        }
     }
     
 }

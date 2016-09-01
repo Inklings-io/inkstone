@@ -1,7 +1,7 @@
 <template>
   <div class="create-screen-wrapper">
     <header>
-        <h1 class="title"><img src="icons/circle-icons/pencil.svg" />Create Note</h1>
+      <h1 class="title"><img src="icons/circle-icons/pencil.svg" />Create Note ${saved_index > -1 ? '(' + saved_index + ')' : '' }</h1>
       <div id="home-btn"><img src="icons/circle-icons/uparrow.svg" /><span>Home</span></div>
     </header>
     <div class="screen-main">
@@ -11,8 +11,9 @@
       <div id="input-syndication-wrapper" style="display:none">
       </div>
       <div id="control-buttons">
-        <button id="post-btn" class="online-only" click.trigger="do_post()" >Post</button>
+        <button id="post-btn" click.trigger="clear_post_confirm()">Clear</button>
         <button id="save-btn" click.trigger="save()" >Save</button>
+        <button id="post-btn" click.trigger="do_post()" disabled.bind="!canPost" >Post</button>
       </div>
       <div id='success'></div>
       <div id='error'></div>

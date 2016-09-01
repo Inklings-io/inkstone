@@ -12,8 +12,8 @@ export class App {
       { route: 'home',       moduleId: 'home',   	  title: 'Home',		loggedIn: true  },
       { route: 'login',      moduleId: 'login',  	  title: 'Login',		loggedOut: true },
       { route: 'settings',   moduleId: 'settings',    title: 'Settings',	loggedIn: true  },
-      //{ route: 'post/:num',  moduleId: 'post-detail', name:'post',			loggedIn: true  },
-      { route: 'post/new',   moduleId: 'post',        name:'newpost',		loggedIn: true  }
+      { route: 'post/:num',  moduleId: 'post',        name:'post',			loggedIn: true  },
+      { route: 'post',       moduleId: 'post',        name:'newpost',		loggedIn: true  }
     ]);
 
     this.router = router;
