@@ -2,7 +2,7 @@
   <div class="create-screen-wrapper">
     <header>
       <h1 class="title"><img src="icons/circle-icons/pencil.svg" />Create Note ${saved_index > -1 ? '(' + saved_index + ')' : '' }</h1>
-      <div id="home-btn"><img src="icons/circle-icons/uparrow.svg" /><span>Home</span></div>
+      <div id="home-btn"><a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" /><span>Home</span></a></div>
     </header>
     <div class="screen-main">
       <textarea name="content" placeholder="Body of Post" value.bind="post.content" ></textarea><br>

@@ -8,12 +8,11 @@ export class App {
     config.title = 'Mobilepub';
     config.addAuthorizeStep(AuthorizeStep);
     config.map([
-      { route: '',           moduleId: 'home',   	  title: 'Home',		loggedIn: true  },
-      { route: 'home',       moduleId: 'home',   	  title: 'Home',		loggedIn: true  },
-      { route: 'login',      moduleId: 'login',  	  title: 'Login',		loggedOut: true },
-      { route: 'settings',   moduleId: 'settings',    title: 'Settings',	loggedIn: true  },
-      { route: 'post/:num',  moduleId: 'post',        name:'post',			loggedIn: true  },
-      { route: 'post',       moduleId: 'post',        name:'newpost',		loggedIn: true  }
+      { route: '',           moduleId: 'home',   	  name:'home',          title: 'Home',		  loggedIn: true  },
+      { route: 'login',      moduleId: 'login',  	  name:'login',         title: 'Login',		  loggedOut: true },
+      { route: 'settings',   moduleId: 'settings',    name:'settings',      title: 'Settings',	  loggedIn: true  },
+      { route: 'post/:num',  moduleId: 'post',        name:'post',			title: 'Edit Post',   loggedIn: true  },
+      { route: 'post',       moduleId: 'post',        name:'newpost',		title: 'Create Post', loggedIn: true  }
     ]);
 
     this.router = router;
