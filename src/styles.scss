@@ -1,6 +1,10 @@
 $font-stack:  "Gill Sans", Roboto,Verdana, sans-serif;
 $primary-color: #333;
-$primary-bg-color: #d2d2d2;
+$primary-bg-color: #b2d2d2;
+
+* {
+    box-sizing: border-box; 
+}
 
 body {
   font: 100% $font-stack;
@@ -18,9 +22,6 @@ body {
   width: 100%;
   max-width:1200px;
 
-  * {
-      box-sizing: border-box; 
-  }
 
 
   .row:before,
@@ -52,8 +53,16 @@ body {
   .col-11 { width:100%; }
 }
 
+.create-screen-wrapper {
+  textarea, input{
+    width:100%;
+  }
+  textarea {
+    min-height: 100px;
+  }
+}
 
-.omega {clear:both;}
+
 
 input, textarea{
   margin:5px;
@@ -65,7 +74,6 @@ input, textarea{
 .home-screen-wrapper,
 .create-screen-wrapper{
   background-color: $primary-bg-color;
-  padding-bottom:50px;
 }
 .login-screen-wrapper header,
 .home-screen-wrapper header,
@@ -80,7 +88,6 @@ input, textarea{
 }
 .screen-main {
   background-color:white;
-  margin: auto 10% ;
   position:relative;
   background: none repeat scroll 0 0 white;
   border-radius: 32px;
@@ -89,12 +96,7 @@ input, textarea{
   padding: 20px 3%;
   text-align:center;
 }
-.screen-main textarea,
-.screen-main input{
-  width: 100%;
-}
 .screen-main textarea{
-  min-height: 100px;
 }
 
 #home-btn {

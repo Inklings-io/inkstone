@@ -185,7 +185,18 @@ export class MicropubAPI {
         return new Promise((resolve, reject) => {
             send_data.token = window.localStorage.getItem("token");
             send_data.me = window.localStorage.getItem("me");
-            client.post('php/send.php', send_data).then( data => {
+            client.fetch('php/send.php', 
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                        //TODO: include token headers
+                    },
+                    //TODO only send if each item is shown
+                    //      and unset show property
+                    body: serialize(send_data)
+                }
+            ).then( data => {
                 if(data.success){
                     resolve(data.url);
                 } else {

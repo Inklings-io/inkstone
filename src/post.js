@@ -15,14 +15,15 @@ export class PostDetails {
     this.default_post = {
       content  :'',
       category :'',
-      in_reply_to :'',
+      name :'',
+      "in-reply-to" :'',
       location :'',
-      like_of :''
+      "like-of" :''
     }
     this.default_shown= {
-      in_reply_to :false,
+      "in-reply-to" :false,
       location :false,
-      like_of :false
+      "like-of" :false
     }
 
     this.post = this.default_post;
@@ -57,6 +58,28 @@ export class PostDetails {
           this.blank_post(); //not needed?
           this.router.navigate('/post');
         }
+    } else {
+      if(params["in-reply-to"]){
+        this.shown['in-reply-to'] = !this.shown['in-reply-to'];
+        this.post['in-reply-to'] = params["in-reply-to"];
+      }
+      if(params["like-of"]){
+        this.shown['like-of'] = !this.shown['like-of'];
+        this.post['like-of'] = params["like-of"];
+      }
+      if(params.location){
+        this.shown.location = !this.shown.location;
+        this.post.location = params.location;
+      }
+      if(params.category){
+        this.post.category = params.category;
+      }
+      if(params.name){
+        this.post.name = params.name;
+      }
+      if(params.content){
+        this.post.content = params.content;
+      }
     }
 
     return true;
@@ -115,11 +138,11 @@ export class PostDetails {
   }
 
   toggle_like_field() {
-    this.shown.like_of = !this.shown.like_of;
+    this.shown["like-of"] = !this.shown["like-of"];
   }
 
   toggle_reply_field() {
-    this.shown.in_reply_to = !this.shown.in_reply_to;
+    this.shown['in-reply-to'] = !this.shown['in-reply-to'];
   }
 
   toggle_location_field() {

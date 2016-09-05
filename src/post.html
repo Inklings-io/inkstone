@@ -1,65 +1,45 @@
 <template>
-  <div class="grid-container create-screen-wrapper">
+  <div class="grid-container">
     <div class="row">
-      <div class="col-1">
-        <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" /><br><span>Home</span></a>
-      </div>
-      <div class="col-9">
-        <header>
-          <h1 class="title"><img src="icons/circle-icons/pencil.svg" />Create Note ${saved_index > -1 ? '(' + saved_index + ')' : '' }</h1>
-        </header>
-    <div id='success'></div>
-    <div id='error'></div>
-      </div>
-      <div class="col-1">
-      </div>
+    <div class="col-2">
+        <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
     </div>
-    <div class="row">
-      <div class="col-1">
-      </div>
-      <div class="col-9 screen-main">
-        <div class="grid-container">
+    <div class="col-9">
+        <img class="toggle_button ${shown['like-of'] ? 'active' : 'inactive'}" click.trigger="toggle_like_field()" src="icons/circle-icons/heart.svg" width="50px" />
+        <img class="toggle_button ${shown['in-reply-to'] ? 'active' : 'inactive'}" click.trigger="toggle_reply_field()" src="icons/circle-icons/bubble.svg" width="50px" />
+        <img class="toggle_button ${shown.location ? 'active' : 'inactive'}" click.trigger="toggle_location_field()" src="icons/circle-icons/location.svg" width="50px" />
+    </div>
+    <div class="col-2">
+    </div>
+    </div><!-- row -->
+  </div><!-- grid-container -->
+
+
+
+  <div class="create-screen-wrapper">
+        <div class="screen-main">
           <div class="row">
-            <div class="col-1">
-              <div hidden.bind="shown.like_of">
-                <img class="toggle_button" click.trigger="toggle_like_field()" src="icons/circle-icons/heart.svg" width="50px" />
-              </div>
-              <div hidden.bind="shown.in_reply_to">
-                <img class="toggle_button" click.trigger="toggle_reply_field()" src="icons/circle-icons/bubble.svg" width="50px" />
-              </div>
-              <div hidden.bind="shown.location">
-                <img class="toggle_button" click.trigger="toggle_location_field()" src="icons/circle-icons/location.svg" width="50px" />
-              </div>
-            </div>
-            <div class="col-10">
+            <div class="col-11">
               <textarea name="content" placeholder="Body of Post" value.bind="post.content" ></textarea><br>
 
-              <div class="grid-container" hidden.bind="!shown.like_of">
+              <div class="grid-container" hidden.bind="!shown['like-of']">
                 <div class="row">
                   <div class="col-1">
                     <img class="toggle_button" click.trigger="toggle_like_field()" src="icons/circle-icons/heart.svg" width="40px;"/>
                   </div>
                   <div class="col-10">
-                  </div>
-                </div> <!-- end row -->
-                <div class="row">
-                  <div class="col-11">
-                    <input name="like-of" placeholder="http://something.to/like/" value.bind="post.like_of"/><br>
+                    <input name="like-of" placeholder="http://something.to/like/" value.bind="post['like-of']"/>
                   </div>
                 </div> <!-- end row -->
               </div> <!-- end grid-container -->
 
-              <div class="grid-container" hidden.bind="!shown.in_reply_to">
+              <div class="grid-container" hidden.bind="!shown['in-reply-to']">
                 <div class="row">
                   <div class="col-1">
                     <img class="toggle_button" click.trigger="toggle_reply_field()" src="icons/circle-icons/bubble.svg" width="40px;"/>
                   </div>
                   <div class="col-10">
-                  </div>
-                </div> <!-- end row -->
-                <div class="row">
-                  <div class="col-11">
-                    <input name="in-reply-to" placeholder="http://something.to/reply/to" value.bind="post.in_reply_to"/><br>
+                    <input name="in-reply-to" placeholder="http://something.to/reply/to" value.bind="post['in-reply-to']"/><br>
                   </div>
                 </div> <!-- end row -->
               </div> <!-- end grid-container -->
@@ -70,17 +50,14 @@
                     <img class="toggle_button" click.trigger="toggle_location_field()" src="icons/circle-icons/location.svg" width="40px;"/>
                   </div>
                   <div class="col-10">
-                  </div>
-                </div> <!-- end row -->
-                <div class="row">
-                  <div class="col-11">
                     <input placeholder="geo:Long,Lat or Name or URL" value.bind="post.location" /> <button>Use GPS</button><br>
                   </div>
                 </div> <!-- end row -->
               </div> <!-- end grid-container -->
 
+              <input placeholder="Title" value.bind="post.name"/><br>
 
-              <input name="category" placeholder="Category1, Category2" value.bind="post.category"/><br>
+              <input placeholder="Category1, Category2" value.bind="post.category"/><br>
 
               <div id="input-syndication-wrapper" style="display:none">
               </div>
@@ -102,10 +79,8 @@
 
         </div> <!-- end grid container -->
       </div>
-      <div class="col-1">
-      </div>
-    </div><!-- row -->
-  </div><!-- grid-container -->
+    <div id='success'></div>
+    <div id='error'></div>
 
 
 </template>

@@ -21,7 +21,7 @@ export class Login {
         } else {
             this.mp.auth(params.me, params.code, params.state)
             .then( data => {
-                this.router.navigate('#/home');
+                this.router.navigate('#');
             })
             .catch( error => { 
                 this.message = 'Login Error: ' + result.message;
