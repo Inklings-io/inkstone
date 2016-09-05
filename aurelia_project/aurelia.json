@@ -99,7 +99,7 @@
           "aurelia-framework",
           "aurelia-history",
           "aurelia-history-browser",
-          "aurelia-http-client",
+          "aurelia-fetch-client",
           "aurelia-loader",
           "aurelia-loader-default",
           "aurelia-logging",

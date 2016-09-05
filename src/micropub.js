@@ -1,5 +1,5 @@
-import {HttpClient} from 'aurelia-http-client';
-import {getFormattedDate} from './utility';
+import {HttpClient} from 'aurelia-fetch-client';
+import {serialize, getFormattedDate} from './utility';
 
 let client = new HttpClient();
 
@@ -17,19 +17,92 @@ export class MicropubAPI {
     logged_in(){
         return(window.localStorage.getItem("me") && window.localStorage.getItem("token"));
     }
+
+    login(me){
+        if(!this.isRequesting){
+            this.get_endpoints(me).then(data => {
+                window.localStorage.setItem("mp_endpoint", data.mp_endpoint);
+
+                
+                var state =  Math.floor(Math.random() * 100000);
+                window.localStorage.setItem("state", state);
+                window.localStorage.setItem("me", me);
+
+                var url = data.auth_endpoint +
+                    (data.auth_endpoint.indexOf('?') > -1 ? '&' : '?' ) +
+                    serialize({
+                        me: me,
+                        redirect_uri: 'http://192.168.1.51/mobilepub/',
+                        response_type: 'id',
+                        state: state,
+                        client_id: 'http://192.168.1.51/mobilepub',
+                        scope: 'post',
+                        response_type: 'code'
+                    });
+
+                
+                location.href = url;
+            });
+        }
+    }
+
+    auth(me, code, state){
+        return new Promise((resolve, reject) => {
+            var original_state = window.localStorage.getItem("state");
+            var original_me = window.localStorage.getItem("me");
+            window.localStorage.removeItem("state");
+
+            if(original_state != state){
+                reject('State does not match. Sent ' + original_state + ' received ' + state );
+            //} else if (original_me != me) {
+                //window.localStorage.removeItem("me");
+                //result.message = 'Login does not match. Sent ' + original_me + ' received ' + me ;
+            } else {
+                
+                var redirect_uri =  'http://192.168.1.51/mobilepub/';
+
+                this.get_token(me, code, state, redirect_uri).then(data => {
+
+                    window.localStorage.setItem("scope", data.scope);
+                    window.localStorage.setItem("token", data.token);
+                    resolve('success');
+                }).catch(error => {
+                    reject('Error: ' + error);
+                });
+            }
+        });
+    }
+
     login_test(me){
         window.localStorage.setItem("me", me);
         window.localStorage.setItem("token", me + 'asdf');
     }
 
-    get_login_redirect(me){
+    get_token(me, code, state, redirect_uri){
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
-            client.post('php/discoverEndpoint.php', 'me='+me).then( data => {
+            //TODO don't use php end if possible
+
+            client.fetch('php/token.php',
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: serialize({
+                        me: me,
+                        code: code,
+                        state: state,
+                        client_id: 'http://192.168.1.51/mobilepub',
+                        redirect_uri: redirect_uri
+                    })
+                }
+            ).then( resonse => resonse.json()
+            ).then( data => {
                 if(data.success){
-                    resolve(data.auth_endpoint);
+                    resolve(data);
                 } else {
-                    reject('Unable to fine auth endpoint');
+                    reject('Error connecting to token endpoint');
                 }
                 this.isRequesting = false;
             }).catch(error => {
@@ -38,6 +111,37 @@ export class MicropubAPI {
             });
 
         });
+
+    }
+    get_endpoints(me){
+        //TODO have this cache results  in local storage
+        this.isRequesting = true;
+        return new Promise((resolve, reject) => {
+            //TODO don't use php end if possible
+
+            client.fetch('php/discoverEndpoints.php',
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: serialize({me: me})
+                }
+            ).then( resonse => resonse.json()
+            ).then( data => {
+                if(data.success){
+                    resolve(data);
+                } else {
+                    reject('Unable to find auth endpoint');
+                }
+                this.isRequesting = false;
+            }).catch(error => {
+                reject('Error connecting to MobilePub Server');
+                this.isRequesting = false;
+            });
+
+        });
+
     }
 
     get_syndication_targets(){
@@ -51,7 +155,14 @@ export class MicropubAPI {
             } else {
                 token = window.localStorage.getItem("token");
                 me = window.localStorage.getItem("me");
-                client.post('php/syndicationTargets.php', {me:me,token:token}).then( data => {
+                client.fetch('php/syndicationTargets.php', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: serialize({me:me,token:token})
+                }
+                ).then( data => {
                     if(data.success){
                         window.localStorage.setItem("syndications", JSON.stringify(data.targets));
                         resolve(data.targets);

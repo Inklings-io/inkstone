@@ -3,7 +3,6 @@
     <header>
         <h1 class="title">Welcome to MobilePub</h1>
         <h2 class="title">Please Login</h2>
-        ${loginUrl}
     </header>
     <div class="screen-main">
         <form submit.trigger="submit_login()" target="/">
@@ -19,7 +18,7 @@
         </div>
       <div><ol id='debugger'></ol></div>
       <div id='success'></div>
-      <div id='error'></div>
+      <div id='error'>${message}</div>
     </div>
     
   </div>
