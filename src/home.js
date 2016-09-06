@@ -26,25 +26,25 @@ export class Home{
         }
 
         if(post['rsvp']){
-          post.discovered.type = 'rsvp';
+          post.discovered.type = 'RSVP';
           post.discovered.additional = post.discovered.rsvp;
         } else if(post['in-reply-to']){
-          post.discovered.type = 'reply';
+          post.discovered.type = 'Reply';
           post.discovered.additional = post['in-reply-to'];
         } else if(post['repost-of']){
-          post.discovered.type = 'share';
+          post.discovered.type = 'Share';
           post.discovered.additional = post['repost-of'];
         } else if(post['like-of']){
-          post.discovered.type = 'like';
+          post.discovered.type = 'Like';
           post.discovered.additional = post['like-of'];
         } else if(post['video']){
-          post.discovered.type = 'video';
+          post.discovered.type = 'Video';
           //todo
         } else if(post['photo']){
-          post.discovered.type = 'photo';
+          post.discovered.type = 'Photo';
           //todo
         } else {
-          post.discovered.type = 'note';
+          post.discovered.type = 'Note';
         }
 
 

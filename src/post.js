@@ -5,6 +5,11 @@ import {Router} from 'aurelia-router';
 export class PostDetails {
   static inject() { return [Router, MicropubAPI]; }
 
+  //TODO for this class
+  //    add visual confirmation when things are saved, cleared, etc
+  //    add ability to actually submit posts
+  //    add any additional neede fields
+  //    move "default post" to settings
 
   constructor(Router, MicropubAPI){
     this.mp = MicropubAPI;
@@ -26,20 +31,20 @@ export class PostDetails {
       "like-of" :false
     }
 
-    this.post = this.default_post;
-    this.shown = this.default_shown;
+    this.post = JSON.parse(JSON.stringify(this.default_post));
+    this.shown = JSON.parse(JSON.stringify(this.default_shown));
     this.originalPost = JSON.parse(JSON.stringify(this.post));
   }
 
   clear_post_data(){
     this.saved_index = -1;
-    this.post = this.default_post;
+    this.post = JSON.parse(JSON.stringify(this.default_post));
     this.originalPost = JSON.parse(JSON.stringify(this.post));
   }
 
   blank_post(){
     this.clear_post_data();
-    this.shown = this.default_shown;
+    this.shown = JSON.parse(JSON.stringify(this.default_shown));
   }
 
 
@@ -52,7 +57,7 @@ export class PostDetails {
           this.post = recalled;
           this.saved_index = params.num;
           this.shown = this.post.shown;
-          this.post.shown = null;
+          delete this.post.shown;
           this.originalPost = JSON.parse(JSON.stringify(this.post));
         } else {
           this.blank_post(); //not needed?
@@ -90,6 +95,7 @@ export class PostDetails {
     if(this.saved_index > -1){
         if( confirm('This will delete the saved copy. Are you sure?')) {
           this.mp.remove_saved(this.saved_index);
+          this.blank_post();
           this.router.navigate('/post');
         }
     } else {

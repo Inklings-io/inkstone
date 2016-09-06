@@ -29,16 +29,21 @@
           <a repeat.for="post of saved_post_list" route-href="route: post;params.bind: {num:post.index}">
             <div class="row">
               <div class="col-2">
-                <img if.bind="post.discovered.type == rsvp" src="icons/circle-icons/calendar.svg"/>
-                <img if.bind="post.discovered.type == reply" src="icons/circle-icons/bubble.svg"/>
-                <img if.bind="post.discovered.type == share" src="icons/circle-icons/recycle.svg"/>
-                <img if.bind="post.discovered.type == like" src="icons/circle-icons/heart.svg"/>
-                <img if.bind="post.discovered.type == video" src="icons/circle-icons/film.svg"/>
-                <img if.bind="post.discovered.type == photo" src="icons/circle-icons/photo.svg"/>
-                <img if.bind="post.discovered.type == note" src="icons/circle-icons/pencil.svg"/>
+                <img src="icons/circle-icons/memcard.svg"/>
+                <img if.bind="post.discovered.type=='Rsvp'" src="icons/circle-icons/calendar.svg"/>
+                <img if.bind="post.discovered.type=='Reply'" src="icons/circle-icons/bubble.svg"/>
+                <img if.bind="post.discovered.type=='Share'" src="icons/circle-icons/recycle.svg"/>
+                <img if.bind="post.discovered.type=='Like'" src="icons/circle-icons/heart.svg"/>
+                <img if.bind="post.discovered.type=='Video'" src="icons/circle-icons/film.svg"/>
+                <img if.bind="post.discovered.type=='Photo'" src="icons/circle-icons/photo.svg"/>
+                <img if.bind="post.discovered.type=='Note'" src="icons/circle-icons/pencil.svg"/>
               </div>
               
-              <div class="col-9"><span class="menu-label">Saved Post ${post.index}</span></div>
+              <div class="col-9">
+                <span class="menu-label">Saved ${post.discovered.type}</span>
+                <div class="menu-description">${post.discovered.content}</div>
+                <div class="menu-additional">${post.discovered.additional}</div>
+              </div>
             </div><!-- row -->
           </a>
 

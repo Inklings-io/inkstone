@@ -194,7 +194,7 @@ export class MicropubAPI {
                     },
                     //TODO only send if each item is shown
                     //      and unset show property
-                    body: serialize(send_data)
+                    body: prep_for_publish(send_data)
                 }
             ).then( data => {
                 if(data.success){
@@ -278,6 +278,37 @@ export class MicropubAPI {
             window.localStorage.setItem("saved", JSON.stringify(saved));
           }
         }
+    }
+
+    prep_for_publish(obj){
+
+        //remove all hidden properties
+        var shown = obj.shown;
+        delete obj.shown;
+        for(var key in shown) {
+            if(!shown[key]){
+                delete obj[key];
+            }
+        }
+
+
+        var str = [];
+
+        for(var key in obj) {
+
+            if (obj.hasOwnProperty(key)) {
+
+              if(typeof obj[key] === 'string'){
+                  str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+              } else if(typeof obj[key] === 'object' && obj[key].constructor === Array){
+                  for(var i = 0; i < obj[key].length; i++){
+                      str.push(encodeURIComponent(key) + "[]=" + encodeURIComponent(obj[key][i]));
+                  }
+              }
+            }
+        }
+      return str.join("&");
+        
     }
     
 }

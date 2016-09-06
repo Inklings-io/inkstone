@@ -8,3 +8,4 @@ scripts/app-bundle.js.map
 scripts/vendor-bundle.js
 vendor
 composer.lock
+.swp
