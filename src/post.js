@@ -52,7 +52,7 @@ export class PostDetails {
           this.post = recalled;
           this.saved_index = params.num;
           this.shown = this.post.shown;
-          unset(this.post.shown);
+          this.post.shown = null;
           this.originalPost = JSON.parse(JSON.stringify(this.post));
         } else {
           this.blank_post(); //not needed?
@@ -133,7 +133,9 @@ export class PostDetails {
         this.mp.remove_saved(this.saved_index);
         this.saved_index = -1;
     }
-    this.blank_post();
+    this.mp.send_data(this.post).then(data => {
+      this.blank_post();
+    });
 
   }
 

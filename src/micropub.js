@@ -243,6 +243,17 @@ export class MicropubAPI {
         window.localStorage.removeItem("saved");
 
     }
+
+    get_saved_list(){
+        var saved = window.localStorage.getItem("saved");
+        if(saved){
+          saved = JSON.parse(saved);
+          return saved;
+        } else {
+          return null;
+        }
+    }
+
     recall_saved(index){
         var saved = window.localStorage.getItem("saved");
         if(saved){

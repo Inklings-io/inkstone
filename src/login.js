@@ -34,7 +34,7 @@ export class Login {
   submit_login(){
       if(this.loginUrl){
           var mp = new MicropubAPI;
-          mp.login(this.loginUrl);
+          mp.login_test(this.loginUrl);
           return true;
       }
       return false;

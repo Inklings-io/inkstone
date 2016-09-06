@@ -1,45 +1,76 @@
 <template>
-  <div class="home-screen-wrapper">
-    <header>
-        <h1 class="title">Welcome to MobilePub</h1>
-    </header>
-    <ol class="home-screen-main">
-      <li class="homescreenIcon">
-        <a route-href="route: newpost;">
-          <img src="icons/circle-icons/pencil.svg"/>
-          <span>Note</span>
-        </a>
-      </li>
-      <li class="homescreenIcon">
-        <a route-href="route: newpost;">
-          <img src="icons/circle-icons/bubble.svg"/>
-          <span>Reply</span>
-        </a>
-      </li>
-      <li class="homescreenIcon">
-        <a route-href="route: newpost;">
-          <img src="icons/circle-icons/location.svg"/>
-          <span>Checkin</span>
-        </a>
-      </li>
-      <li class="homescreenIcon">
-        <a route-href="route: newpost;">
-          <img src="icons/circle-icons/bookmark.svg"/>
-          <span>Bookmark</span>
-        </a>
-      </li>
-      <li class="homescreenIcon">
-        <a route-href="route: newpost;">
-          <img src="icons/circle-icons/heart.svg"/>
-          <span>Like</span>
-        </a>
-      </li>
-      <li class="homescreenIcon">
-        <a click.trigger="logout()" href="#/login">
-          <img src="icons/circle-icons/power.svg"/>
-          <span>Logout</span>
-        </a>
-      </li>
-    </ol>
-  </div>
+  <div class="grid-container home-screen">
+    <div class="row">
+      <div class="col-1">
+      </div>
+      <div class="col-9">
+        <header>
+            <h1 class="title">Welcome to MobilePub</h1>
+            <h4>Logged in as </h4>
+        </header>
+      </div>
+      <div class="col-1">
+      </div>
+    </div><!-- row -->
+    <div class="row">
+      <div class="col-11 screen-main">
+
+        <div class="grid-container main-menu">
+
+          <a route-href="route: newpost;">
+            <div class="row">
+              <div class="col-2">
+                <img src="icons/circle-icons/pencil.svg"/>
+              </div>
+              <div class="col-9"><span class="menu-label">Post</span></div>
+            </div><!-- row -->
+          </a>
+
+          <a repeat.for="post of saved_post_list" route-href="route: post;params.bind: {num:post.index}">
+            <div class="row">
+              <div class="col-2">
+                <img if.bind="post.discovered.type == rsvp" src="icons/circle-icons/calendar.svg"/>
+                <img if.bind="post.discovered.type == reply" src="icons/circle-icons/bubble.svg"/>
+                <img if.bind="post.discovered.type == share" src="icons/circle-icons/recycle.svg"/>
+                <img if.bind="post.discovered.type == like" src="icons/circle-icons/heart.svg"/>
+                <img if.bind="post.discovered.type == video" src="icons/circle-icons/film.svg"/>
+                <img if.bind="post.discovered.type == photo" src="icons/circle-icons/photo.svg"/>
+                <img if.bind="post.discovered.type == note" src="icons/circle-icons/pencil.svg"/>
+              </div>
+              
+              <div class="col-9"><span class="menu-label">Saved Post ${post.index}</span></div>
+            </div><!-- row -->
+          </a>
+
+          <a hidden.bind="saved_post_list.length" href="#" click.trigger="post_all()">
+            <div class="row">
+              <div class="col-2">
+                <img src="icons/circle-icons/recycle.svg"/>
+              </div>
+              <div class="col-9"><span class="menu-label">Repost all</span></div>
+            </div><!-- row -->
+          </a>
+
+          <a route-href="route:settings">
+            <div class="row">
+              <div class="col-2">
+                <img src="icons/circle-icons/settings.svg"/>
+              </div>
+              <div class="col-9"><span class="menu-label">Settings</span></div>
+            </div><!-- row -->
+          </a>
+
+          <a click.trigger="logout()" route-href="route:login;" >
+            <div class="row">
+              <div class="col-2">
+                <img src="icons/circle-icons/power.svg"/>
+              </div>
+              <div class="col-9"><span class="menu-label">Logout</span></div>
+            </div><!-- row -->
+          </a>
+        </div><!-- grid-container -->
+    
+      </div><!-- col-11 -->
+    </div><!-- row -->
+  </div><!-- grid-container home-screen -->
 </template>

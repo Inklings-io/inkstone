@@ -10,7 +10,6 @@ export class App {
     config.map([
       { route: '',          moduleId: 'home',       name:'home',        title: 'Home',		  loggedIn: true  },
       { route: 'login',     moduleId: 'login',      name:'login',       title: 'Login',		  loggedOut: true },
-      //{ route: 'auth',      moduleId: 'auth',  	    name:'auth',        title: 'Auth'		                  },
       { route: 'settings',  moduleId: 'settings',   name:'settings',    title: 'Settings',	  loggedIn: true  },
       { route: 'post/:num', moduleId: 'post',       name:'post',		title: 'Edit Post',   loggedIn: true  },
       { route: 'post',      moduleId: 'post',       name:'newpost',	    title: 'Create Post', loggedIn: true  }

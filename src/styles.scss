@@ -14,8 +14,23 @@ body {
   padding:0;
   border:0;
 
-  .toggle_button{ float:left;}
 }
+
+.toggle_buttons {
+  .toggle_button {
+    float:left;
+    margin-left:1%;
+  }
+
+  .inactive {background-color: lightgrey}
+  .active {background-color: #4dd;}
+
+  .inactive, .active {
+    padding:3px;
+    border-radius: 30px;
+  }
+}
+
 
 //grid system
 .grid-container {
@@ -62,6 +77,25 @@ body {
   }
 }
 
+.home-screen {
+  header {
+    text-align:center;
+  }
+}
+
+.main-menu {
+  .row {
+    width:100;
+    background-color:lightgray;
+    border-radius:20px;
+    margin:4px;
+  }
+  .menu-label {
+    font-size:20pt;
+    margin-top:auto;
+    margin-bottom:auto;
+  }
+}
 
 
 input, textarea{
@@ -112,32 +146,7 @@ input, textarea{
   display:block;
 }
 
-.home-screen-main {
-  background-color:grey;
-  margin: auto 10% ;
-  position:relative;
-  background: none repeat scroll 0 0 white;
-  border-radius: 32px;
-  list-style: outside none none;
-  color:black;
-  padding: 20px 3%;
-  text-align:center;
-}
-.homescreenIcon {
-  float:none;
-  display: inline-block;
-  width: 20%;
-  min-width: 100px;
-  margin-left:3%;
-  margin-right:3%;
-  height: 120px;
-  text-align:center;
-}
-.homescreenIcon span {
-  display:block;
-}
 .clear {clear:both;}
-h1 {padding:21px 0; margin:0;}
 #MyImage {width:90%}
 
 .onoffswitch {

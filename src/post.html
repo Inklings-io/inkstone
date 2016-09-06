@@ -4,7 +4,7 @@
     <div class="col-2">
         <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
     </div>
-    <div class="col-9">
+    <div class="toggle_buttons col-9">
         <img class="toggle_button ${shown['like-of'] ? 'active' : 'inactive'}" click.trigger="toggle_like_field()" src="icons/circle-icons/heart.svg" width="50px" />
         <img class="toggle_button ${shown['in-reply-to'] ? 'active' : 'inactive'}" click.trigger="toggle_reply_field()" src="icons/circle-icons/bubble.svg" width="50px" />
         <img class="toggle_button ${shown.location ? 'active' : 'inactive'}" click.trigger="toggle_location_field()" src="icons/circle-icons/location.svg" width="50px" />
