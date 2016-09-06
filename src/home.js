@@ -8,6 +8,9 @@ export class Home{
   constructor(MicropubAPI){
     this.mp = MicropubAPI;
     this.saved_post_list = [];
+
+    this.user = this.mp.get_user();
+
     var list = this.mp.get_saved_list();
     if(list){
       for(var i = 0; i < list.length; i++) {

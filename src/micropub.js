@@ -1,7 +1,9 @@
 import {HttpClient} from 'aurelia-fetch-client';
 import {serialize, getFormattedDate} from './utility';
+import {Config} from './config';
 
 let client = new HttpClient();
+let configs = new Config();
 
 export class MicropubAPI {
     isRequesting = false;
@@ -12,6 +14,10 @@ export class MicropubAPI {
         window.localStorage.removeItem("token");
         window.localStorage.removeItem("me");
         window.localStorage.removeItem('syndications');
+    }
+
+    get_user(){
+        return window.localStorage.getItem("me");
     }
 
     logged_in(){
@@ -32,11 +38,11 @@ export class MicropubAPI {
                     (data.auth_endpoint.indexOf('?') > -1 ? '&' : '?' ) +
                     serialize({
                         me: me,
-                        redirect_uri: 'http://192.168.1.51/mobilepub/',
+                        redirect_uri: configs.get('redirect_uri'),
                         response_type: 'id',
                         state: state,
-                        client_id: 'http://192.168.1.51/mobilepub',
-                        scope: 'post',
+                        client_id: configs.get('client_id'),
+                        scope: configs.get('scope'),
                         response_type: 'code'
                     });
 
@@ -53,13 +59,13 @@ export class MicropubAPI {
             window.localStorage.removeItem("state");
 
             if(original_state != state){
-                reject('State does not match. Sent ' + original_state + ' received ' + state );
+                reject(new Error('State does not match. Sent ' + original_state + ' received ' + state) );
             //} else if (original_me != me) {
                 //window.localStorage.removeItem("me");
                 //result.message = 'Login does not match. Sent ' + original_me + ' received ' + me ;
             } else {
                 
-                var redirect_uri =  'http://192.168.1.51/mobilepub/';
+                var redirect_uri = configs.get('redirect_uri');
 
                 this.get_token(me, code, state, redirect_uri).then(data => {
 
@@ -67,7 +73,7 @@ export class MicropubAPI {
                     window.localStorage.setItem("token", data.token);
                     resolve('success');
                 }).catch(error => {
-                    reject('Error: ' + error);
+                    reject(error);
                 });
             }
         });
@@ -93,7 +99,7 @@ export class MicropubAPI {
                         me: me,
                         code: code,
                         state: state,
-                        client_id: 'http://192.168.1.51/mobilepub',
+                        client_id: configs.get('client_id'),
                         redirect_uri: redirect_uri
                     })
                 }
@@ -102,11 +108,11 @@ export class MicropubAPI {
                 if(data.success){
                     resolve(data);
                 } else {
-                    reject('Error connecting to token endpoint');
+                    reject(new Error('Error connecting to token endpoint'));
                 }
                 this.isRequesting = false;
             }).catch(error => {
-                reject('Error connecting to MobilePub Server');
+                reject(new Error('Error connecting to App Server : ' + error.message));
                 this.isRequesting = false;
             });
 
@@ -132,11 +138,11 @@ export class MicropubAPI {
                 if(data.success){
                     resolve(data);
                 } else {
-                    reject('Unable to find auth endpoint');
+                    reject(new Error('Unable to find auth endpoint'));
                 }
                 this.isRequesting = false;
             }).catch(error => {
-                reject('Error connecting to MobilePub Server');
+                reject(new Error('Error connecting to App Server : ' + error.message));
                 this.isRequesting = false;
             });
 
@@ -167,12 +173,12 @@ export class MicropubAPI {
                         window.localStorage.setItem("syndications", JSON.stringify(data.targets));
                         resolve(data.targets);
                     } else {
-                        reject('Error finding Syndication Targets');
+                        reject(new Error('Error finding Syndication Targets'));
                     }
                     this.isRequesting = false;
 
                 }).catch(error => {
-                    reject('Error connecting to MobilePub Server');
+                    reject(new Error('Error connecting to MobilePub Server : ' + error.message));
                     this.isRequesting = false;
                 });
             }
@@ -200,12 +206,12 @@ export class MicropubAPI {
                 if(data.success){
                     resolve(data.url);
                 } else {
-                    reject(data.error);
+                    reject(new Error(data.error));
                 }
                 this.isRequesting = false;
 
             }).catch( error => {
-                reject( "Error connecting to MobilePub Server");
+                reject( new Error('Error connecting to App Server : ' + error.message));
                 this.isRequesting = false;
             });
 

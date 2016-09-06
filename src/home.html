@@ -6,7 +6,7 @@
       <div class="col-9">
         <header>
             <h1 class="title">Welcome to MobilePub</h1>
-            <h4>Logged in as </h4>
+            <h4>Logged in as ${user}</h4>
         </header>
       </div>
       <div class="col-1">
@@ -47,12 +47,12 @@
             </div><!-- row -->
           </a>
 
-          <a hidden.bind="saved_post_list.length" href="#" click.trigger="post_all()">
+          <a if.bind="saved_post_list.length > 0" href="#" click.trigger="post_all()">
             <div class="row">
               <div class="col-2">
                 <img src="icons/circle-icons/recycle.svg"/>
               </div>
-              <div class="col-9"><span class="menu-label">Repost all</span></div>
+              <div class="col-9"><span class="menu-label">Post All Saved Items</span></div>
             </div><!-- row -->
           </a>
 

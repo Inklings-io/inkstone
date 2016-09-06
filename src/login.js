@@ -21,10 +21,10 @@ export class Login {
         } else {
             this.mp.auth(params.me, params.code, params.state)
             .then( data => {
-                this.router.navigate('#');
+                this.router.navigate('#/home');
             })
             .catch( error => { 
-                this.message = 'Login Error: ' + result.message;
+                this.message = 'Login Error: ' + error.message;
             });
         }
     }
@@ -34,10 +34,12 @@ export class Login {
   submit_login(){
       if(this.loginUrl){
           var mp = new MicropubAPI;
-          mp.login_test(this.loginUrl);
-          return true;
+          mp.login(this.loginUrl);
+          //this.router.navigate('#');
+
+          //return true;
       }
-      return false;
+      //return false;
   }
 
 }

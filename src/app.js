@@ -9,6 +9,7 @@ export class App {
     config.addAuthorizeStep(AuthorizeStep);
     config.map([
       { route: '',          moduleId: 'home',       name:'home',        title: 'Home',		  loggedIn: true  },
+      { route: 'home',      moduleId: 'home',                           title: 'Home',		  loggedIn: true  },
       { route: 'login',     moduleId: 'login',      name:'login',       title: 'Login',		  loggedOut: true },
       { route: 'settings',  moduleId: 'settings',   name:'settings',    title: 'Settings',	  loggedIn: true  },
       { route: 'post/:num', moduleId: 'post',       name:'post',		title: 'Edit Post',   loggedIn: true  },
