@@ -1,6 +1,13 @@
 $font-stack:  "Gill Sans", Roboto,Verdana, sans-serif;
 $primary-color: #333;
-$primary-bg-color: #b2d2d2;
+$primary-bg-color: #a2d2d2;
+//$secondary-bg-color: #e3e3e3;
+$secondary-bg-color: #a2d2d2;
+$card-bg-color: #FFF;
+
+$icons-active-fill: white;
+$icons-inactive-fill: #aaa;
+$icons-inactive-bg: gray;
 
 * {
     box-sizing: border-box; 
@@ -22,13 +29,37 @@ body {
     margin-left:1%;
   }
 
-  .inactive {background-color: lightgrey}
-  .active {background-color: #4dd;}
+  .inactive {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 2px 0 rgba(0, 0, 0, 0.19);
+          fill:$icons-inactive-fill;
+          background-color:$icons-inactive-bg;
 
-  .inactive, .active {
-    padding:3px;
-    border-radius: 30px;
   }
+  .active {
+    box-shadow: 0 2px 2px 0 $icons-active-fill, 0 6px 2px 0 $icons-active-fill;
+    fill:$icons-active-fill;
+  }
+  .heart.active{
+    background-color:#C75C5C;
+  }
+  .reply.active{
+    background-color:#77B3D4;
+  }
+  .location.active{
+    background-color:#76c2af;
+  }
+
+  icon {
+      border-radius: 30px;
+      width: 50px;
+      height: 50px;
+  
+      .heart {
+          .active {
+          }
+      }
+  }
+
 }
 
 
@@ -36,8 +67,6 @@ body {
 .grid-container {
   width: 100%;
   max-width:1200px;
-
-
 
   .row:before,
   .row:after {
@@ -92,8 +121,9 @@ body {
 .main-menu {
   .row {
     width:100;
-    background-color:lightgray;
-    border-radius:20px;
+    background-color: $card-bg-color;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 2px 0 rgba(0, 0, 0, 0.19);
+    //border-radius:20px;
     margin:4px;
   }
   .menu-label {
@@ -127,10 +157,16 @@ input, textarea{
   margin-right:10px;
 }
 .screen-main {
-  background-color:white;
+  background-color: $secondary-bg-color;
   position:relative;
-  background: none repeat scroll 0 0 white;
-  border-radius: 32px;
+  background: none repeat scroll 0 0 $secondary-bg-color;
+  //border-radius: 32px;
+  margin:auto 1%;
+
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  max-width:98%;
+  border-color: $secondary-bg-color;
   list-style: outside none none;
   color:black;
   padding: 20px 3%;

@@ -139,7 +139,7 @@ export class PostDetails {
         this.mp.remove_saved(this.saved_index);
         this.saved_index = -1;
     }
-    this.mp.send_data(this.post).then(data => {
+    this.mp.send(this.post).then(data => {
       this.blank_post();
     });
 

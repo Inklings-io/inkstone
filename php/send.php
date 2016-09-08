@@ -6,13 +6,13 @@ require '../vendor/autoload.php';
 
 $json = array( 'success' => true);
 
-if(!isset($_POST['me']) || !isset($_POST['token'])){
+if(!isset($_POST['mp-me']) || !isset($_POST['token'])){
     $json['success'] = false;
     $json['error'] = 'URL or token seems to be missing';
     echo json_encode($json);
     exit();
 }
-$me = normalizeUrl($_POST['me']);
+$me = normalizeUrl($_POST['mp-me']);
 $token = $_POST['token'];
 
 unset($_POST['me']);
@@ -50,7 +50,6 @@ if (!$ch) {
     $json['success'] = false;
     $json['error'] = 'Failure posting to your micropub endpoint.';
     echo json_encode($json);
-    //TODO else add some error message
     exit();
 }
 
@@ -60,17 +59,29 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $token));
 curl_setopt($ch, CURLOPT_HEADER, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 
-/////////////////////////////////////////////////
-//TODO: once my hosting provider fixes its issue i can remove this
-//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-/////////////////////////////////////////////////
-
 $response = curl_exec($ch);
 $result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 if (in_array($result, array(200,201,204,301,302))) {
     if (in_array($result, array(201,301,302))) {
-        $target_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-        $json['url'] = $target_url;
+
+
+		$headers = array();
+
+		$header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
+
+		foreach (explode("\r\n", $header_text) as $i => $line){
+			if ($i === 0)
+				$headers['http_code'] = $line;
+			else
+			{
+				list ($key, $value) = explode(': ', $line);
+
+				$headers[$key] = $value;
+			}
+		}
+
+        //$target_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+        $json['url'] = $headers['Location'];
     }
 } else {
     $json['error'] = 'Micropub Endpoint returned code ' . $result . '.';

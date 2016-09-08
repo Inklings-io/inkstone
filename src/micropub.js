@@ -189,8 +189,9 @@ export class MicropubAPI {
     send(send_data){
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
+            //todo, these should not be in the post directly if using endpoint directly
             send_data.token = window.localStorage.getItem("token");
-            send_data.me = window.localStorage.getItem("me");
+            send_data['mp-me'] = window.localStorage.getItem("me");
             client.fetch('php/send.php', 
                 {
                     method: "POST",
@@ -200,8 +201,9 @@ export class MicropubAPI {
                     },
                     //TODO only send if each item is shown
                     //      and unset show property
-                    body: prep_for_publish(send_data)
+                    body: this.prep_for_publish(send_data)
                 }
+            ).then( resonse => resonse.json()
             ).then( data => {
                 if(data.success){
                     resolve(data.url);
@@ -304,7 +306,9 @@ export class MicropubAPI {
 
             if (obj.hasOwnProperty(key)) {
 
-              if(typeof obj[key] === 'string'){
+              if(!obj[key]){
+                 ; //do nothing 
+              } else if(typeof obj[key] === 'string'){
                   str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
               } else if(typeof obj[key] === 'object' && obj[key].constructor === Array){
                   for(var i = 0; i < obj[key].length; i++){
