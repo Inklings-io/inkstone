@@ -1,12 +1,34 @@
-import {MicropubAPI} from './micropub';
+import {Config} from './config';
+import {areEqual} from './utility';
 
-export class Settings{
+export class PostDetails {
+  static inject() { return [Config]; }
 
-  static inject() { return [ MicropubAPI]; }
+
+  constructor(Config){
+    this.config = Config;
+
+    this.settings = {
+      scope: config.get('scope'),
+    }
+
+    this.originalSettings = JSON.parse(JSON.stringify(this.settings));
+  }
 
 
-  constructor(MicropubAPI){
-    this.mp = MicropubAPI;
+
+  canDeactivate() {
+    if (!areEqual(this.originalSettings, this.settings)){
+      return confirm('You have unsaved changes. Are you sure you wish to leave?');
+    }
+
+    return true;
+  }
+
+  save() {
+
+    this.config.save(this.post);
+
   }
 
 
