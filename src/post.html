@@ -77,6 +77,17 @@
               <input placeholder="Title" value.bind="post.name"/><br>
 
               <input placeholder="Category1, Category2" value.bind="post.category"/><br>
+              <div>
+                <h3>Custom Fields</h3>
+
+                <div repeat.for="field of post.custom">
+                  <label>${field.name}</label>
+                  <input hidden.bind='field.shown' value.bind="field.value" />
+                </div>
+                ${post.custom['mp-type'].value}
+
+
+              </div>
 
               <div id="input-syndication-wrapper" style="display:none">
               </div>

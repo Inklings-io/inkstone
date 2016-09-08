@@ -23,12 +23,29 @@ export class PostDetails {
       name :'',
       "in-reply-to" :'',
       location :'',
-      "like-of" :''
+      "like-of" :'',
+      custom: {
+          "mp-type": { 
+            type: 'select',
+            options: ['note','checkin'],
+            shown: false,
+            value: ''
+          }, 
+          "tag-of": {
+            type: 'list'
+            shown:true,
+            value: ''
+          }
+      }
     }
     this.default_shown= {
       "in-reply-to" :false,
       location :false,
-      "like-of" :false
+      "like-of" :false,
+      custom: {
+          "mp-type": true,
+          "tag-of": false
+      }
     }
 
     this.post = JSON.parse(JSON.stringify(this.default_post));
