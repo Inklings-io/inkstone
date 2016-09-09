@@ -1,9 +1,114 @@
 <template>
   <div class="grid-container">
     <div class="row">
-      <div class="col-1">
-        Settings page goes here
-      </div><!-- col-11 -->
+    <div class="col-2">
+        <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
+    </div>
+    <div class="col-2">
+    </div>
     </div><!-- row -->
   </div><!-- grid-container -->
+
+
+
+
+
+                <div class="grid-container setting_box" repeat.for="field of settings.default_post_config" >
+
+                  <div class="row settings_option">
+                    <div class="right col-5">
+                      <label>Field Name:</label>
+                    </div>
+                    <div class="left col-6">
+                      <input value.bind="field.name" />
+                    </div>
+                  </div>
+
+                  <div class="row settings_option">
+                    <div class="right col-5">
+                      <label>Label:</label>
+                    </div>
+                    <div class="left col-6">
+                      <input value.bind="field.label" />
+                    </div>
+                  </div>
+
+                  <div class="row settings_option">
+
+                    <div class="right col-5">
+                      <label>Type:</label>
+                    </div>
+                    <div class="left col-6">
+                      <select value.bind="field.type" >
+                        <option value="string">String - a single line input</option>
+                        <option value="text">Text - A large block of text</option>
+                        <option value="list">List - A set of strings</option>
+                        <option value="select">Select - A dropdown list of options</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row settings_option">
+                    <div class="right col-5">
+                      <label>Icon:</label>
+                      <img src="${field.icon}" width="20px;" />
+                    </div>
+                    <div class="left col-6">
+                      <select value.bind="field.icon" >
+
+                        <option value="">None - cannot toggle visibility</option>
+                        <option value="icons/circle-icons/audio.svg">Audio</option>
+                        <option value="icons/circle-icons/bookmark.svg">Bookmark</option>
+                        <option value="icons/circle-icons/bubble.svg">Bubble</option>
+                        <option value="icons/circle-icons/calendar.svg">Calendar</option>
+                        <option value="icons/circle-icons/check.svg">Check</option>
+                        <option value="icons/circle-icons/document.svg">Document</option>
+                        <option value="icons/circle-icons/film.svg">Film</option>
+                        <option value="icons/circle-icons/heart.svg">Heart</option>
+                        <option value="icons/circle-icons/lens.svg">Lens</option>
+                        <option value="icons/circle-icons/location.svg">Location</option>
+                        <option value="icons/circle-icons/memcard.svg">Memory Card</option>
+                        <option value="icons/circle-icons/mic.svg">Microphone</option>
+                        <option value="icons/circle-icons/pencil.svg">Pencil</option>
+                        <option value="icons/circle-icons/person.svg">Person</option>
+                        <option value="icons/circle-icons/photo.svg">Photo</option>
+                        <option value="icons/circle-icons/power.svg">Power</option>
+                        <option value="icons/circle-icons/recycle.svg">Recycle</option>
+                        <option value="icons/circle-icons/search.svg">Search</option>
+                        <option value="icons/circle-icons/settings.svg">Settings</option>
+
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row settings_option">
+                    <div class="right col-5">
+                      <label>Show by Default</label>
+                    </div>
+                    <div class="left col-6">
+                      <input type="checkbox" checked.bind="field.shown" >
+                    </div>
+                  </div>
+
+                </div><!-- grid-container -->
+
+
+
+        <div class="grid-container">
+          <div class="row">
+            <div class-"col-7">
+            </div>
+            <div class-"col-4">
+              <div id="control-buttons">
+                <button id="post-btn" click.delegate="revert()">Revert Changes</button>
+                <button id="save-btn" click.delegate="save()" >Save</button>
+                <button id="post-btn" click.delegate="reset()">Reset to defaults</button>
+              </div>
+            </div>
+          </div><!-- end row -->
+        </div> <!-- end grid container -->
+    <div id='success'></div>
+    <div id='error'></div>
+
+
 </template>

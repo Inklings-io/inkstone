@@ -9,6 +9,13 @@ $icons-active-fill: white;
 $icons-inactive-fill: #aaa;
 $icons-inactive-bg: gray;
 
+.center {
+    text-align: center
+}
+.right {
+    text-align: right
+}
+
 * {
     box-sizing: border-box; 
 }
@@ -126,9 +133,10 @@ body {
   }
 }
 
+
 .main-menu {
   .row {
-    width:100;
+    width:100%;
     background-color: $card-bg-color;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 2px 0 rgba(0, 0, 0, 0.19);
     //border-radius:20px;
@@ -139,6 +147,14 @@ body {
     margin-top:auto;
     margin-bottom:auto;
   }
+}
+
+.setting_box {
+    width:96%;
+    background-color: $card-bg-color;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 2px 0 rgba(0, 0, 0, 0.19);
+    //border-radius:20px;
+    margin:2%;
 }
 
 
@@ -336,5 +352,51 @@ input, textarea{
 #control-buttons button[disabled] {
   background-color: lightgray;
   border-color: lightgray;
+}
+
+
+@media all and (max-width:600px){
+  .grid-container {
+	.col-1{ width: 33.33%;    }
+	.col-2{ width: 50%;        }
+	.col-3{ width: 83.33%;    }
+	.col-4{ width: 100%;    }
+	.col-5{ width: 100%;    }
+	.col-6{ width: 100%;    }
+	.col-7{ width: 100%;      }
+	.col-8{ width: 100%;      }
+	.col-9{ width: 100%;      }
+	.col-10{ width: 100%;      }
+	.col-11{ width: 100%;      }
+
+	.row .col-2:last-of-type{
+		width: 100%; 
+	}
+
+	.row .col-5 ~ .col-1{
+		width: 100%; 
+	}
+  }
+  .right {text-align:center;}
+  .left {text-align:center;}
+}
+
+@media all and (max-width:400px){
+  .grid-container {
+	.col-1{ width: 100%;    }
+	.col-2{ width: 100%;        }
+	.col-3{ width: 100%;    }
+	.col-4{ width: 100%;    }
+	.col-5{ width: 100%;    }
+	.col-6{ width: 100%;    }
+	.col-7{ width: 100%;      }
+	.col-8{ width: 100%;      }
+	.col-9{ width: 100%;      }
+	.col-10{ width: 100%;      }
+	.col-11{ width: 100%;      }
+  }
+  .right {text-align:center;}
+  .left {text-align:center;}
+
 }
 

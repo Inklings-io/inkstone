@@ -8,6 +8,16 @@ export function areEqual(obj1, obj2) {
                 if(obj1[key] !== obj2[key]){
                     return false;
                 }
+            } else if(typeof obj1[key] === 'object' && obj1[key].constructor === Array){
+              if(obj1[key].length != obj2[key].length){
+                return false;
+              }
+              for(var i = 0; i < obj1[key].length; i++){
+                if(!areEqual(obj1[key][i], obj2[key][i])){
+                  return false;
+                }
+              }
+
             } else {
                 if(!areEqual(obj1[key], obj2[key])){
                     return false;

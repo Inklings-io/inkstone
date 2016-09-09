@@ -9,7 +9,9 @@ export class PostDetails {
     this.config = Config;
 
     this.settings = {
-      scope: config.get('scope'),
+      scope: this.config.get('scope'),
+      default_post: this.config.get('default_post'),
+      default_post_config: this.config.get('default_post_config'),
     }
 
     this.originalSettings = JSON.parse(JSON.stringify(this.settings));
@@ -27,9 +29,28 @@ export class PostDetails {
 
   save() {
 
-    this.config.save(this.post);
+    for(var key in this.settings){
+        console.log(key);
+
+      this.config.set(key, this.settings[key]);
+    }
+    this.originalSettings = JSON.parse(JSON.stringify(this.settings));
+  }
+  revert() {
+
+    this.settings = JSON.parse(JSON.stringify(this.originalSettings));
 
   }
 
+  reset() {
+    this.config.reset();
 
+    this.settings = {
+      scope: this.config.get('scope'),
+      default_post: this.config.get('default_post'),
+      default_post_config: this.config.get('default_post_config'),
+    }
+
+    this.originalSettings = JSON.parse(JSON.stringify(this.settings));
+  }
 }
