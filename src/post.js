@@ -18,55 +18,120 @@ export class PostDetails {
 
       //TODO: have this saved in settings
     this.default_post = {
-      content  :'',
-      category :'',
-      name :'',
-      "in-reply-to" :'',
-      location :'',
-      "like-of" :'',
-
-      summary: '',
-      slug: '',
-      "repost-of": '',
-      "bookmark-of": '',
-
-      custom : [
-          { 
-            label: 'Type',
-            name: 'mp-type',
-            type: 'select',
-            options: ['note','checkin'],
-            value: 'note'
-          }, 
-          { 
-            label: 'Tag of',
-            name: 'tag-of',
-            type: 'list',
-            adding: '',
-            values: [] 
-          },
-          { 
-            name: 'location-name',
-            label: 'Location Name',
-            type: 'string',
-            value: ''
-          } 
-      ]
+       'bookmark-of'    : '',
+       'category'       : [],
+       'content'        : '',
+       'in-reply-to'    : '',
+       'like-of'        : '',
+       'location        : '',
+       'location-name'  : '',
+       'mp-type'        : 'note',
+       'name'           : '',
+       'repost-of'      : '',
+       'slug'           : '',
+       'summary'        : '',
+       'tag-of'         : [] 
     }
+    this.default_post_config = [
+
+      { 
+        name: 'content',
+        label: 'Content',
+        type: 'text',
+        //icon: 'icons/circle-icons/document.svg',
+        shown: true,
+      },
+      { 
+        name: 'name',
+        label: 'Title',
+        type: 'string',
+        icon: 'icons/circle-icons/document.svg',
+        shown: true,
+      },
+      { 
+        name: 'category',
+        label: 'Category',
+        type: 'list',
+        icon: 'icons/circle-icons/document.svg',
+        adding: '',
+        shown: true,
+      },
+      { 
+        name: 'in-reply-to',
+        label: 'In Reply To',
+        type: 'string',
+        icon: 'icons/circle-icons/bubble.svg',
+        shown: true,
+      },
+      { 
+        name: 'location',
+        label: 'Location',
+        type: 'string',
+        icon: 'icons/circle-icons/location.svg',
+        shown: true,
+      },
+      { 
+        name: 'like-of',
+        label: 'Like of',
+        type: 'string',
+        icon: 'icons/circle-icons/heart.svg',
+        shown: true,
+      },
+      { 
+        name: 'summary',
+        label: 'Summary',
+        type: 'string',
+        icon: 'icons/circle-icons/document.svg',
+        shown: true,
+      },
+      { 
+        name: 'slug',
+        label: 'Slug',
+        type: 'string',
+        icon: 'icons/circle-icons/document.svg',
+        shown: true,
+      },
+      { 
+        name: 'repost-of',
+        label: 'Repost Of URL',
+        type: 'string',
+        icon: 'icons/circle-icons/document.svg',
+        shown: false,
+      },
+      { 
+        name: 'bookmark-of',
+        label: 'Bookmakr URL',
+        type: 'string',
+        icon: 'icons/circle-icons/document.svg',
+        shown: false,
+      },
+      { 
+        label: 'Type',
+        name: 'mp-type',
+        type: 'select',
+        icon: 'icons/circle-icons/document.svg',
+        options: ['note','checkin'],
+        shown: false,
+      }, 
+      { 
+        name: 'tag-of',
+        label: 'Tag of',
+        type: 'list',
+        icon: 'icons/circle-icons/document.svg',
+        adding: '',
+        shown: false,
+      },
+      { 
+        name: 'location-name',
+        label: 'Location Name',
+        type: 'string',
+        icon: 'icons/circle-icons/document.svg',
+        shown: false,
+      } 
+    ]
     
-    this.default_shown= {
-      "in-reply-to" :false,
-      location :false,
-      "like-of" :false,
-      custom: {
-          "mp-type": false,
-          "tag-of": false,
-          "location-name": false
-      }
-    }
-
     this.post = JSON.parse(JSON.stringify(this.default_post));
-    this.shown = JSON.parse(JSON.stringify(this.default_shown));
+    this.default_post_config = JSON.parse(JSON.stringify(this.default_post_config));
     this.originalPost = JSON.parse(JSON.stringify(this.post));
   }
 
@@ -77,8 +142,8 @@ export class PostDetails {
   }
 
   blank_post(){
+    this.post_config = JSON.parse(JSON.stringify(this.default_post_config));
     this.clear_post_data();
-    this.shown = JSON.parse(JSON.stringify(this.default_shown));
   }
 
 
@@ -90,8 +155,8 @@ export class PostDetails {
         if(recalled){
           this.post = recalled;
           this.saved_index = params.num;
-          this.shown = this.post.shown;
-          delete this.post.shown;
+          this.post_config = this.post.post_config;
+          delete this.post.post_config;
           this.originalPost = JSON.parse(JSON.stringify(this.post));
         } else {
           this.blank_post(); //not needed?
@@ -99,39 +164,26 @@ export class PostDetails {
         }
     } else {
       
-
-
 		for (var key in params) {
-			// skip loop if the property is from prototype
-			if (!params.hasOwnProperty(key)) continue;
 
-			var invalue = params[key];
-			if(this.post.hasOwnProperty(key)){
-				this.post[key] = params[key];
-				if(this.shown.hasOwnProperty(key)){
-					this.shown[key] = true;
-				}
-			} else {
-				//do this same thing for custom fields
-				for(var i = 0; i < this.post.custom.length; i++){
-					if(this.post.custom[i].name == key){
-						if(this.post.custom[i].hasOwnProperty('value')){
-							this.post.custom[i].value = params[key];
-						} else if(this.post.custom[i].hasOwnProperty('values')){
-							this.post.custom[i].values.push(params[key]);
+			// skip loop if the property is from prototype
+			if (!params.hasOwnProperty(key) || !post.hasOwnProperty(key)) continue;
+
+				for(var i = 0; i < this.post_config.length; i++){
+					if(this.post_config[i].name == key){
+
+						if(this.post_config[i].type == 'list'){
+							this.post[key] = [ params[key] ];
+						} else {
+							this.post[key] = params[key];
 						}
-						if(this.shown.custom.hasOwnProperty(key)){
-							this.shown.custom[key] = true;
-						}
+
+                        this.post_config[i].shown = true;
 						break;
 					}
 				}
-				
 
-			}
 		}
-
-
 
     }
 
@@ -168,7 +220,7 @@ export class PostDetails {
 
   save() {
 
-    this.post.shown = this.shown;
+    this.post.post_config = this.post_config;
     
     if(this.saved_index > -1){
         this.mp.remove_saved(this.saved_index);
@@ -194,7 +246,12 @@ export class PostDetails {
   }
 
   toggle_field(field_name){
-    this.shown[field_name] = !this.shown[field_name];
+    for(var i = 0; i < this.post_config.length; i++){
+      if(this.post_config[i].name == field_name){
+        this.post_config[i].shown = !this.post[i].shown;
+        break;
+      }
+    }
   }
 
   toggle_custom(field_name){

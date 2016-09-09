@@ -5,20 +5,8 @@
         <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
     </div>
     <div class="toggle_buttons col-9">
-        <icon class="toggle_button ${shown['like-of'] ? 'active' : 'inactive'}" click.trigger="toggle_field('like-of')" >
-          <img src="icons/circle-icons/heart.svg" width="50px;" />
-          <span>like-of</span>
-        </icon>
-        <icon class="toggle_button ${shown['in-reply-to'] ? 'active' : 'inactive'}" click.trigger="toggle_field('in-reply-to')">
-          <img src="icons/circle-icons/bubble.svg" width="50px;" />
-          <span>in-reply-to</span>
-        </icon>
-        <icon class="toggle_button ${shown.location ? 'active' : 'inactive'}" click.trigger="toggle_field('location')">
-          <img src="icons/circle-icons/location.svg" width="50px;" />
-          <span>location</span>
-        </icon>
-        <icon repeat.for="field of post.custom" class="toggle_button ${shown.custom[field.name] ? 'active' : 'inactive'}" click.trigger="toggle_custom(field.name)">
-          <img src="icons/circle-icons/document.svg" width="50px;" />
+        <icon if.bind="field.icon != null" repeat.for="field of post" class="toggle_button ${field.shown ? 'active' : 'inactive'}" click.trigger="toggle_field(field.name)">
+        <img src="${field.icon}" width="50px;" />
           <span>${field.name}</span>
         </icon>
     </div>
@@ -32,64 +20,36 @@
   <div class="create-screen-wrapper">
         <div class="screen-main">
           <div class="row">
-            <div class="col-11">
-              <textarea name="content" placeholder="Body of Post" value.bind="post.content" ></textarea><br>
 
-              <div class="grid-container" hidden.bind="!shown['like-of']">
-                <div class="row">
-                  <div class="col-1">
-                    <img class="toggle_button" src="icons/circle-icons/heart.svg" width="40px;"/>
-                  </div>
-                  <div class="col-10">
-                    <input name="like-of" placeholder="http://something.to/like/" value.bind="post['like-of']"/>
-                  </div>
-                </div> <!-- end row -->
-              </div> <!-- end grid-container -->
 
-              <div class="grid-container" hidden.bind="!shown['in-reply-to']">
-                <div class="row">
-                  <div class="col-1">
-                    <img class="toggle_button" src="icons/circle-icons/bubble.svg" width="40px;"/>
-                  </div>
-                  <div class="col-10">
-                    <input name="in-reply-to" placeholder="http://something.to/reply/to" value.bind="post['in-reply-to']"/><br>
-                  </div>
-                </div> <!-- end row -->
-              </div> <!-- end grid-container -->
-
-              <div class="grid-container" hidden.bind="!shown.location">
-                <div class="row">
-                  <div class="col-1">
-                    <img class="toggle_button" src="icons/circle-icons/location.svg" width="40px;"/>
-                  </div>
-                  <div class="col-10">
-                    <input placeholder="geo:Long,Lat or Name or URL" value.bind="post.location" /> <button>Use GPS</button><br>
-                  </div>
-                </div> <!-- end row -->
-              </div> <!-- end grid-container -->
-
-              <input placeholder="Title" value.bind="post.name"/><br>
-
-              <input placeholder="Category1, Category2" value.bind="post.category"/><br>
               <div class="grid-container">
 
-                <div class="row" repeat.for="field of post.custom" hidden.bind='!shown.custom[field.name]' >
-                  <label class="col-2">${field.label}</label>
+                <div class="row" repeat.for="field of post" hidden.bind='!field.shown' >
 
-                  <div  class="col-8" if.bind="field.type == 'string'">
-                    <input value.bind="field.value" />
+
+
+
+                  <div class="col-11" if.bind="field.type == 'text'">
+                    <textarea name="content" placeholder="${field.label}" value.bind="post[field.name]" ></textarea><br>
                   </div>
 
-                  <div  class="col-8" if.bind="field.type == 'select'">
-                    <select value.bind="field.value" >
-                      <option repeat.for="opt of field.options" value="${opt}">${opt}</option>
-                    </select>
+                  <div  class="col-11" if.bind="field.type == 'string'">
+                    <input value.bind="post[field.name]" placeholder="${field.label}"/>
                   </div>
 
-                  <div  class="col-8" if.bind="field.type == 'list'">
-                    <input value.bind="field.adding" /><div click.trigger="add_custom_list_item(field.name)">+</div>
+                  <div  if.bind="field.type == 'select'">
+                    <label class="col-2">${field.label}</label>
+                    <div class="col-9">
+                      <select value.bind="post[field.name]" >
+                        <option repeat.for="opt of field.options" value="${opt}">${opt}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div  class="col-9" if.bind="field.type == 'list'">
+                    <input value.bind="field.adding" placeholder="${field.label}"/><div click.trigger="add_list_item(field.name)">+</div>
                     <ul>
-                      <li repeat.for="opt of field.values">${opt}</li>
+                      <li repeat.for="opt of post[field.name]s">${opt}</li>
                     </ul>
                   </div>
 
