@@ -24,27 +24,44 @@ export class PostDetails {
       "in-reply-to" :'',
       location :'',
       "like-of" :'',
-      custom: {
-          "mp-type": { 
+
+      summary: '',
+      slug: '',
+      "repost-of": '',
+      "bookmark-of": '',
+
+      custom : [
+          { 
+            label: 'Type',
+            name: 'mp-type',
             type: 'select',
             options: ['note','checkin'],
-            shown: false,
-            value: ''
+            value: 'note'
           }, 
-          "tag-of": {
-            type: 'list'
-            shown:true,
+          { 
+            label: 'Tag of',
+            name: 'tag-of',
+            type: 'list',
+            adding: '',
+            values: [] 
+          },
+          { 
+            name: 'location-name',
+            label: 'Location Name',
+            type: 'string',
             value: ''
-          }
-      }
+          } 
+      ]
     }
+    
     this.default_shown= {
       "in-reply-to" :false,
       location :false,
       "like-of" :false,
       custom: {
-          "mp-type": true,
-          "tag-of": false
+          "mp-type": false,
+          "tag-of": false,
+          "location-name": false
       }
     }
 
@@ -81,27 +98,41 @@ export class PostDetails {
           this.router.navigate('/post');
         }
     } else {
-      if(params["in-reply-to"]){
-        this.shown['in-reply-to'] = !this.shown['in-reply-to'];
-        this.post['in-reply-to'] = params["in-reply-to"];
-      }
-      if(params["like-of"]){
-        this.shown['like-of'] = !this.shown['like-of'];
-        this.post['like-of'] = params["like-of"];
-      }
-      if(params.location){
-        this.shown.location = !this.shown.location;
-        this.post.location = params.location;
-      }
-      if(params.category){
-        this.post.category = params.category;
-      }
-      if(params.name){
-        this.post.name = params.name;
-      }
-      if(params.content){
-        this.post.content = params.content;
-      }
+      
+
+
+		for (var key in params) {
+			// skip loop if the property is from prototype
+			if (!params.hasOwnProperty(key)) continue;
+
+			var invalue = params[key];
+			if(this.post.hasOwnProperty(key)){
+				this.post[key] = params[key];
+				if(this.shown.hasOwnProperty(key)){
+					this.shown[key] = true;
+				}
+			} else {
+				//do this same thing for custom fields
+				for(var i = 0; i < this.post.custom.length; i++){
+					if(this.post.custom[i].name == key){
+						if(this.post.custom[i].hasOwnProperty('value')){
+							this.post.custom[i].value = params[key];
+						} else if(this.post.custom[i].hasOwnProperty('values')){
+							this.post.custom[i].values.push(params[key]);
+						}
+						if(this.shown.custom.hasOwnProperty(key)){
+							this.shown.custom[key] = true;
+						}
+						break;
+					}
+				}
+				
+
+			}
+		}
+
+
+
     }
 
     return true;
@@ -162,16 +193,30 @@ export class PostDetails {
 
   }
 
-  toggle_like_field() {
-    this.shown["like-of"] = !this.shown["like-of"];
+  toggle_field(field_name){
+    this.shown[field_name] = !this.shown[field_name];
   }
 
-  toggle_reply_field() {
-    this.shown['in-reply-to'] = !this.shown['in-reply-to'];
+  toggle_custom(field_name){
+    this.shown.custom[field_name] = !this.shown.custom[field_name];
   }
 
-  toggle_location_field() {
-    this.shown.location = !this.shown.location;
+  add_custom_list_item(field_name){
+      var found_index = -1;
+      console.log('asdf');
+
+      for(var i = 0; i < this.post.custom.length; i++){
+          if(this.post.custom[i].name == field_name){
+              found_index = i;
+              break;
+          }
+      }
+
+      if (found_index > -1){
+          this.post.custom[found_index].values.push(this.post.custom[found_index].adding);
+          this.post.custom[found_index].adding = '';
+      }
+
   }
 
 

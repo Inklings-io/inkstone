@@ -1,5 +1,22 @@
 export function areEqual(obj1, obj2) {
-	return Object.keys(obj1).every((key) => obj2.hasOwnProperty(key) && (obj1[key] === obj2[key]));
+    for( var key in obj1){
+        if(obj1.hasOwnProperty(key)){
+            if(!obj2.hasOwnProperty(key)){
+                return false;
+            }
+            if(typeof obj1[key] === 'string'){
+                if(obj1[key] !== obj2[key]){
+                    return false;
+                }
+            } else {
+                if(!areEqual(obj1[key], obj2[key])){
+                    return false;
+                }
+            }
+        }
+    }
+	return true;
+    
 };
 
 export function getFormattedDate(){

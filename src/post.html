@@ -5,27 +5,21 @@
         <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
     </div>
     <div class="toggle_buttons col-9">
-        <icon class="heart toggle_button ${shown['like-of'] ? 'active' : 'inactive'}" click.trigger="toggle_like_field()" >
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox="0 0 64 64">
-            <path d='M49.982,31.003c-0.094-5.522-4.574-10.442-10.107-10.442c-3.2,0-6.019,1.674-7.875,4.131     c-1.856-2.457-4.676-4.131-7.875-4.131c-5.533,0-10.012,4.921-10.107,10.442H14c0,0.034,0.007,0.065,0.007,0.099     c0,0.025-0.007,0.049-0.007,0.076c0,0.155,0.038,0.272,0.045,0.421c0.495,14.071,17.813,19.84,17.813,19.84     s17.572-5.762,18.092-19.818C49.959,31.464,50,31.34,50,31.178c0-0.027-0.007-0.052-0.007-0.076c0-0.036,0.007-0.065,0.007-0.099     H49.982z' />
-          </svg>
+        <icon class="toggle_button ${shown['like-of'] ? 'active' : 'inactive'}" click.trigger="toggle_field('like-of')" >
+          <img src="icons/circle-icons/heart.svg" width="50px;" />
+          <span>like-of</span>
         </icon>
-        <icon class="reply toggle_button ${shown['in-reply-to'] ? 'active' : 'inactive'}" click.trigger="toggle_reply_field()">
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox="0 0 64 64">
-            <g opacity="0.7">
-              <path d="M52,32c0-9.941-8.954-18-20-18s-20,8.059-20,18c0,9.569,8.303,17.372,18.775,17.944    C31.463,53.597,32,56,32,56s5.045-3.044,9.639-8.23C47.814,44.706,52,38.795,52,32z"/></g>
-            <g><ellipse cx="32" cy="30" rx="20" ry="18"/></g>
-            <g opacity="0.7">
-              <circle cx="32" cy="30" fill="#4F5D73" r="2"/>
-              <circle cx="40" cy="30" fill="#4F5D73" r="2"/>
-              <circle cx="24" cy="30" fill="#4F5D73" r="2"/>
-            </g>
-          </svg>
+        <icon class="toggle_button ${shown['in-reply-to'] ? 'active' : 'inactive'}" click.trigger="toggle_field('in-reply-to')">
+          <img src="icons/circle-icons/bubble.svg" width="50px;" />
+          <span>in-reply-to</span>
         </icon>
-        <icon class="location toggle_button ${shown.location ? 'active' : 'inactive'}" click.trigger="toggle_location_field()">
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox="0 0 64 64">
-<path d="M32,14c-9.389,0-17,7.522-17,16.8C15,45.5,32,56,32,56s17-10.237,17-25.2C49,21.522,41.389,14,32,14z      M32,38c-4.418,0-8-3.582-8-8s3.582-8,8-8s8,3.582,8,8S36.418,38,32,38z" />
-          </svg>
+        <icon class="toggle_button ${shown.location ? 'active' : 'inactive'}" click.trigger="toggle_field('location')">
+          <img src="icons/circle-icons/location.svg" width="50px;" />
+          <span>location</span>
+        </icon>
+        <icon repeat.for="field of post.custom" class="toggle_button ${shown.custom[field.name] ? 'active' : 'inactive'}" click.trigger="toggle_custom(field.name)">
+          <img src="icons/circle-icons/document.svg" width="50px;" />
+          <span>${field.name}</span>
         </icon>
     </div>
     <div class="col-2">
@@ -44,7 +38,7 @@
               <div class="grid-container" hidden.bind="!shown['like-of']">
                 <div class="row">
                   <div class="col-1">
-                    <img class="toggle_button" click.trigger="toggle_like_field()" src="icons/circle-icons/heart.svg" width="40px;"/>
+                    <img class="toggle_button" src="icons/circle-icons/heart.svg" width="40px;"/>
                   </div>
                   <div class="col-10">
                     <input name="like-of" placeholder="http://something.to/like/" value.bind="post['like-of']"/>
@@ -55,7 +49,7 @@
               <div class="grid-container" hidden.bind="!shown['in-reply-to']">
                 <div class="row">
                   <div class="col-1">
-                    <img class="toggle_button" click.trigger="toggle_reply_field()" src="icons/circle-icons/bubble.svg" width="40px;"/>
+                    <img class="toggle_button" src="icons/circle-icons/bubble.svg" width="40px;"/>
                   </div>
                   <div class="col-10">
                     <input name="in-reply-to" placeholder="http://something.to/reply/to" value.bind="post['in-reply-to']"/><br>
@@ -66,7 +60,7 @@
               <div class="grid-container" hidden.bind="!shown.location">
                 <div class="row">
                   <div class="col-1">
-                    <img class="toggle_button" click.trigger="toggle_location_field()" src="icons/circle-icons/location.svg" width="40px;"/>
+                    <img class="toggle_button" src="icons/circle-icons/location.svg" width="40px;"/>
                   </div>
                   <div class="col-10">
                     <input placeholder="geo:Long,Lat or Name or URL" value.bind="post.location" /> <button>Use GPS</button><br>
@@ -77,17 +71,32 @@
               <input placeholder="Title" value.bind="post.name"/><br>
 
               <input placeholder="Category1, Category2" value.bind="post.category"/><br>
-              <div>
-                <h3>Custom Fields</h3>
+              <div class="grid-container">
 
-                <div repeat.for="field of post.custom">
-                  <label>${field.name}</label>
-                  <input hidden.bind='field.shown' value.bind="field.value" />
-                </div>
-                ${post.custom['mp-type'].value}
+                <div class="row" repeat.for="field of post.custom" hidden.bind='!shown.custom[field.name]' >
+                  <label class="col-2">${field.label}</label>
+
+                  <div  class="col-8" if.bind="field.type == 'string'">
+                    <input value.bind="field.value" />
+                  </div>
+
+                  <div  class="col-8" if.bind="field.type == 'select'">
+                    <select value.bind="field.value" >
+                      <option repeat.for="opt of field.options" value="${opt}">${opt}</option>
+                    </select>
+                  </div>
+
+                  <div  class="col-8" if.bind="field.type == 'list'">
+                    <input value.bind="field.adding" /><div click.trigger="add_custom_list_item(field.name)">+</div>
+                    <ul>
+                      <li repeat.for="opt of field.values">${opt}</li>
+                    </ul>
+                  </div>
+
+                </div> <!-- end row -->
 
 
-              </div>
+              </div> <!-- end grid-container -->
 
               <div id="input-syndication-wrapper" style="display:none">
               </div>
