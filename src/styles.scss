@@ -59,11 +59,12 @@ body {
     background-color:#76c2af;
   }
 
-  icon {
+  .icon {
       border-radius: 30px;
       width: 50px;
       height: 50px;
       margin-right:5px;
+      cursor:pointer;
   
       .heart {
           .active {
@@ -111,6 +112,26 @@ body {
   .col-10 { width:90.91%; }
   .col-11 { width:100%; }
 
+}
+.list_values {
+    list-style-type: none;
+    .list_value {
+        float:left;
+        background-color:white;
+        border-radius:20px;
+        padding:4px 6px;
+        border: 1px solid gray;
+        margin-right:5px;
+
+        .list_item_remove {
+            background-color:gray;
+            border-radius:20px;
+            height:10px;
+            width:10px;
+            overflow:hidden;
+            cursor:pointer;
+        }
+    }
 }
 
 .home-screen {
@@ -348,6 +369,7 @@ input, textarea{
   height:30px;
   min-width:60px;       
   margin-right:20px;
+  cursor:pointer;
 } 
 #control-buttons button[disabled] {
   background-color: lightgray;

@@ -149,16 +149,29 @@ export class PostDetails {
 
 
   add_list_item(field_name){
-      var found_index = -1;
 
       for(var i = 0; i < this.post_config.length; i++){
           if(this.post_config[i].name == field_name){
-              this.post[this.post_config[i].name].push(this.post_config[i].adding);
-              this.post_config[i].adding = '';
+              if(this.post_config[i].adding != '' ){
+                  this.post[this.post_config[i].name].push(this.post_config[i].adding);
+                  this.post_config[i].adding = '';
+              }
               break;
           }
       }
+  }
 
+  remove_list_item(field_name, option){
+
+    if (this.post.hasOwnProperty(field_name) && typeof this.post[field_name] === 'object' && this.post[field_name].constructor === Array){
+
+      for(var i = 0; i < this.post[field_name].length; i++){
+        if(this.post[field_name][i] == option){
+          this.post[field_name].splice(i, 1);
+          break;
+        }
+      }
+    }
 
   }
 

@@ -75,28 +75,29 @@ export class Config {
           name: 'slug',
           label: 'Slug',
           type: 'string',
-          icon: 'icons/circle-icons/document.svg',
+          icon: 'icons/circle-icons/search.svg',
           shown: false
         },
         { 
           name: 'repost-of',
           label: 'Repost Of URL',
           type: 'string',
-          icon: 'icons/circle-icons/document.svg',
+          icon: 'icons/circle-icons/recycle.svg',
           shown: false
         },
         { 
           name: 'bookmark-of',
           label: 'Bookmakr URL',
           type: 'string',
-          icon: 'icons/circle-icons/document.svg',
+          icon: 'icons/circle-icons/bookmark.svg',
           shown: false
         },
         { 
           label: 'Type',
           name: 'mp-type',
           type: 'select',
-          icon: 'icons/circle-icons/document.svg',
+          icon: 'icons/circle-icons/settings.svg',
+          adding_option: '',
           options: ['note','checkin'],
           shown: false
         }, 
@@ -104,7 +105,7 @@ export class Config {
           name: 'tag-of',
           label: 'Tag of',
           type: 'list',
-          icon: 'icons/circle-icons/document.svg',
+          icon: 'icons/circle-icons/person.svg',
           adding: '',
           shown: false
         },
@@ -112,7 +113,7 @@ export class Config {
           name: 'location-name',
           label: 'Location Name',
           type: 'string',
-          icon: 'icons/circle-icons/document.svg',
+          icon: 'icons/circle-icons/location.svg',
           shown: false
         } 
     ];

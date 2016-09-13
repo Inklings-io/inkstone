@@ -81,6 +81,23 @@
                     </div>
                   </div>
 
+                  <!-- if type = 'select' -->
+                  <div if.bind="field.type == 'select'">
+                    <form submit.trigger="add_list_item(field.name)">
+                      <div  class="col-9">
+                        <input value.bind="field.adding_option" placeholder="Add Option"/>
+                      </div>
+                      <div  class="col-2">
+                        <button type="submit">Add</button>
+                      </div>
+                    </form>
+                    <ul class="col-11 list_values">
+                      <li class="list_value" repeat.for="opt of field.options"><a class="list_item_remove" click.delegate="remove_list_item(field.name, opt)">X</a> ${opt}</li>
+                    </ul>
+                  </div>
+                  <!-- if type = 'select' -->
+
+
                   <div class="row settings_option">
                     <div class="right col-5">
                       <label>Show by Default</label>
@@ -92,6 +109,16 @@
 
                 </div><!-- grid-container -->
 
+                <div class="grid-container setting_box">
+                  <div class="row settings_option">
+                    <div class="right col-5">
+                      <label>IndieAuth Scope</label>
+                    </div>
+                    <div class="left col-6">
+                      <input value.bind="settings.scope" />
+                    </div>
+                  </div>
+                </div><!-- grid-container -->
 
 
         <div class="grid-container">
