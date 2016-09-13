@@ -3,10 +3,15 @@ import {serialize, getFormattedDate} from './utility';
 import {Config} from './config';
 
 let client = new HttpClient();
-let configs = new Config();
 
 export class MicropubAPI {
-    isRequesting = false;
+    static inject() { return [Config]; }
+
+
+    constructor(Config){
+        this.config = Config;
+        this.isRequesting = false;
+    }
 
     logout(){
         //window.localStorage.clear();
@@ -38,11 +43,11 @@ export class MicropubAPI {
                     (data.auth_endpoint.indexOf('?') > -1 ? '&' : '?' ) +
                     serialize({
                         me: me,
-                        redirect_uri: configs.get('redirect_uri'),
+                        redirect_uri: this.config.get('redirect_uri'),
                         response_type: 'id',
                         state: state,
-                        client_id: configs.get('client_id'),
-                        scope: configs.get('scope'),
+                        client_id: this.config.get('client_id'),
+                        scope: this.config.get('scope'),
                         response_type: 'code'
                     });
 
@@ -65,7 +70,7 @@ export class MicropubAPI {
                 //result.message = 'Login does not match. Sent ' + original_me + ' received ' + me ;
             } else {
                 
-                var redirect_uri = configs.get('redirect_uri');
+                var redirect_uri = this.config.get('redirect_uri');
 
                 this.get_token(me, code, state, redirect_uri).then(data => {
 
@@ -99,7 +104,7 @@ export class MicropubAPI {
                         me: me,
                         code: code,
                         state: state,
-                        client_id: configs.get('client_id'),
+                        client_id: this.config.get('client_id'),
                         redirect_uri: redirect_uri
                     })
                 }

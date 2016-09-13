@@ -138,7 +138,11 @@ export class Config {
       if(window.localStorage.getItem('settings_' + key)){
         return JSON.parse(window.localStorage.getItem('settings_' + key));
       } else {
-        return null;
+        if(this.hasOwnProperty(key)){
+            return this[key];
+        } else {
+            return null;
+        }
       }
     }
 

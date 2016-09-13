@@ -2,6 +2,7 @@ node_modules
 *.idea
 *.DS_STORE
 *.swp
+*.swo
 
 scripts/app-bundle.js
 scripts/app-bundle.js.map

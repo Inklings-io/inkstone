@@ -1,7 +1,7 @@
 import {Config} from './config';
 import {areEqual} from './utility';
 
-export class PostDetails {
+export class Settings {
   static inject() { return [Config]; }
 
 

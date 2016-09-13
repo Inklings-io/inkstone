@@ -33,8 +33,7 @@ export class Login {
 
   submit_login(){
       if(this.loginUrl){
-          var mp = new MicropubAPI;
-          mp.login(this.loginUrl);
+          this.mp.login(this.loginUrl);
           //this.router.navigate('#');
 
           //return true;
