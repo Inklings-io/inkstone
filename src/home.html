@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-1">
       </div>
-      <div class="col-9">
+      <div class="col-10">
         <header>
             <h1 class="title">Welcome to MobilePub</h1>
             <h4>Logged in as ${user}</h4>
@@ -13,7 +13,7 @@
       </div>
     </div><!-- row -->
     <div class="row">
-      <div class="col-11 screen-main">
+      <div class="col-12 screen-main">
 
         <div class="grid-container main-menu">
 
@@ -22,7 +22,7 @@
               <div class="col-2">
                 <img src="icons/circle-icons/pencil.svg"/>
               </div>
-              <div class="col-9"><span class="menu-label">Post</span></div>
+              <div class="col-10"><span class="menu-label">Post</span></div>
             </div><!-- row -->
           </a>
 
@@ -39,7 +39,7 @@
                 <img if.bind="post.discovered.type=='Note'" src="icons/circle-icons/pencil.svg"/>
               </div>
               
-              <div class="col-9">
+              <div class="col-10">
                 <span class="menu-label">Saved ${post.discovered.type}</span>
                 <div class="menu-description">${post.discovered.content}</div>
                 <div class="menu-additional">${post.discovered.additional}</div>
@@ -52,7 +52,7 @@
               <div class="col-2">
                 <img src="icons/circle-icons/recycle.svg"/>
               </div>
-              <div class="col-9"><span class="menu-label">Post All Saved Items</span></div>
+              <div class="col-10"><span class="menu-label">Post All Saved Items</span></div>
             </div><!-- row -->
           </a>
 
@@ -61,7 +61,7 @@
               <div class="col-2">
                 <img src="icons/circle-icons/settings.svg"/>
               </div>
-              <div class="col-9"><span class="menu-label">Settings</span></div>
+              <div class="col-10"><span class="menu-label">Settings</span></div>
             </div><!-- row -->
           </a>
 
@@ -70,12 +70,12 @@
               <div class="col-2">
                 <img src="icons/circle-icons/power.svg"/>
               </div>
-              <div class="col-9"><span class="menu-label">Logout</span></div>
+              <div class="col-10"><span class="menu-label">Logout</span></div>
             </div><!-- row -->
           </a>
         </div><!-- grid-container -->
     
-      </div><!-- col-11 -->
+      </div><!-- col-12 -->
     </div><!-- row -->
   </div><!-- grid-container home-screen -->
 </template>

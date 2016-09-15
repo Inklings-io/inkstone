@@ -4,6 +4,9 @@
     <div class="col-2">
         <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
     </div>
+    <div class="col-8">
+      <header>Settings</header>
+    </div>
     <div class="col-2">
     </div>
     </div><!-- row -->
@@ -16,29 +19,17 @@
                 <div class="grid-container setting_box" repeat.for="field of settings.default_post_config" >
 
                   <div class="row settings_option">
-                    <div class="right col-5">
-                      <label>Field Name:</label>
-                    </div>
                     <div class="left col-6">
+                      <label>Field Name:</label>
                       <input value.bind="field.name" />
                     </div>
-                  </div>
-
-                  <div class="row settings_option">
-                    <div class="right col-5">
-                      <label>Label:</label>
-                    </div>
                     <div class="left col-6">
+                      <label>Label:</label>
                       <input value.bind="field.label" />
                     </div>
-                  </div>
 
-                  <div class="row settings_option">
-
-                    <div class="right col-5">
+                    <div class="left col-4">
                       <label>Type:</label>
-                    </div>
-                    <div class="left col-6">
                       <select value.bind="field.type" >
                         <option value="string">String - a single line input</option>
                         <option value="text">Text - A large block of text</option>
@@ -46,14 +37,10 @@
                         <option value="select">Select - A dropdown list of options</option>
                       </select>
                     </div>
-                  </div>
 
-                  <div class="row settings_option">
-                    <div class="right col-5">
+                    <div class="left col-4">
                       <label>Icon:</label>
-                      <img src="${field.icon}" width="20px;" />
-                    </div>
-                    <div class="left col-6">
+                      <img if.bind="field.icon" src="${field.icon}" width="20px;" />
                       <select value.bind="field.icon" >
 
                         <option value="">None - cannot toggle visibility</option>
@@ -79,39 +66,42 @@
 
                       </select>
                     </div>
-                  </div>
-
-                  <!-- if type = 'select' -->
-                  <div if.bind="field.type == 'select'">
-                    <form submit.trigger="add_list_item(field.name)">
-                      <div  class="col-9">
-                        <input value.bind="field.adding_option" placeholder="Add Option"/>
-                      </div>
-                      <div  class="col-2">
-                        <button type="submit">Add</button>
-                      </div>
-                    </form>
-                    <ul class="col-11 list_values">
-                      <li class="list_value" repeat.for="opt of field.options"><a class="list_item_remove" click.delegate="remove_list_item(field.name, opt)">X</a> ${opt}</li>
-                    </ul>
-                  </div>
-                  <!-- if type = 'select' -->
 
 
-                  <div class="row settings_option">
-                    <div class="right col-5">
-                      <label>Show by Default</label>
-                    </div>
-                    <div class="left col-6">
+
+                    <div class="col-4">
+                      <label>Show By Default:</label>
                       <input type="checkbox" checked.bind="field.shown" >
                     </div>
+
+
+                    <!-- if type = 'select' -->
+                    <div if.bind="field.type == 'select'">
+                      <form submit.trigger="add_selection_item(field.name)">
+                        <div  class="col-12">
+                          <input value.bind="field.adding_option" placeholder="Add Option"/>
+                          <button type="submit">Add</button>
+                        </div>
+                      </form>
+                      <ul class="col-12 list_values">
+                        <li class="list_value" repeat.for="opt of field.options"><a class="list_item_remove" click.delegate="remove_selection_item(field.name, opt)">X</a> ${opt}</li>
+                      </ul>
+                    </div>
+                    <!-- if type = 'select' -->
+
+                    <div if.bind="field.custom" class="col-12 right ">
+                        <button click.delegate="remove_field(field.name)">Delete Field</button>
+                    </div>
+
                   </div>
 
                 </div><!-- grid-container -->
 
+
+
                 <div class="grid-container setting_box">
                   <div class="row settings_option">
-                    <div class="right col-5">
+                    <div class="right col-6">
                       <label>IndieAuth Scope</label>
                     </div>
                     <div class="left col-6">
@@ -123,13 +113,14 @@
 
         <div class="grid-container">
           <div class="row">
-            <div class-"col-7">
+            <div class-"col-8">
             </div>
             <div class-"col-4">
               <div id="control-buttons">
-                <button id="post-btn" click.delegate="revert()">Revert Changes</button>
-                <button id="save-btn" click.delegate="save()" >Save</button>
-                <button id="post-btn" click.delegate="reset()">Reset to defaults</button>
+                <button click.delegate="add_field()">Add New Field</button>
+                <button click.delegate="revert()">Revert Changes</button>
+                <button click.delegate="save()" >Save</button>
+                <button click.delegate="reset()">Reset to defaults</button>
               </div>
             </div>
           </div><!-- end row -->

@@ -29,6 +29,20 @@ export class Settings {
   }
 
   save() {
+    for(var i = 0; i < this.settings.default_post_config.length; i++){
+        var field_name = this.settings.default_post_config[i].name;
+
+        if(!this.settings.default_post.hasOwnProperty(field_name)){
+          if(this.settings.default_post_config[i].type == 'list'){
+            this.settings.default_post[field_name] = [];
+          } else if(this.settings.default_post_config[i].type == 'select'){
+            this.settings.default_post[field_name] = this.settings.default_post_config[i].options[0];
+          } else {
+            this.settings.default_post[field_name] = '';
+          }
+
+        }
+    }
 
     for(var key in this.settings){
         console.log(key);
@@ -37,6 +51,7 @@ export class Settings {
     }
     this.originalSettings = JSON.parse(JSON.stringify(this.settings));
   }
+
   revert() {
 
     this.settings = JSON.parse(JSON.stringify(this.originalSettings));
@@ -55,8 +70,26 @@ export class Settings {
     this.originalSettings = JSON.parse(JSON.stringify(this.settings));
   }
 
+  add_field() {
+      this.settings.default_post_config.push( this.config.get('field_template'));
+  }
 
-  add_list_item(field_name){
+  remove_field(field_name) {
+    for(var i = 0; i < this.settings.default_post_config.length; i++){
+      if(this.settings.default_post_config[i].name == field_name){
+        if(this.settings.default_post_config[i].custom){
+          this.settings.default_post_config.splice(i,1);
+          delete this.settings.default_post[field_name];
+        }
+
+        break;
+      }
+    }
+
+  }
+
+
+  add_selection_item(field_name){
     for(var i = 0; i < this.settings.default_post_config.length; i++){
       if(this.settings.default_post_config[i].name == field_name){
 
@@ -81,7 +114,7 @@ export class Settings {
   }
   
 
-  remove_list_item(field_name, option_val){
+  remove_selection_item(field_name, option_val){
       
     for(var i = 0; i < this.settings.default_post_config.length; i++){
       if(this.settings.default_post_config[i].name == field_name){

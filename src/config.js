@@ -5,6 +5,19 @@ export class Config {
     this.client_id = 'https://inklings.io/inkstone/';
     this.redirect_uri = 'https://inklings.io/inkstone/';
 
+    this.field_template = { 
+      name: 'micropub-field',
+      label: 'Field Display Name',
+      type: 'string',
+      icon: 'icons/circle-icons/settings.svg',
+      adding: '',
+      adding_option: '',
+      options: [],
+      custom: true,
+      shown: false
+    } 
+
+
     this.preset_post = {
          'bookmark-of'    : '',
          'category'       : [],
@@ -26,6 +39,10 @@ export class Config {
           label: 'Content',
           type: 'text',
           icon: '',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: true
         },
         { 
@@ -33,6 +50,10 @@ export class Config {
           label: 'Title',
           type: 'string',
           icon: 'icons/circle-icons/document.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: true
         },
         { 
@@ -41,6 +62,9 @@ export class Config {
           type: 'list',
           icon: 'icons/circle-icons/document.svg',
           adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
         { 
@@ -48,6 +72,10 @@ export class Config {
           label: 'In Reply To',
           type: 'string',
           icon: 'icons/circle-icons/bubble.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
         { 
@@ -55,6 +83,10 @@ export class Config {
           label: 'Location',
           type: 'string',
           icon: 'icons/circle-icons/location.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
         { 
@@ -62,6 +94,10 @@ export class Config {
           label: 'Like of',
           type: 'string',
           icon: 'icons/circle-icons/heart.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
         { 
@@ -69,6 +105,10 @@ export class Config {
           label: 'Summary',
           type: 'string',
           icon: 'icons/circle-icons/document.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
         { 
@@ -76,6 +116,10 @@ export class Config {
           label: 'Slug',
           type: 'string',
           icon: 'icons/circle-icons/search.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
         { 
@@ -83,6 +127,10 @@ export class Config {
           label: 'Repost Of URL',
           type: 'string',
           icon: 'icons/circle-icons/recycle.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
         { 
@@ -90,23 +138,21 @@ export class Config {
           label: 'Bookmakr URL',
           type: 'string',
           icon: 'icons/circle-icons/bookmark.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
-        { 
-          label: 'Type',
-          name: 'mp-type',
-          type: 'select',
-          icon: 'icons/circle-icons/settings.svg',
-          adding_option: '',
-          options: ['note','checkin'],
-          shown: false
-        }, 
         { 
           name: 'tag-of',
           label: 'Tag of',
           type: 'list',
           icon: 'icons/circle-icons/person.svg',
           adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
           shown: false
         },
         { 
@@ -114,6 +160,21 @@ export class Config {
           label: 'Location Name',
           type: 'string',
           icon: 'icons/circle-icons/location.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: true,
+          shown: false
+        },
+        { 
+          label: 'Type',
+          name: 'mp-type',
+          type: 'select',
+          icon: 'icons/circle-icons/settings.svg',
+          adding: '',
+          adding_option: '',
+          options: ['note','checkin'],
+          custom: true,
           shown: false
         } 
     ];

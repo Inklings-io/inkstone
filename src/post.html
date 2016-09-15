@@ -1,16 +1,16 @@
 <template>
   <div class="grid-container">
     <div class="row">
-    <div class="col-2">
+    <div class="col-1">
         <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
     </div>
-    <div class="toggle_buttons col-9">
+    <div class="toggle_buttons col-10">
         <div if.bind="field.icon" repeat.for="field of post_config" class="icon toggle_button ${field.shown ? 'active' : 'inactive'}" click.trigger="toggle_field(field.name)">
         <img src="${field.icon}" width="50px;" />
           <span>${field.name}</span>
         </div>
     </div>
-    <div class="col-2">
+    <div class="col-1">
     </div>
     </div><!-- row -->
   </div><!-- grid-container -->
@@ -27,17 +27,17 @@
                 <div class="row" repeat.for="field of post_config" hidden.bind='!field.shown' >
 
 
-                  <div class="col-11" if.bind="field.type == 'text'">
+                  <div class="col-12" if.bind="field.type == 'text'">
                     <textarea name="content" placeholder="${field.label}" value.bind="post[field.name]" ></textarea><br>
                   </div>
 
-                  <div  class="col-11" if.bind="field.type == 'string'">
+                  <div  class="col-12" if.bind="field.type == 'string'">
                     <input value.bind="post[field.name]" placeholder="${field.label}"/>
                   </div>
 
                   <div  if.bind="field.type == 'select'">
                     <label class="col-2">${field.label}</label>
-                    <div class="col-9">
+                    <div class="col-10">
                       <select value.bind="post[field.name]" >
                         <option repeat.for="opt of field.options" value="${opt}">${opt}</option>
                       </select>
@@ -46,14 +46,14 @@
 
                   <div if.bind="field.type == 'list'">
                     <form submit.trigger="add_list_item(field.name)">
-                      <div  class="col-9">
+                      <div  class="col-10">
                         <input value.bind="field.adding" placeholder="${field.label}"/>
                       </div>
                       <div  class="col-2">
                         <button type="submit">Add</button>
                       </div>
                     </form>
-                    <ul class="col-11 list_values">
+                    <ul class="col-12 list_values">
                       <li class="list_value" repeat.for="opt of post[field.name]"><a class="list_item_remove" click.delegate="remove_list_item(field.name, opt)">X</a> ${opt}</li>
                     </ul>
                   </div>
@@ -69,7 +69,7 @@
             </div>
           </div><!-- end row -->
           <div class="row">
-            <div class-"col-7">
+            <div class-"col-8">
             </div>
             <div class-"col-4">
               <div id="control-buttons">
