@@ -41,4 +41,7 @@ export class Login {
       //return false;
   }
 
+  isOnline() {
+    return navigator.onLine;
+  }
 }

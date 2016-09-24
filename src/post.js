@@ -176,7 +176,7 @@ export class PostDetails {
   }
 
 
-  get canPost() {
+  canPost() {
     return navigator.onLine;
   }
   

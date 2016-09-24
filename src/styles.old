@@ -1,0 +1,236 @@
+
+                    <div class="left col-4">
+                      <div class="switch">
+                      <label>
+                        <input type="checkbox" checked.bind="field.shown" >
+                        <span class="slider">
+                          <span class="slider-on">
+                            Show by Default
+                          </span>
+                          <span class="slider-off">
+                            Hide by Default
+                          </span>
+
+                        </span>
+                      </label>
+                      </div>
+                    </div>
+
+.switch {
+    position:relative;
+    input { display:none; }
+
+    .slider {
+        background-color:grey;
+        position:relative;
+        display:block;
+        overflow:hidden;
+        font-weight:bold;
+        color:black;
+        border-radius:30px;
+        border:4px solid grey;
+        transition: .4s;
+        height:1.7em;
+    }
+
+    input + .slider > .slider-on {
+        color:gray;
+        background-color:white;
+        border-radius:10px;
+        width:40%;
+        overflow:hidden;
+        margin-left:-25%;
+        transition: .4s;
+    }
+    input + .slider>.slider-off {
+        margin-left : 15%;
+    }
+
+    input:checked + .slider {
+        background-color:green; 
+        border:4px solid green;
+        transition: .4s;
+    }
+
+    input:checked + .slider>.slider-on {
+        color:black;
+        margin-left:20%;
+        transition: .4s;
+    }
+    input:checked + .slider>.slider-off {
+        width:10px;
+    }
+
+}
+
+input, textarea{
+  margin:5px;
+  border-radius: 15px;
+  min-height:30px;
+  padding:7px 12px;
+}
+
+.screen-main {
+  background-color: $secondary-bg-color;
+  position:relative;
+  background: none repeat scroll 0 0 $secondary-bg-color;
+  //border-radius: 32px;
+  margin:auto 1%;
+
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  max-width:98%;
+  border-color: $secondary-bg-color;
+  list-style: outside none none;
+  color:black;
+  padding: 20px 3%;
+  text-align:center;
+}
+
+
+.onoffswitch {
+  position: relative; width: 90px;
+  -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+  display: none;
+}
+.onoffswitch-label {
+  display: block; overflow: hidden; cursor: pointer;
+  border: 2px solid #999999; border-radius: 20px;
+}
+.onoffswitch-inner {
+  display: block; width: 200%; margin-left: -100%;
+  -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+  -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+  display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+  font-size: 14px; color: white; font-weight: bold;
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+  content: "ON";
+  padding-left: 10px;
+  background-color: #34A7C1; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+  content: "OFF";
+  padding-right: 10px;
+  background-color: #EEEEEE; color: #999999;
+  text-align: right;
+}
+.onoffswitch-switch {
+  display: block; width: 18px; margin: 6px;
+  background: #FFFFFF;
+  border: 2px solid #999999; border-radius: 20px;
+  position: absolute; top: 0; bottom: 0; right: 56px;
+  -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+  -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
+}
+.setting div input{
+  display: block; 
+  background: #FFFFFF;
+  border: 2px solid #999999; border-radius: 20px;
+  text-align:center;
+  height:30px;
+}
+.onoffswitch.on .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
+}
+.onoffswitch.on .onoffswitch-label .onoffswitch-switch {
+  right: 0px;
+}
+.setting{
+  position:relative;
+  height: 35px;
+  margin-bottom:20px;
+}
+.setting>div {float:left;}
+.setting>div.switch-desc{
+  margin-top:auto;
+  margin-bottom:auto;
+  height: 30px; padding: 0; line-height: 35px;
+  font-size: 14px; color: black; font-weight: bold;
+  margin-right:10px;
+}
+#PhotoPreview {
+  width:90%;
+}
+#success div {
+    background-color:#8ce196;
+    border-radius:10px;
+    padding: 5px 20px;
+}
+#error div {
+    background-color:#e18c96;
+    border-radius:10px;
+    padding: 5px 20px;
+}
+#input-syndication-wrapper{
+    text-align:left;
+    margin-left:20%;
+}
+#input-syndication-wrapper > div{
+    padding:4px;
+}
+.switch input { 
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
+}
+.switch input + label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+.switch input + label {
+  padding: 2px;
+  height: 30px;
+}
+.switch input + label:before,
+.switch input + label:after {
+  display: inline-block;
+  position: absolute;
+  top: 1px;
+  left: -60px;
+  bottom: 1px;
+  content: "";
+}
+.switch input + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  border-radius: 30px;
+  background-color: #dddddd;
+  transition: background 0.4s;
+  width:60px;
+}
+.switch input + label:after {
+  width: 28px;
+  background-color: #fff;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: margin 0.4s;
+}
+.switch input:checked + label:before {
+  background-color: #8ce196;
+}
+.switch input:checked + label:after {
+  margin-left: 30px;
+}
+#control-buttons button {
+  background-color: #8ce196;
+  border-color: #8ce196;
+  border-radius: 30px;
+  height:30px;
+  min-width:60px;       
+  margin-right:20px;
+  cursor:pointer;
+} 
+#control-buttons button[disabled] {
+  background-color: lightgray;
+  border-color: lightgray;
+}
+

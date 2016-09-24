@@ -1,6 +1,8 @@
 $font-stack:  "Gill Sans", Roboto,Verdana, sans-serif;
-$primary-color: #333;
-$primary-bg-color: #a2d2d2;
+$primary-color: #222;
+$primary-bg-color: #eee;
+$header-bg-color: #a2d2d2;
+
 //$secondary-bg-color: #e3e3e3;
 $secondary-bg-color: #a2d2d2;
 $card-bg-color: #FFF;
@@ -19,6 +21,10 @@ $icons-inactive-bg: gray;
     text-align: right
 }
 
+.red {
+  color:red;
+}
+
 * {
     box-sizing: border-box; 
 }
@@ -30,6 +36,24 @@ body {
   margin:0;
   padding:0;
   border:0;
+
+  header {
+    background-color: $header-bg-color;
+    padding:1%;
+    
+    .title {
+      font-weight:bold;
+      text-align:center;
+      font-size: 20pt;
+      text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .loginscreen {
+    margin-left:auto;
+    margin-right:auto;
+    padding:1%;
+  }
 
   textarea, input{
     width:100%;
@@ -178,13 +202,13 @@ body {
 
 @media all and (max-width:900px){
   .grid-container {
-	.col-1{ width: 12.5%;    }
-	.col-2{ width: 25%;        }
-	.col-3{ width: 37.5%;    }
-	.col-4{ width: 50%;    }
-	.col-5{ width: 62.5%;    }
-	.col-6{ width: 75%;    }
-	.col-7{ width: 87.5%;      }
+	.col-1{ width: 16.67%;    }
+	.col-2{ width: 33.33%;        }
+	.col-3{ width: 50%;    }
+	.col-4{ width: 66.67%;    }
+	.col-5{ width: 83.33%;    }
+	.col-6{ width: 100%;    }
+	.col-7{ width: 100%;      }
 	.col-8{ width: 100%;      }
 	.col-9{ width: 100%;      }
 	.col-10{ width: 100%;      }

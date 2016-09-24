@@ -1,21 +1,52 @@
 <template>
-  <div class="login-screen-wrapper">
     <header>
-        <h1 class="title">Welcome to MobilePub</h1>
-        <h2 class="title">Please Login</h2>
+        <span class="title">Welcome to Inkstone</span>
     </header>
-    <div class="screen-main">
-        <form submit.trigger="submit_login()" target="/">
-          <input class='me' id="login-url" type="text" value.bind="loginUrl" placeholder="Enter domain"/>
-          <button type='submit' id="login-btn" class="online-only">Login</button>
-          <div class="offline-only">Login requires internet access.</div>
-        </form>
-        <div>
-        <a href="http://indiewebcamp.com/How_to_set_up_web_sign-in_on_your_own_domain">What is Web Sign-In?</a>
+
+    <div class="grid-container loginscreen">
+
+      <div class="row">
+        <div class="col-6">
+          <h3 class="title">Please Login</h3>
+          <form submit.trigger="submit_login()" target="/">
+            <input disabled.bind="!isOnline()" class='me' id="login-url" type="text" value.bind="loginUrl" placeholder="Enter domain"/>
+            <button disabled.bind="!isOnline()" type='submit' id="login-btn" class="online-only">Login</button>
+            <div hidden.bind="isOnline()" class="red">Login requires internet access.</div>
+          </form>
         </div>
-        <div>
-        <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
+        <div class="col-6">
+          <h3 class="title">Inkstone?</h3>
+          <p>
+          The Inkstone is one of the most basic tools a writer can use.  Blocks of solid ink are ground against the stone with water creating liquid ink.  Japanese calligraphers say that one must use an inkstone to create ones own ink and infuse your spirit in to the very ink itself.  Bottled ink is easy, cheap but has no inspiration within it.
+
+          </p>
         </div>
+
+      </div>
+      <div class="row">
+
+        <div class="col-12">
+          <h3 class="title">Unsure how to log in?</h3>
+          <p>
+          Inkstone is an app designed for posting content to your own site.  The method for doing this is with a simple standard call Micropub.  Micropub makes it easy to use any application to post conotent to your own site.  Interested? Here are some links to take a look at.
+          </p>
+          <ul>
+            <li>
+              <a href="http://indiewebcamp.com/How_to_set_up_web_sign-in_on_your_own_domain">What is Web Sign-In?</a>
+            </li>
+            <li>
+              <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
+            </li>
+          </ul>
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+
       <div><ol id='debugger'></ol></div>
       <div id='success'></div>
       <div id='error'>${message}</div>
