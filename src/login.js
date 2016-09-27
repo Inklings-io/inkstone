@@ -33,10 +33,8 @@ export class Login {
 
   submit_login(){
       if(this.loginUrl){
-          this.mp.login(this.loginUrl);
-          //this.router.navigate('#');
-
-          //return true;
+          //this.mp.login(this.loginUrl);
+          this.mp.login_test(this.loginUrl);
       }
       //return false;
   }

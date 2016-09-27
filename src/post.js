@@ -18,6 +18,8 @@ export class PostDetails {
     this.router = Router;
     this.saved_index = -1;
 
+    this.user = this.mp.get_user();
+
       //TODO: have this saved in settings
       //
     this.default_post = this.config.get('default_post');

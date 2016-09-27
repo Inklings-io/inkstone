@@ -1,81 +1,92 @@
 <template>
-  <div class="grid-container home-screen">
+  <header>
+      <div class="logo"><img src="icons/inkstone.svg"/></div>
+      <span class="title">Welcome to InkStone</span>
+      <div class="user"><img src="icons/circle-icons/person.svg"/><span>${user}</span></div>
+      <div style="clear:both;"></div>
+  </header>
+
+  <div class="grid-container main-wrapper main-menu">
     <div class="row">
-      <div class="col-1">
+
+      <div class="col-6">
+        <div class="grid-container card">
+          <a class="row" route-href="route: newpost;" >
+            <div class="x-sm-col-1 sm-col-1 col-2">
+              <img src="icons/circle-icons/pencil.svg"/>
+            </div>
+            <div class="x-sm-col-3 sm-col-5 col-10">
+              <span class="menu-label">Create Post</span>
+            </div>
+          </a>
+        </div>
       </div>
-      <div class="col-10">
-        <header>
-            <h1 class="title">Welcome to MobilePub</h1>
-            <h4>Logged in as ${user}</h4>
-        </header>
+
+
+      <div repeat.for="post of saved_post_list" class="col-6">
+        <div class="grid-container card saved-card">
+          <a class="row" route-href="route: post;params.bind: {num:post.index}">
+            <div class="x-sm-col-1 sm-col-1 col-2 left">
+              <img src="icons/circle-icons/memcard.svg"/>
+              <img if.bind="post.discovered.type=='Rsvp'" src="icons/circle-icons/calendar.svg"/>
+              <img if.bind="post.discovered.type=='Reply'" src="icons/circle-icons/bubble.svg"/>
+              <img if.bind="post.discovered.type=='Share'" src="icons/circle-icons/recycle.svg"/>
+              <img if.bind="post.discovered.type=='Like'" src="icons/circle-icons/heart.svg"/>
+              <img if.bind="post.discovered.type=='Video'" src="icons/circle-icons/film.svg"/>
+              <img if.bind="post.discovered.type=='Photo'" src="icons/circle-icons/photo.svg"/>
+              <img if.bind="post.discovered.type=='Note'" src="icons/circle-icons/pencil.svg"/>
+            </div>
+            <div class="x-sm-col-3 sm-col-5 col-10 center saved-card-data">
+              <span class="saved-menu-label">Saved ${post.discovered.type}</span>
+              <div class="saved-menu-description">${post.discovered.content}</div>
+              <div class="saved-menu-additional">${post.discovered.additional}</div>
+            </div>
+          </a>
+        </div>
       </div>
-      <div class="col-1">
+
+      <div if.bind="saved_post_list.length > 0" href="#" click.trigger="post_all()" class="col-6">
+        <div class="grid-container card">
+          <div class="row">
+            <div class="x-sm-col-1 sm-col-1 col-2">
+              <img src="icons/circle-icons/recycle.svg"/>
+            </div>
+            <div class="x-sm-col-3 sm-col-5 col-10">
+              <span class="menu-label">Post All Saved Items</span>
+            </div>
+          </div>
+        </div>
       </div>
+
+
+      <div class="col-6">
+        <div class="grid-container card">
+          <a class="row" route-href="route:settings">
+            <div class="x-sm-col-1 sm-col-1 col-2">
+              <img src="icons/circle-icons/settings.svg"/>
+            </div>
+            <div class="x-sm-col-3 sm-col-5 col-10">
+              <span class="menu-label">Settings</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="grid-container card">
+          <a class="row" click.trigger="logout()" route-href="route:login;" >
+            <div class="x-sm-col-1 sm-col-1 col-2">
+              <img src="icons/circle-icons/power.svg"/>
+            </div>
+            <div class="x-sm-col-3 sm-col-5 col-10">
+              <span class="menu-label">Logout</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
     </div><!-- row -->
-    <div class="row">
-      <div class="col-12 screen-main">
 
-        <div class="grid-container main-menu">
-
-          <a route-href="route: newpost;">
-            <div class="row">
-              <div class="col-2">
-                <img src="icons/circle-icons/pencil.svg"/>
-              </div>
-              <div class="col-10"><span class="menu-label">Post</span></div>
-            </div><!-- row -->
-          </a>
-
-          <a repeat.for="post of saved_post_list" route-href="route: post;params.bind: {num:post.index}">
-            <div class="row">
-              <div class="col-2">
-                <img src="icons/circle-icons/memcard.svg"/>
-                <img if.bind="post.discovered.type=='Rsvp'" src="icons/circle-icons/calendar.svg"/>
-                <img if.bind="post.discovered.type=='Reply'" src="icons/circle-icons/bubble.svg"/>
-                <img if.bind="post.discovered.type=='Share'" src="icons/circle-icons/recycle.svg"/>
-                <img if.bind="post.discovered.type=='Like'" src="icons/circle-icons/heart.svg"/>
-                <img if.bind="post.discovered.type=='Video'" src="icons/circle-icons/film.svg"/>
-                <img if.bind="post.discovered.type=='Photo'" src="icons/circle-icons/photo.svg"/>
-                <img if.bind="post.discovered.type=='Note'" src="icons/circle-icons/pencil.svg"/>
-              </div>
-              
-              <div class="col-10">
-                <span class="menu-label">Saved ${post.discovered.type}</span>
-                <div class="menu-description">${post.discovered.content}</div>
-                <div class="menu-additional">${post.discovered.additional}</div>
-              </div>
-            </div><!-- row -->
-          </a>
-
-          <a if.bind="saved_post_list.length > 0" href="#" click.trigger="post_all()">
-            <div class="row">
-              <div class="col-2">
-                <img src="icons/circle-icons/recycle.svg"/>
-              </div>
-              <div class="col-10"><span class="menu-label">Post All Saved Items</span></div>
-            </div><!-- row -->
-          </a>
-
-          <a route-href="route:settings">
-            <div class="row">
-              <div class="col-2">
-                <img src="icons/circle-icons/settings.svg"/>
-              </div>
-              <div class="col-10"><span class="menu-label">Settings</span></div>
-            </div><!-- row -->
-          </a>
-
-          <a click.trigger="logout()" route-href="route:login;" >
-            <div class="row">
-              <div class="col-2">
-                <img src="icons/circle-icons/power.svg"/>
-              </div>
-              <div class="col-10"><span class="menu-label">Logout</span></div>
-            </div><!-- row -->
-          </a>
-        </div><!-- grid-container -->
+  </div><!-- grid-container -->
     
-      </div><!-- col-12 -->
-    </div><!-- row -->
-  </div><!-- grid-container home-screen -->
 </template>

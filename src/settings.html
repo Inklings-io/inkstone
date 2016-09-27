@@ -1,132 +1,125 @@
 <template>
-  <div class="grid-container">
-    <div class="row">
-    <div class="col-2">
-        <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
-    </div>
-    <div class="col-8">
-      <header>Settings</header>
-    </div>
-    <div class="col-2">
-    </div>
-    </div><!-- row -->
-  </div><!-- grid-container -->
+  <header>
+      <a class="back-icon" route-href="route:home;"><img src="icons/circle-icons/uparrow.svg"/></a>
+      <span class="title settings-title">InkStone Settings</span>
+      <div style="clear:both;"></div>
+  </header>
 
 
 
 
+    <div class="grid-container setting_box" repeat.for="field of settings.default_post_config" >
 
-                <div class="grid-container setting_box" repeat.for="field of settings.default_post_config" >
+      <div class="row settings_option">
+        <div class="left col-6">
+          <label>Field Name:</label>
+          <input value.bind="field.name" />
+        </div>
+        <div class="left col-6">
+          <label>Label:</label>
+          <input value.bind="field.label" />
+        </div>
 
-                  <div class="row settings_option">
-                    <div class="left col-6">
-                      <label>Field Name:</label>
-                      <input value.bind="field.name" />
-                    </div>
-                    <div class="left col-6">
-                      <label>Label:</label>
-                      <input value.bind="field.label" />
-                    </div>
+        <div class="left col-4 sm-col-3">
+          <label>Type:</label>
+          <select value.bind="field.type" >
+            <option value="string">String - a single line input</option>
+            <option value="text">Text - A large block of text</option>
+            <option value="list">List - A set of strings</option>
+            <option value="select">Select - A dropdown list of options</option>
+          </select>
+        </div>
 
-                    <div class="left col-4">
-                      <label>Type:</label>
-                      <select value.bind="field.type" >
-                        <option value="string">String - a single line input</option>
-                        <option value="text">Text - A large block of text</option>
-                        <option value="list">List - A set of strings</option>
-                        <option value="select">Select - A dropdown list of options</option>
-                      </select>
-                    </div>
+        <div class="left col-4 sm-col-3">
+          <label>Icon:</label>
+          <img if.bind="field.icon" src="${field.icon}" width="20px;" />
+          <select value.bind="field.icon" >
 
-                    <div class="left col-4">
-                      <label>Icon:</label>
-                      <img if.bind="field.icon" src="${field.icon}" width="20px;" />
-                      <select value.bind="field.icon" >
+            <option value="">None - cannot toggle visibility</option>
+            <option value="icons/circle-icons/audio.svg">Audio</option>
+            <option value="icons/circle-icons/bookmark.svg">Bookmark</option>
+            <option value="icons/circle-icons/bubble.svg">Bubble</option>
+            <option value="icons/circle-icons/calendar.svg">Calendar</option>
+            <option value="icons/circle-icons/check.svg">Check</option>
+            <option value="icons/circle-icons/document.svg">Document</option>
+            <option value="icons/circle-icons/film.svg">Film</option>
+            <option value="icons/circle-icons/heart.svg">Heart</option>
+            <option value="icons/circle-icons/lens.svg">Lens</option>
+            <option value="icons/circle-icons/location.svg">Location</option>
+            <option value="icons/circle-icons/memcard.svg">Memory Card</option>
+            <option value="icons/circle-icons/mic.svg">Microphone</option>
+            <option value="icons/circle-icons/pencil.svg">Pencil</option>
+            <option value="icons/circle-icons/person.svg">Person</option>
+            <option value="icons/circle-icons/photo.svg">Photo</option>
+            <option value="icons/circle-icons/power.svg">Power</option>
+            <option value="icons/circle-icons/recycle.svg">Recycle</option>
+            <option value="icons/circle-icons/search.svg">Search</option>
+            <option value="icons/circle-icons/settings.svg">Settings</option>
 
-                        <option value="">None - cannot toggle visibility</option>
-                        <option value="icons/circle-icons/audio.svg">Audio</option>
-                        <option value="icons/circle-icons/bookmark.svg">Bookmark</option>
-                        <option value="icons/circle-icons/bubble.svg">Bubble</option>
-                        <option value="icons/circle-icons/calendar.svg">Calendar</option>
-                        <option value="icons/circle-icons/check.svg">Check</option>
-                        <option value="icons/circle-icons/document.svg">Document</option>
-                        <option value="icons/circle-icons/film.svg">Film</option>
-                        <option value="icons/circle-icons/heart.svg">Heart</option>
-                        <option value="icons/circle-icons/lens.svg">Lens</option>
-                        <option value="icons/circle-icons/location.svg">Location</option>
-                        <option value="icons/circle-icons/memcard.svg">Memory Card</option>
-                        <option value="icons/circle-icons/mic.svg">Microphone</option>
-                        <option value="icons/circle-icons/pencil.svg">Pencil</option>
-                        <option value="icons/circle-icons/person.svg">Person</option>
-                        <option value="icons/circle-icons/photo.svg">Photo</option>
-                        <option value="icons/circle-icons/power.svg">Power</option>
-                        <option value="icons/circle-icons/recycle.svg">Recycle</option>
-                        <option value="icons/circle-icons/search.svg">Search</option>
-                        <option value="icons/circle-icons/settings.svg">Settings</option>
-
-                      </select>
-                    </div>
-
-
-
-                    <div class="col-4">
-                      <label>Show By Default:</label>
-                      <input type="checkbox" checked.bind="field.shown" >
-                    </div>
-
-
-                    <!-- if type = 'select' -->
-                    <div if.bind="field.type == 'select'">
-                      <form submit.trigger="add_selection_item(field.name)">
-                        <div  class="col-12">
-                          <input value.bind="field.adding_option" placeholder="Add Option"/>
-                          <button type="submit">Add</button>
-                        </div>
-                      </form>
-                      <ul class="col-12 list_values">
-                        <li class="list_value" repeat.for="opt of field.options"><a class="list_item_remove" click.delegate="remove_selection_item(field.name, opt)">X</a> ${opt}</li>
-                      </ul>
-                    </div>
-                    <!-- if type = 'select' -->
-
-                    <div if.bind="field.custom" class="col-12 right ">
-                        <button click.delegate="remove_field(field.name)">Delete Field</button>
-                    </div>
-
-                  </div>
-
-                </div><!-- grid-container -->
+          </select>
+        </div>
 
 
 
-                <div class="grid-container setting_box">
-                  <div class="row settings_option">
-                    <div class="right col-6">
-                      <label>IndieAuth Scope</label>
-                    </div>
-                    <div class="left col-6">
-                      <input value.bind="settings.scope" />
-                    </div>
-                  </div>
-                </div><!-- grid-container -->
+        <div class="col-4">
+          <label>Show By Default:</label>
+          <input type="checkbox" checked.bind="field.shown" >
+        </div>
 
 
-        <div class="grid-container">
-          <div class="row">
-            <div class-"col-8">
+        <!-- if type = 'select' -->
+        <div if.bind="field.type == 'select'">
+          <form submit.trigger="add_selection_item(field.name)">
+            <div  class="col-12">
+              <input value.bind="field.adding_option" placeholder="Add Option"/>
+              <button type="submit">Add</button>
             </div>
-            <div class-"col-4">
-              <div id="control-buttons">
-                <button click.delegate="add_field()">Add New Field</button>
-                <button click.delegate="revert()">Revert Changes</button>
-                <button click.delegate="save()" >Save</button>
-                <button click.delegate="reset()">Reset to defaults</button>
-              </div>
-            </div>
-          </div><!-- end row -->
-        </div> <!-- end grid container -->
-    <div id='success'></div>
-    <div id='error'></div>
+          </form>
+          <ul class="col-12 list_values">
+            <li class="list_value" repeat.for="opt of field.options"><a class="list_item_remove" click.delegate="remove_selection_item(field.name, opt)">X</a> ${opt}</li>
+          </ul>
+        </div>
+        <!-- if type = 'select' -->
 
+        <div if.bind="field.custom" class="col-12 right ">
+            <button click.delegate="remove_field(field.name)">Delete Field</button>
+        </div>
+
+      </div>
+
+    </div><!-- grid-container -->
+
+
+
+    <div class="grid-container setting_box">
+      <div class="row settings_option">
+        <div class="right col-6">
+          <label>IndieAuth Scope</label>
+        </div>
+        <div class="left col-6">
+          <input value.bind="settings.scope" />
+        </div>
+      </div>
+    </div><!-- grid-container -->
+
+
+    <div class="grid-container setting_box">
+      <div class="row">
+        <div class="control-buttons">
+          <div class="col-3">
+            <button click.delegate="add_field()">Add New Field</button>
+          </div>
+          <div class="col-3">
+            <button click.delegate="revert()">Revert Changes</button>
+          </div>
+          <div class="col-3">
+            <button click.delegate="save()" >Save</button>
+          </div>
+          <div class="col-3">
+            <button click.delegate="reset()">Reset to defaults</button>
+          </div>
+        </div>
+      </div><!-- end row -->
+    </div> <!-- end grid container -->
 
 </template>

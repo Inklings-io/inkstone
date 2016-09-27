@@ -29,6 +29,14 @@ $icons-inactive-bg: gray;
     box-sizing: border-box; 
 }
 
+.logo {
+  float:left;
+
+  img {
+    width:25px;
+  }
+}
+
 body {
   font: 100% $font-stack;
   color: $primary-color;
@@ -41,15 +49,56 @@ body {
     background-color: $header-bg-color;
     padding:1%;
     
+    .homelogo {
+      width:100px;
+    }
+
+    .back-icon {
+      img {
+       width:50px;
+       float:left;
+      }
+    }
+
+    .hometitle {
+      font-weight:bold;
+      text-align:center;
+      font-size: 40pt;
+      text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+      display:block;
+    }
+
+    .settings-title {
+      display:block;
+      margin-top:15px;
+    }
+
     .title {
       font-weight:bold;
       text-align:center;
       font-size: 20pt;
       text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+      display:inline;
+    }
+
+    .user {
+      float:right;
+      height:30px;
+
+      img {
+        height:30px;
+        width:30px;
+      }
+
+      span {
+        height:30px;
+        padding:6px;
+        float:right;
+      }
     }
   }
 
-  .loginscreen {
+  .main-wrapper {
     margin-left:auto;
     margin-right:auto;
     padding:1%;
@@ -68,22 +117,42 @@ body {
 
 }
 
-.toggle_buttons {
-  .toggle_button {
-    float:left;
-    margin-left:1%;
+#login_form{
+  input {
+    width:79%;
+    padding:5px 10px;
+    border-radius: 10px 0px 0px 10px;
+    margin-right:0;
   }
+  button {
+    width:19%;
+    padding:5px;
+    margin-left:0;
+    border-radius: 0px 10px 10px 0px;
+    font-weight:bold;
+  }
+}
 
-  .inactive {
+.toggle_buttons .toggle_button {
+  cursor:pointer;
+  float:left;
+  width:100%;
+  width:100%;
+  padding:3px;
+
+
+  .icon.inactive {
+
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 2px 0 rgba(0, 0, 0, 0.19);
-          fill:$icons-inactive-fill;
-          background-color:$icons-inactive-bg;
+    fill:$icons-inactive-fill;
+    background-color:$icons-inactive-bg;
+
     img {
       opacity:0.3;
     }
-
   }
-  .active {
+
+  .icon.active {
     box-shadow: 0 2px 2px 0 $icons-active-fill, 0 6px 2px 0 $icons-active-fill;
     fill:$icons-active-fill;
   }
@@ -97,25 +166,30 @@ body {
     background-color:#76c2af;
   }
 
-  .icon {
-      border-radius: 30px;
-      width: 50px;
-      height: 50px;
-      margin-right:5px;
-      cursor:pointer;
-  
-      .heart {
-          .active {
-          }
-      }
-      span{
-          font-size: 8pt;
-          overflow:hidden;
-      }
-  }
 
+  .label{
+      font-size: 8pt;
+      overflow:hidden;
+      text-align:center;
+      width:100%;
+  }
+  .icon{
+    border-radius: 30px;
+    width: 50px;
+    height: 50px;
+    margin-right:auto;
+    margin-left:auto;
+  }
 }
 
+.post_inputs{
+  input {
+    padding:10px;
+  }
+  textarea{
+    padding:10px;
+  }
+}
 
 //grid system
 .grid-container {
@@ -138,7 +212,7 @@ body {
     }
   }
 
-  .col-1  { width:8.33%; }
+  .col-1  { width:8.33%;  }
   .col-2  { width:16.67%; }
   .col-3  { width:25.00%; }
   .col-4  { width:33.33%; }
@@ -149,7 +223,7 @@ body {
   .col-9  { width:75.00%; }
   .col-10 { width:83.33%; }
   .col-11 { width:91.67%; }
-  .col-12 { width:100%; }
+  .col-12 { width:100%;   }
 
 }
 .list_values {
@@ -174,68 +248,132 @@ body {
 }
 
 .main-menu {
-  .row {
-    width:100%;
+  .card {
     background-color: $card-bg-color;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 2px 0 rgba(0, 0, 0, 0.19);
     //border-radius:20px;
-    margin:4px;
+    margin-top:14px;
+    img {
+      padding:15px;
+    }
+    .saved-card-data {
+      height:100px;
+    }
+    .saved-menu-label {
+      font-size:20pt;
+    }
+    .menu-label {
+      font-size:20pt;
+      margin-top:auto;
+      margin-bottom:auto;
+      display:block;
+      text-align:center;
+      margin-top:30px;
+    }
   }
-  .menu-label {
-    font-size:20pt;
-    margin-top:auto;
-    margin-bottom:auto;
+
+  .saved-card {
+    img {
+      width:45px;
+      padding:1px;
+      margin-left:15px;
+    }
   }
 }
 
 .setting_box {
-    width:96%;
     background-color: $card-bg-color;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 2px 0 rgba(0, 0, 0, 0.19);
     //border-radius:20px;
     margin:2%;
+    margin-left:auto;
+    margin-right:auto;
 }
 
+.control-buttons {
+  button {
+    cursor:pointer;
+    background-color: $header-bg-color;
+    border-radius:30px;
+    font-weight:bold;
+    padding:10px;
+  }
+  button[disabled] {
+    background-color: grey;
+  }
+}
 
 
 
 
 @media all and (max-width:900px){
   .grid-container {
-	.col-1{ width: 16.67%;    }
-	.col-2{ width: 33.33%;        }
-	.col-3{ width: 50%;    }
-	.col-4{ width: 66.67%;    }
-	.col-5{ width: 83.33%;    }
-	.col-6{ width: 100%;    }
-	.col-7{ width: 100%;      }
-	.col-8{ width: 100%;      }
-	.col-9{ width: 100%;      }
-	.col-10{ width: 100%;      }
-	.col-11{ width: 100%;      }
-	.col-12{ width: 100%;      }
+	.col-1  { width: 16.67%; }
+	.col-2  { width: 33.33%; }
+	.col-3  { width: 50%;    }
+	.col-4  { width: 66.67%; }
+	.col-5  { width: 83.33%; }
+	.col-6  { width: 100%;   }
+	.col-7  { width: 100%;   }
+	.col-8  { width: 100%;   }
+	.col-9  { width: 100%;   }
+	.col-10 { width: 100%;   }
+	.col-11 { width: 100%;   }
+	.col-12 { width: 100%;   }
 
+    .sm-col-1  { width: 16.67%; }
+    .sm-col-2  { width: 33.33%; }
+    .sm-col-3  { width: 50%;    }
+    .sm-col-4  { width: 66.67%; }
+    .sm-col-5  { width: 83.33%; }
+    .sm-col-6  { width: 100%;   }
+    .sm-col-7  { width: 100%;   }
+    .sm-col-8  { width: 100%;   }
+    .sm-col-9  { width: 100%;   }
+    .sm-col-10 { width: 100%;   }
+    .sm-col-11 { width: 100%;   }
+    .sm-col-12 { width: 100%;   }
+  }
 
+  body header .hometitle {
+    font-size: 25pt;
   }
 }
 
 @media all and (max-width:600px){
   .grid-container {
-	.col-1{ width: 25%;    }
-	.col-2{ width: 50%;        }
-	.col-3{ width: 75%;    }
-	.col-4{ width: 100%;    }
-	.col-5{ width: 100%;    }
-	.col-6{ width: 100%;    }
-	.col-7{ width: 100%;      }
-	.col-8{ width: 100%;      }
-	.col-9{ width: 100%;      }
-	.col-10{ width: 100%;      }
-	.col-11{ width: 100%;      }
-	.col-12{ width: 100%;      }
+	.col-1  { width: 25%;  }
+	.col-2  { width: 50%;  }
+	.col-3  { width: 75%;  }
+	.col-4  { width: 100%; }
+	.col-5  { width: 100%; }
+	.col-6  { width: 100%; }
+	.col-7  { width: 100%; }
+	.col-8  { width: 100%; }
+	.col-9  { width: 100%; }
+	.col-10 { width: 100%; }
+	.col-11 { width: 100%; }
+	.col-12 { width: 100%; }
+
+    .x-sm-col-1  { width: 25%;  }
+    .x-sm-col-2  { width: 50%;  }
+    .x-sm-col-3  { width: 75%;  }
+    .x-sm-col-4  { width: 100%; }
+    .x-sm-col-5  { width: 100%; }
+    .x-sm-col-6  { width: 100%; }
+    .x-sm-col-7  { width: 100%; }
+    .x-sm-col-8  { width: 100%; }
+    .x-sm-col-9  { width: 100%; }
+    .x-sm-col-10 { width: 100%; }
+    .x-sm-col-11 { width: 100%; }
+    .x-sm-col-12 { width: 100%; }
   }
   .right {text-align:center;}
   .left {text-align:center;}
+
+  body header .hometitle {
+    font-size: 20pt;
+  }
 
 }
 

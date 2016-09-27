@@ -1,23 +1,26 @@
 <template>
     <header>
-        <span class="title">Welcome to Inkstone</span>
+        <img class="homelogo" src="icons/inkstone.svg"/>
+        <span class="hometitle">Welcome to InkStone</span>
     </header>
 
-    <div class="grid-container loginscreen">
+    <div class="grid-container main-wrapper">
 
       <div class="row">
+
         <div class="col-6">
-          <h3 class="title">Please Login</h3>
-          <form submit.trigger="submit_login()" target="/">
-            <input disabled.bind="!isOnline()" class='me' id="login-url" type="text" value.bind="loginUrl" placeholder="Enter domain"/>
-            <button disabled.bind="!isOnline()" type='submit' id="login-btn" class="online-only">Login</button>
-            <div hidden.bind="isOnline()" class="red">Login requires internet access.</div>
+          <h3 class="title">Login</h3>
+          <form submit.trigger="submit_login()" id="login_form" target="/">
+            <input disabled.bind="!isOnline()" class='me' id="login-url" type="text" value.bind="loginUrl" placeholder="Enter domain"/><button disabled.bind="!isOnline()" type='submit' id="login-btn" class="online-only">Login</button>
+            <h3 hidden.bind="isOnline()" class="center red">Internet access required for login</h3>
           </form>
         </div>
+        
+
         <div class="col-6">
-          <h3 class="title">Inkstone?</h3>
+          <h3 class="title">InkStone?</h3>
           <p>
-          The Inkstone is one of the most basic tools a writer can use.  Blocks of solid ink are ground against the stone with water creating liquid ink.  Japanese calligraphers say that one must use an inkstone to create ones own ink and infuse your spirit in to the very ink itself.  Bottled ink is easy, cheap but has no inspiration within it.
+          The inkstone is one of the most basic tools a writer can use.  Blocks of solid ink are ground against the stone with water creating liquid ink.  Japanese calligraphers say that one must use an inkstone to create ones own ink and infuse your spirit in to the very ink itself.  Bottled ink is easy, cheap but has no inspiration within it.
 
           </p>
         </div>
@@ -28,7 +31,7 @@
         <div class="col-12">
           <h3 class="title">Unsure how to log in?</h3>
           <p>
-          Inkstone is an app designed for posting content to your own site.  The method for doing this is with a simple standard call Micropub.  Micropub makes it easy to use any application to post conotent to your own site.  Interested? Here are some links to take a look at.
+          InkStone is an app designed for posting content to your own site.  To do this InkStone implementats a few simple standards.  The first is called Web Sign-In.  With only a small snippet of code, you can log in here using your website URL as your login.  The second is called <a href="http://micropub.net">Micropub</a> currently working its way through the W3C.  Micropub makes it easy to use any application to post content to your own site.  Interested? Here are some additional links to take a look at.
           </p>
           <ul>
             <li>
@@ -37,20 +40,29 @@
             <li>
               <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
             </li>
+            <li>
+              <a href="http://indieauth.com/">IndieAuth</a>
+            </li>
+            <li>
+              <a href="http://micropub.net/">Micropub spec</a>
+            </li>
           </ul>
         </div>
 
 
       </div>
 
+
+
+      <div class="row">
+
+        <div class="col-12 center">
+          <a href="https://inklings.io/"><img style="width:20px;" src="icons/inkling.svg"/></a>
+          InkStone is an <a href="https://inklings.io/">Inkling</a> brought to you by <a href="https://ben.thatmustbe.me">Ben Roberts</a>.
+        </div>
+      </div>
     </div>
 
-
-
-      <div><ol id='debugger'></ol></div>
-      <div id='success'></div>
       <div id='error'>${message}</div>
-    </div>
     
-  </div>
 </template>

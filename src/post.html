@@ -1,90 +1,86 @@
 <template>
-  <div class="grid-container">
+  <header>
+      <a class="back-icon" route-href="route:home;"><img src="icons/circle-icons/uparrow.svg"/></a>
+      <span class="title settings-title">Create Post</span>
+      <div class="user"><img src="icons/circle-icons/person.svg"/><span>${user}</span></div>
+      <div style="clear:both;"></div>
+  </header>
+
+
+  <div class="grid-container main-wrapper">
     <div class="row">
-    <div class="col-1">
-        <a route-href="route:home;"><img src="icons/circle-icons/uparrow.svg" width="50px;" /></a>
-    </div>
-    <div class="toggle_buttons col-10">
-        <div repeat.for="field of post_config" if.bind="field.icon" class="icon toggle_button ${field.shown ? 'active' : 'inactive'}" click.trigger="toggle_field(field.name)">
-          <img src="${field.icon}" width="50px;" />
-          <span>${field.name}</span>
+      <div class="toggle_buttons col-1">
+        <div repeat.for="field of post_config" if.bind="field.icon" class="toggle_button" click.trigger="toggle_field(field.name)">
+          <div class="icon ${field.shown ? 'active' : 'inactive'}">
+            <img src="${field.icon}" width="50px;" />
+          </div>
+          <div class="label">${field.name}</div>
         </div>
-    </div>
-    <div class="col-1">
-    </div>
-    </div><!-- row -->
-  </div><!-- grid-container -->
+      </div>
+
+      <div class="col-11 sm-col-5 x-sm-col-3">
+        <div class="post_inputs grid-container">
+
+          <div class="row" repeat.for="field of post_config" hidden.bind='!field.shown' >
 
 
+            <div class="col-12" if.bind="field.type == 'text'">
+              <textarea placeholder="${field.label}" value.bind="post[field.name]" ></textarea><br>
+            </div>
 
-  <div class="create-screen-wrapper">
-        <div class="screen-main">
-          <div class="row">
+            <div  class="col-12" if.bind="field.type == 'string'">
+              <input value.bind="post[field.name]" placeholder="${field.label}"/>
+            </div>
 
-
-              <div class="grid-container">
-
-                <div class="row" repeat.for="field of post_config" hidden.bind='!field.shown' >
-
-
-                  <div class="col-12" if.bind="field.type == 'text'">
-                    <textarea name="content" placeholder="${field.label}" value.bind="post[field.name]" ></textarea><br>
-                  </div>
-
-                  <div  class="col-12" if.bind="field.type == 'string'">
-                    <input value.bind="post[field.name]" placeholder="${field.label}"/>
-                  </div>
-
-                  <div  if.bind="field.type == 'select'">
-                    <label class="col-2">${field.label}</label>
-                    <div class="col-10">
-                      <select value.bind="post[field.name]" >
-                        <option repeat.for="opt of field.options" value="${opt}">${opt}</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div if.bind="field.type == 'list'">
-                    <form submit.trigger="add_list_item(field.name)">
-                      <div  class="col-10">
-                        <input value.bind="field.adding" placeholder="${field.label}"/>
-                      </div>
-                      <div  class="col-2">
-                        <button type="submit">Add</button>
-                      </div>
-                    </form>
-                    <ul class="col-12 list_values">
-                      <li class="list_value" repeat.for="opt of post[field.name]"><a class="list_item_remove" click.delegate="remove_list_item(field.name, opt)">X</a> ${opt}</li>
-                    </ul>
-                  </div>
-
-                </div> <!-- end row -->
-
-
-              </div> <!-- end grid-container -->
-
-              <div id="input-syndication-wrapper" style="display:none">
+            <div  if.bind="field.type == 'select'">
+              <label class="col-2">${field.label}</label>
+              <div class="col-10">
+                <select value.bind="post[field.name]" >
+                  <option repeat.for="opt of field.options" value="${opt}">${opt}</option>
+                </select>
               </div>
+            </div>
 
+            <div if.bind="field.type == 'list'">
+              <form submit.trigger="add_list_item(field.name)">
+                <div  class="col-10">
+                  <input value.bind="field.adding" placeholder="${field.label}"/>
+                </div>
+                <div  class="col-2">
+                  <button type="submit">Add</button>
+                </div>
+              </form>
+              <ul class="col-12 list_values">
+                <li class="list_value" repeat.for="opt of post[field.name]"><a class="list_item_remove" click.delegate="remove_list_item(field.name, opt)">X</a> ${opt}</li>
+              </ul>
             </div>
+
           </div><!-- end row -->
+
+          <div id="input-syndication-wrapper" style="display:none">
+          </div>
+
           <div class="row">
-            <div class-"col-8">
-            </div>
-            <div class-"col-4">
-              <div id="control-buttons">
-                <button id="post-btn" click.delegate="clear_post_confirm()">Clear</button>
-                <button id="save-btn" click.delegate="save()" >Save</button>
-                <button id="post-btn" click.trigger="do_post()" disabled.bind="!canPost" >Post</button>
+            <div class="control-buttons">
+              <div class="col-4">
+              </div>
+              <div class="col-4">
+                <button click.delegate="clear_post_confirm()">Clear</button>
+                <button click.delegate="save()" >Save</button>
+                <button click.trigger="do_post()" disabled.bind="!canPost" >Post</button>
+              </div>
+              <div class="col-4">
               </div>
             </div>
           </div><!-- end row -->
-
 
         </div> <!-- end grid container -->
-      </div>
-    <div id='success'></div>
-    <div id='error'></div>
+
+      </div> <!-- end col-11 -->
+
+    </div><!-- end row -->
+
+  </div> <!-- end grid container -->
 
 
 </template>
