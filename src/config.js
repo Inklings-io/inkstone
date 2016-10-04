@@ -14,11 +14,13 @@ export class Config {
       adding_option: '',
       options: [],
       custom: true,
-      shown: false
+      shown: false,
+      always_send: false
     } 
 
 
     this.preset_post = {
+         'h'              : 'entry',
          'bookmark-of'    : '',
          'category'       : [],
          'content'        : '',
@@ -35,6 +37,18 @@ export class Config {
     };
     this.preset_fields = [
         { 
+          name: 'h',
+          label: 'microformat type',
+          type: 'select',
+          icon: '',
+          adding: '',
+          adding_option: '',
+          options: ['entry'],
+          custom: false,
+          shown: false,
+          always_send: true
+        },
+        { 
           name: 'content',
           label: 'Content',
           type: 'text',
@@ -43,7 +57,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: true
+          shown: true,
+          always_send: false
         },
         { 
           name: 'name',
@@ -54,7 +69,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: true
+          shown: true,
+          always_send: false
         },
         { 
           name: 'category',
@@ -65,7 +81,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'in-reply-to',
@@ -76,7 +93,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'location',
@@ -87,7 +105,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'like-of',
@@ -98,7 +117,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'summary',
@@ -109,7 +129,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'slug',
@@ -120,7 +141,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'repost-of',
@@ -131,7 +153,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'bookmark-of',
@@ -142,7 +165,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'tag-of',
@@ -153,7 +177,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: false,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           name: 'location-name',
@@ -164,7 +189,8 @@ export class Config {
           adding_option: '',
           options: [],
           custom: true,
-          shown: false
+          shown: false,
+          always_send: false
         },
         { 
           label: 'Type',
@@ -175,7 +201,8 @@ export class Config {
           adding_option: '',
           options: ['note','checkin'],
           custom: true,
-          shown: false
+          shown: false,
+          always_send: false
         } 
     ];
 

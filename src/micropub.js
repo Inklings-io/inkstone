@@ -124,43 +124,82 @@ export class MicropubAPI {
         });
 
     }
-    get_endpoints(me){
-        //TODO have this cache results  in local storage
+    get_endpoints(me, force=false){
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
             //TODO don't use php end if possible
 
-            client.fetch('php/discoverEndpoints.php',
-                {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: serialize({me: me})
-                }
-            ).then( resonse => resonse.json()
-            ).then( data => {
-                if(data.success){
-                    resolve(data);
-                } else {
-                    reject(new Error('Unable to find auth endpoint'));
-                }
+            var endpoints = window.localStorage.getItem("endpoints");
+            if(!force && endpoints){
+                resolve(JSON.parse(endpoints));
                 this.isRequesting = false;
-            }).catch(error => {
-                reject(new Error('Error connecting to App Server : ' + error.message));
-                this.isRequesting = false;
-            });
+            } else {
+                client.fetch('php/discoverEndpoints.php',
+                    {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: serialize({me: me})
+                    }
+                ).then( resonse => resonse.json()
+                ).then( data => {
+                    if(data.success){
+                        resolve(data);
+                    } else {
+                        window.localStorage.setItem("endpoints", JSON.stringify(data));
+                        reject(new Error('Unable to find auth endpoint'));
+                    }
+                    this.isRequesting = false;
+                }).catch(error => {
+                    reject(new Error('Error connecting to App Server : ' + error.message));
+                    this.isRequesting = false;
+                });
+            } // else
 
         });
 
     }
 
-    get_syndication_targets(){
+    get_configs(force = false){
+        this.isRequesting = true;
+        return new Promise((resolve, reject) => {
+
+            mpconfigs = window.localStorage.getItem("mp-config");
+            if(!force && mpconfigs){
+                resolve(JSON.parse(mpconfigs));
+                this.isRequesting = false;
+            } else {
+                token = window.localStorage.getItem("token");
+                me = window.localStorage.getItem("me");
+                client.fetch('php/getConfig.php', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: serialize({me:me,token:token})
+                }
+                ).then( data => {
+                    window.localStorage.setItem("mp-config", JSON.stringify(data));
+                    this.isRequesting = false;
+                    resolve(data);
+
+                }).catch(error => {
+                    this.isRequesting = false;
+                    reject(new Error('Error connecting to MobilePub Server : ' + error.message));
+                });
+            }
+        });
+
+    }
+
+    //should prefer get_configs over this 
+    get_syndication_targets(force = false){
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
 
             syndications = window.localStorage.getItem("syndications");
-            if(syndications){
+            if(!force && syndications){
                 resolve(JSON.parse(syndications));
                 this.isRequesting = false;
             } else {
@@ -174,17 +213,13 @@ export class MicropubAPI {
                     body: serialize({me:me,token:token})
                 }
                 ).then( data => {
-                    if(data.success){
-                        window.localStorage.setItem("syndications", JSON.stringify(data.targets));
-                        resolve(data.targets);
-                    } else {
-                        reject(new Error('Error finding Syndication Targets'));
-                    }
+                    window.localStorage.setItem("syndications", JSON.stringify(data));
                     this.isRequesting = false;
+                    resolve(data);
 
                 }).catch(error => {
-                    reject(new Error('Error connecting to MobilePub Server : ' + error.message));
                     this.isRequesting = false;
+                    reject(new Error('Error connecting to MobilePub Server : ' + error.message));
                 });
             }
         });
@@ -195,17 +230,15 @@ export class MicropubAPI {
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
             //todo, these should not be in the post directly if using endpoint directly
-            send_data.token = window.localStorage.getItem("token");
+            //send_data.token = window.localStorage.getItem("token");
             send_data['mp-me'] = window.localStorage.getItem("me");
             client.fetch('php/send.php', 
                 {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                        //TODO: include token headers
+                        'Content-Type' : 'application/x-www-form-urlencoded',
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     },
-                    //TODO only send if each item is shown
-                    //      and unset show property
                     body: this.prep_for_publish(send_data)
                 }
             ).then( resonse => resonse.json()
@@ -295,11 +328,14 @@ export class MicropubAPI {
 
     prep_for_publish(obj){
 
+        var config = obj.post_config;
+        delete obj.post_config;
+
         //remove all hidden properties
         var shown = obj.shown;
         delete obj.shown;
         for(var key in shown) {
-            if(!shown[key]){
+            if(!config[key].shown && !config[key].always_send){
                 delete obj[key];
             }
         }

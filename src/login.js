@@ -5,6 +5,7 @@ export class Login {
   static inject() { return [Router, MicropubAPI]; }
 
   constructor(Router, MicropubAPI){
+    this.debug_mode = true;
     this.loginUrl = "";
     this.mp = MicropubAPI;
     this.router = Router;
@@ -33,13 +34,15 @@ export class Login {
 
   submit_login(){
       if(this.loginUrl){
-          //this.mp.login(this.loginUrl);
-          this.mp.login_test(this.loginUrl);
+          if(this.debug_mode){
+            this.mp.login_test(this.loginUrl);
+          } else {
+            this.mp.login(this.loginUrl);
+          }
       }
-      //return false;
   }
 
   isOnline() {
-    return navigator.onLine;
+    return this.debug_mode || navigator.onLine;
   }
 }

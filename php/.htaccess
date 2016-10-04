@@ -1,0 +1,4 @@
+# some php setups capture Authorization against our choice :(
+#RewriteRule ^$ index.php [L,QSA,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+#RewriteRule ^([^?]*) $1 [L,QSA,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1

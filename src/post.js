@@ -134,8 +134,11 @@ export class PostDetails {
         this.mp.remove_saved(this.saved_index);
         this.saved_index = -1;
     }
+    this.post.post_config = this.post_config;
     this.mp.send(this.post).then(data => {
       this.blank_post();
+    }).catch(error => {
+      delete this.post.post_config;
     });
 
   }

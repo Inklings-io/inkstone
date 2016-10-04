@@ -25,10 +25,12 @@
 
 
             <div class="col-12" if.bind="field.type == 'text'">
-              <textarea placeholder="${field.label}" value.bind="post[field.name]" ></textarea><br>
+              <!-- todo put a special case for content to allow html? -->
+              <textarea placeholder="${field.label}" value.bind="post[field.name]" ></textarea>
             </div>
 
             <div  class="col-12" if.bind="field.type == 'string'">
+              <!-- todo put a special case for gps to be able to fetch gps from device -->
               <input value.bind="post[field.name]" placeholder="${field.label}"/>
             </div>
 

@@ -14,7 +14,7 @@ $me = normalizeUrl($_POST['me']);
 
 $micropub_endpoint = IndieAuth\Client::discoverMicropubEndpoint($me);
 
-$ch = curl_init($micropub_endpoint . (strpos($micropub_endpoint, '?') === false ? '?' : '&') . 'q=syndicate-to');
+$ch = curl_init($micropub_endpoint . (strpos($micropub_endpoint, '?') === false ? '?' : '&') . 'q=config');
 
 if (!$ch) {
     //$this->log->write('error with curl_init');
