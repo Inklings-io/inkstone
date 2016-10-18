@@ -68,7 +68,7 @@ h3 {
 }
 
 p {
-    font-family: "Roboto", sans-serif;
+    font-family: "Source Sans Pro", sans-serif;
     font-size: 18px;
     font-weight: 400;
     line-height: 1.60;
@@ -141,9 +141,7 @@ body {
     }
 
     .title {
-      font-weight:bold;
       text-align:center;
-      font-size: 20pt;
       text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
       display:inline;
     }
@@ -192,11 +190,15 @@ body {
     margin-right:0;
   }
   button {
+    background-color: $first-palette-bright;
     width:19%;
     padding:5px;
     margin-left:0;
     border-radius: 0px 10px 10px 0px;
     font-weight:bold;
+  }
+  button[disabled] {
+    background-color: $first-palette-dark;
   }
 }
 
@@ -250,10 +252,7 @@ body {
 }
 
 .post_inputs{
-  input {
-    padding:10px;
-  }
-  textarea{
+  input, textarea {
     padding:10px;
   }
 }
@@ -340,6 +339,7 @@ body {
   }
 
   .saved-card {
+      overflow:hidden;
     img {
       width:45px;
       padding:1px;
@@ -366,7 +366,8 @@ body {
     padding:10px;
   }
   button[disabled] {
-    background-color: grey;
+    background-color: grey !important;
+    color:#444;
   }
 }
 

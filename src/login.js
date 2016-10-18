@@ -5,7 +5,7 @@ export class Login {
   static inject() { return [Router, MicropubAPI]; }
 
   constructor(Router, MicropubAPI){
-    this.debug_mode = true;
+    this.debug_mode = false;
     this.loginUrl = "";
     this.mp = MicropubAPI;
     this.router = Router;
@@ -36,8 +36,12 @@ export class Login {
       if(this.loginUrl){
           if(this.debug_mode){
             this.mp.login_test(this.loginUrl);
+            window.location.href = '/';
           } else {
-            this.mp.login(this.loginUrl);
+            var url = this.mp.login(this.loginUrl);
+            if (url){
+                window.location.href = url;
+            }
           }
       }
   }

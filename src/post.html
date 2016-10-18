@@ -1,7 +1,7 @@
 <template>
   <header>
       <a class="back-icon" route-href="route:home;"><img src="icons/circle-icons/uparrow.svg"/></a>
-      <span class="title settings-title">Create Post</span>
+      <h1 class="title">Create Post</h1>
       <div class="user"><img src="icons/circle-icons/person.svg"/><span>${user}</span></div>
       <div style="clear:both;"></div>
   </header>
@@ -59,7 +59,13 @@
 
           </div><!-- end row -->
 
-          <div id="input-syndication-wrapper" style="display:none">
+          <div class="row" if.bind="syndication_targets">
+            <div class="col-12">
+              <div><label>Syndicate-To:</label></div>
+              <select value.bind="syndicate_tos" multiple="multitple">
+                <option repeat.for="syn of syndication_targets" value="${syn.uid}">${syn.name}</option>
+              </select>
+            </div>
           </div>
 
           <div class="row">
@@ -69,7 +75,7 @@
               <div class="col-4">
                 <button click.delegate="clear_post_confirm()">Clear</button>
                 <button click.delegate="save()" >Save</button>
-                <button click.trigger="do_post()" disabled.bind="!canPost" >Post</button>
+                <button click.trigger="do_post()" disabled.bind="!canPost()" >Post</button>
               </div>
               <div class="col-4">
               </div>

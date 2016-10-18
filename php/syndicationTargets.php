@@ -7,7 +7,8 @@ $json = array( 'success' => true);
 
 //TODO update this to mimic current 
 if(!isset($_POST['me'])){
-    //TODO return http 400
+    header('HTTP/1.1 400 Invalid Request');
+    exit();
 }
 $me = normalizeUrl($_POST['me']);
 

@@ -1,12 +1,14 @@
 import {Config} from './config';
 import {areEqual} from './utility';
+import {MicropubAPI} from './micropub';
 
 export class Settings {
-  static inject() { return [Config]; }
+  static inject() { return [Config, MicropubAPI]; }
 
 
-  constructor(Config){
+  constructor(Config, MicropubAPI){
     this.config = Config;
+    this.mp = MicropubAPI;
 
     this.settings = {
       scope: this.config.get('scope'),
@@ -14,6 +16,7 @@ export class Settings {
       default_post_config: this.config.get('default_post_config'),
     }
 
+    this.user = this.mp.get_user();
 
     this.originalSettings = JSON.parse(JSON.stringify(this.settings));
   }

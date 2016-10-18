@@ -1,7 +1,7 @@
 <template>
     <header>
         <img class="homelogo" src="icons/inkstone.svg"/>
-        <span class="hometitle">Welcome to InkStone</span>
+        <h1 class="hometitle">Welcome to InkStone</h1>
     </header>
 
     <div class="grid-container main-wrapper">
@@ -9,16 +9,16 @@
       <div class="row">
 
         <div class="col-6">
-          <h3 class="title">Login</h3>
+          <h2 class="title">Login</h2>
           <form submit.trigger="submit_login()" id="login_form" target="/">
             <input disabled.bind="!isOnline()" class='me' id="login-url" type="text" value.bind="loginUrl" placeholder="Enter domain"/><button disabled.bind="!isOnline()" type='submit' id="login-btn" class="online-only">Login</button>
-            <h3 hidden.bind="isOnline()" class="center red">Internet access required for login</h3>
+            <h2 hidden.bind="isOnline()" class="center red">Internet access required for login</h2>
           </form>
         </div>
         
 
         <div class="col-6">
-          <h3 class="title">InkStone?</h3>
+          <h2 class="title">InkStone?</h2>
           <p>
           The inkstone is one of the most basic tools a writer can use.  Blocks of solid ink are ground against the stone with water creating liquid ink.  Japanese calligraphers say that one must use an inkstone to create ones own ink and infuse your spirit in to the very ink itself.  Bottled ink is easy, cheap but has no inspiration within it.
 
@@ -29,7 +29,7 @@
       <div class="row">
 
         <div class="col-12">
-          <h3 class="title">Unsure how to log in?</h3>
+          <h2 class="title">Unsure how to log in?</h2>
           <p>
           InkStone is an app designed for posting content to your own site.  To do this InkStone implementats a few simple standards.  The first is called Web Sign-In.  With only a small snippet of code, you can log in here using your website URL as your login.  The second is called <a href="http://micropub.net">Micropub</a> currently working its way through the W3C.  Micropub makes it easy to use any application to post content to your own site.  Interested? Here are some additional links to take a look at.
           </p>

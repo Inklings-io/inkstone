@@ -51,10 +51,12 @@ export class MicropubAPI {
                         response_type: 'code'
                     });
 
+                //this->get_config
                 
-                location.href = url;
+               return url;
             });
         }
+        return null;
     }
 
     auth(me, code, state){
@@ -198,24 +200,26 @@ export class MicropubAPI {
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
 
-            syndications = window.localStorage.getItem("syndications");
+            syndications = window.localStorage.getItem("syndicate-to");
             if(!force && syndications){
                 resolve(JSON.parse(syndications));
                 this.isRequesting = false;
             } else {
                 token = window.localStorage.getItem("token");
                 me = window.localStorage.getItem("me");
-                client.fetch('php/syndicationTargets.php', {
+                client.fetch('php/route.php?q=syndicate-to', {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     },
-                    body: serialize({me:me,token:token})
+                    body: serialize({me:me})
                 }
                 ).then( data => {
-                    window.localStorage.setItem("syndications", JSON.stringify(data));
+                    syndications = data['syndicate-to'];
+                    window.localStorage.setItem("syndicate-to", JSON.stringify(syndications));
                     this.isRequesting = false;
-                    resolve(data);
+                    resolve(syndications);
 
                 }).catch(error => {
                     this.isRequesting = false;

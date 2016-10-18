@@ -9,8 +9,6 @@ export class PostDetails {
   //TODO for this class
   //    add visual confirmation when things are saved, cleared, etc
   //    add ability to actually submit posts
-  //    add any additional neede fields
-  //    move "default post" to settings
 
   constructor(Router, MicropubAPI, Config){
     this.config = Config;
@@ -20,14 +18,48 @@ export class PostDetails {
 
     this.user = this.mp.get_user();
 
-      //TODO: have this saved in settings
-      //
     this.default_post = this.config.get('default_post');
     this.default_post_config = this.config.get('default_post_config');
     
     this.post = JSON.parse(JSON.stringify(this.default_post));
     this.post_config = JSON.parse(JSON.stringify(this.default_post_config));
+
+    this.syndicate_tos = [];
+
     this.originalPost = JSON.parse(JSON.stringify(this.post));
+
+    this.syndication_targets =  null
+    this.mp.get_syndication_targets().then(data => 
+        this.syndication_targets = data)
+
+/* //FOR DEBUGGING
+        this.syndication_targets = [
+    {
+      "uid": "https://archive.org/",
+      "name": "archive.org"
+    },
+    {
+      "uid": "https://wikimedia.org/",
+      "name": "WikiMedia"
+    },
+    {
+      "uid": "https://myfavoritesocialnetwork.example/aaronpk",
+      "name": "aaronpk on myfavoritesocialnetwork",
+      "service": {
+        "name": "My Favorite Social Network",
+        "url": "https://myfavoritesocialnetwork.example/",
+        "photo": "https://myfavoritesocialnetwork.example/img/icon.png"
+      },
+      "user": {
+        "name": "aaronpk",
+        "url": "https://myfavoritesocialnetwork.example/aaronpk",
+        "photo": "https://myfavoritesocialnetwork.example/aaronpk/photo.jpg"
+      }
+    }
+  ];
+*/
+
+    
   }
 
   clear_post_data(){
@@ -52,6 +84,8 @@ export class PostDetails {
           this.saved_index = params.num;
           this.post_config = this.post.post_config;
           delete this.post.post_config;
+          this.syndicate_tos = this.post['syndicate-to'];
+          delete this.post['syndicate-to'];
           this.originalPost = JSON.parse(JSON.stringify(this.post));
         } else {
           this.blank_post(); //not needed?
@@ -116,6 +150,7 @@ export class PostDetails {
   save() {
 
     this.post.post_config = this.post_config;
+    this.post['syndicate-to'] = this.syndicate_tos;
     
     if(this.saved_index > -1){
         this.mp.remove_saved(this.saved_index);
@@ -135,6 +170,7 @@ export class PostDetails {
         this.saved_index = -1;
     }
     this.post.post_config = this.post_config;
+    this.post['syndicate-to'] = this.syndicate_tos;
     this.mp.send(this.post).then(data => {
       this.blank_post();
     }).catch(error => {

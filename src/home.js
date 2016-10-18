@@ -64,4 +64,8 @@ export class Home{
     return true;
   }
 
+  canPost() {
+    return navigator.onLine;
+  }
+
 }

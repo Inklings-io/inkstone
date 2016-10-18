@@ -4,8 +4,6 @@ header( 'Content-Type: application/json');
 
 require '../vendor/autoload.php';
 
-$json = array( 'success' => true);
-
 if(!isset($_POST['mp-me'])){
     header('HTTP/1.1 400 Invalid Request');
     exit();
@@ -54,31 +52,27 @@ $response = curl_exec($ch);
 //TODO just return the result directly
 $result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-if (in_array($result, array(200,201,204,301,302))) {
-    if (in_array($result, array(201,301,302))) {
 
+//$headers = array();
 
-		$headers = array();
+//should use header lenth
+$header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
+$body_text = substr($response, strlen($header_text));
 
-		$header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
+foreach (explode("\r\n", $header_text) as $i => $line){
 
-		foreach (explode("\r\n", $header_text) as $i => $line){
-			if ($i === 0)
-				$headers['http_code'] = $line;
-			else
-			{
-				list ($key, $value) = explode(': ', $line);
+    header($line);
 
-				$headers[$key] = $value;
-			}
-		}
+    /*
+    if ($i === 0)
+        $headers['http_code'] = $line;
+    else
+    {
+        list ($key, $value) = explode(': ', $line);
 
-        //$target_url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-        $json['url'] = $headers['Location'];
+        $headers[$key] = $value;
     }
-} else {
-    $json['error'] = 'Micropub Endpoint returned code ' . $result . '.';
-    $json['success'] = false;
+     */
 }
+echo $body_text;
 
-echo json_encode($json);

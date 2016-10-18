@@ -158,7 +158,7 @@ export class Config {
         },
         { 
           name: 'bookmark-of',
-          label: 'Bookmakr URL',
+          label: 'Bookmark URL',
           type: 'string',
           icon: 'icons/circle-icons/bookmark.svg',
           adding: '',
