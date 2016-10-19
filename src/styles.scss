@@ -186,19 +186,8 @@ body {
   input {
     width:79%;
     padding:5px 10px;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 5px;
     margin-right:0;
-  }
-  button {
-    background-color: $first-palette-bright;
-    width:19%;
-    padding:5px;
-    margin-left:0;
-    border-radius: 0px 10px 10px 0px;
-    font-weight:bold;
-  }
-  button[disabled] {
-    background-color: $first-palette-dark;
   }
 }
 
@@ -254,6 +243,7 @@ body {
 .post_inputs{
   input, textarea {
     padding:10px;
+    border-radius:5px;
   }
 }
 
@@ -357,19 +347,29 @@ body {
     margin-right:auto;
 }
 
-.control-buttons {
   button {
+    border-width: 1px;
+    border-style: solid;
+    background-color: $first-palette-bright;
+    border-color: darken($first-palette-bright, 10);
+    border-radius:4px;
+    margin:2px;
+    font-weight: 600;
     cursor:pointer;
-    background-color: $second-palette-bright;
-    border-radius:30px;
-    font-weight:bold;
-    padding:10px;
+    display:inline-block;
+    font-size:14px;
+    line-height: 1.4;
+    padding:6px 12px;
+    text-align:center;
+    vertical-align:middle;
+    white-space: nowrap;
+
   }
   button[disabled] {
-    background-color: grey !important;
-    color:#444;
+    background-color: lighten($first-palette-bright, 20);
+    border-color: lighten($first-palette-bright, 30);
+    cursor:default;
   }
-}
 
 
 
