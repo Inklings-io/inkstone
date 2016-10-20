@@ -30,7 +30,7 @@ export class MicropubAPI {
     }
 
     login(me){
-        if(!this.isRequesting){
+        return new Promise((resolve, reject) => {
             this.get_endpoints(me).then(data => {
                 window.localStorage.setItem("mp_endpoint", data.mp_endpoint);
 
@@ -51,12 +51,9 @@ export class MicropubAPI {
                         response_type: 'code'
                     });
 
-                //this->get_config
-                
-               return url;
+               resolve(url);
             });
-        }
-        return null;
+        });
     }
 
     auth(me, code, state){
@@ -172,14 +169,13 @@ export class MicropubAPI {
                 resolve(JSON.parse(mpconfigs));
                 this.isRequesting = false;
             } else {
-                token = window.localStorage.getItem("token");
-                me = window.localStorage.getItem("me");
-                client.fetch('php/getConfig.php', {
+                client.fetch('php/route.php?q=config', {
                     method: "POST",
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     },
-                    body: serialize({me:me,token:token})
+                    body: serialize({'mp-me':window.localStorage.getItem("me")})
                 }
                 ).then( data => {
                     window.localStorage.setItem("mp-config", JSON.stringify(data));
@@ -200,20 +196,18 @@ export class MicropubAPI {
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
 
-            syndications = window.localStorage.getItem("syndicate-to");
+            var syndications = window.localStorage.getItem("syndicate-to");
             if(!force && syndications){
                 resolve(JSON.parse(syndications));
                 this.isRequesting = false;
             } else {
-                token = window.localStorage.getItem("token");
-                me = window.localStorage.getItem("me");
                 client.fetch('php/route.php?q=syndicate-to', {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                         'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     },
-                    body: serialize({me:me})
+                    body: serialize({'mp-me':window.localStorage.getItem("me")})
                 }
                 ).then( data => {
                     syndications = data['syndicate-to'];

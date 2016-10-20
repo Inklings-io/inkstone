@@ -13,8 +13,12 @@ $me = normalizeUrl($_POST['me']);
 
 
 $micropub_endpoint = IndieAuth\Client::discoverMicropubEndpoint($me);
+$query_option = 'config';
+if(isset($_GET['q']) && !empty($_GET['q'])){
+    $query_option = $_GET['q'];
+}
 
-$ch = curl_init($micropub_endpoint . (strpos($micropub_endpoint, '?') === false ? '?' : '&') . 'q=config');
+$ch = curl_init($micropub_endpoint . (strpos($micropub_endpoint, '?') === false ? '?' : '&') . 'q='.$query_option);
 
 if (!$ch) {
     //$this->log->write('error with curl_init');

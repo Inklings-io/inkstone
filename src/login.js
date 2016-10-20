@@ -38,12 +38,13 @@ export class Login {
             this.mp.login_test(this.loginUrl);
             window.location.href = '/';
           } else {
-            var url = this.mp.login(this.loginUrl);
-            if (url){
-                window.location.href = url;
-            }
+            this.mp.login(this.loginUrl).then( url => {
+                console.log('good' + url );
+                window.location = url;
+            });
           }
       }
+      return true;
   }
 
   isOnline() {

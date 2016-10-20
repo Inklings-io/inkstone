@@ -15,6 +15,8 @@ export class PostDetails {
     this.mp = MicropubAPI;
     this.router = Router;
     this.saved_index = -1;
+    this.notifications = [];
+    this.notifications_id= 1;
 
     this.user = this.mp.get_user();
 
@@ -29,7 +31,7 @@ export class PostDetails {
     this.originalPost = JSON.parse(JSON.stringify(this.post));
 
     this.syndication_targets =  null
-    this.mp.get_syndication_targets().then(data => 
+    this.mp.get_syndication_targets(true).then(data => 
         this.syndication_targets = data)
 
 /* //FOR DEBUGGING
@@ -62,15 +64,15 @@ export class PostDetails {
     
   }
 
-  clear_post_data(){
+  clearPostData(){
     this.saved_index = -1;
     this.post = JSON.parse(JSON.stringify(this.default_post));
     this.originalPost = JSON.parse(JSON.stringify(this.post));
   }
 
-  blank_post(){
+  blankPost(){
     this.post_config = JSON.parse(JSON.stringify(this.default_post_config));
-    this.clear_post_data();
+    this.clearPostData();
   }
 
 
@@ -120,20 +122,20 @@ export class PostDetails {
   }
 
 
-  clear_post_confirm(){
+  clearPostConfirm(){
     if(this.saved_index > -1){
         if( confirm('This will delete the saved copy. Are you sure?')) {
           this.mp.remove_saved(this.saved_index);
-          this.blank_post();
+          this.blankPost();
           this.router.navigate('/post');
         }
     } else {
         if (!areEqual(this.originalPost, this.post)){
             if( confirm('Are you sure you want to clear the post?')) {
-                this.blank_post();
+                this.blankPost();
             }
         } else {
-            this.blank_post();
+            this.blankPost();
         }
 
     }
@@ -158,12 +160,12 @@ export class PostDetails {
     }
     this.mp.save(this.post);
 
-    this.blank_post();
+    this.blankPost();
     this.router.navigate('/post');
 
   }
 
-  do_post(){
+  doPost(){
       //TODO
     if(this.saved_index > -1){
         this.mp.remove_saved(this.saved_index);
@@ -172,14 +174,14 @@ export class PostDetails {
     this.post.post_config = this.post_config;
     this.post['syndicate-to'] = this.syndicate_tos;
     this.mp.send(this.post).then(data => {
-      this.blank_post();
+      this.blankPost();
     }).catch(error => {
       delete this.post.post_config;
     });
 
   }
 
-  toggle_field(field_name){
+  toggleField(field_name){
     for(var i = 0; i < this.post_config.length; i++){
       if(this.post_config[i].name == field_name){
         this.post_config[i].shown = !this.post_config[i].shown;
@@ -189,7 +191,7 @@ export class PostDetails {
   }
 
 
-  add_list_item(field_name){
+  addListItem(field_name){
 
       for(var i = 0; i < this.post_config.length; i++){
           if(this.post_config[i].name == field_name){
@@ -202,7 +204,7 @@ export class PostDetails {
       }
   }
 
-  remove_list_item(field_name, option){
+  removeListItem(field_name, option){
 
     if (this.post.hasOwnProperty(field_name) && typeof this.post[field_name] === 'object' && this.post[field_name].constructor === Array){
 
@@ -219,6 +221,20 @@ export class PostDetails {
 
   canPost() {
     return navigator.onLine;
+  }
+
+  addNotification(message, url){
+    this.notifications.push({id:this.notifications_id, msg: message, url:url});
+    this.notifications_id += 1;
+  }
+
+  delNotification(id){
+      for(var i = 0; i < this.notifications.length; i++){
+        if(this.notifications[i].id == id){
+          this.notifications.splice(i,1);
+          break;
+        }
+      }
   }
   
 

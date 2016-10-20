@@ -10,7 +10,7 @@
   <div class="grid-container main-wrapper">
     <div class="row">
       <div class="toggle_buttons col-1">
-        <div repeat.for="field of post_config" if.bind="field.icon" class="toggle_button" click.trigger="toggle_field(field.name)">
+        <div repeat.for="field of post_config" if.bind="field.icon" class="toggle_button" click.trigger="toggleField(field.name)">
           <div class="icon ${field.shown ? 'active' : 'inactive'}">
             <img src="${field.icon}" width="50px;" />
           </div>
@@ -44,7 +44,7 @@
             </div>
 
             <div if.bind="field.type == 'list'">
-              <form submit.trigger="add_list_item(field.name)">
+              <form submit.trigger="addListItem(field.name)">
                 <div  class="col-10">
                   <input value.bind="field.adding" placeholder="${field.label}"/>
                 </div>
@@ -53,7 +53,7 @@
                 </div>
               </form>
               <ul class="col-12 list_values">
-                <li class="list_value" repeat.for="opt of post[field.name]"><a class="list_item_remove" click.delegate="remove_list_item(field.name, opt)">X</a> ${opt}</li>
+                <li class="list_value" repeat.for="opt of post[field.name]"><a class="list_item_remove" click.delegate="removeListItem(field.name, opt)">X</a> ${opt}</li>
               </ul>
             </div>
 
@@ -73,9 +73,10 @@
               <div class="col-4">
               </div>
               <div class="col-4">
-                <button click.delegate="clear_post_confirm()">Clear</button>
+                <button click.delegate="clearPostConfirm()">Clear</button>
                 <button click.delegate="save()" >Save</button>
-                <button click.trigger="do_post()" disabled.bind="!canPost()" >Post</button>
+                <button click.trigger="doPost()" disabled.bind="!canPost()" >Post</button>
+                <!-- <button click.trigger="addNotification('New Post', 'https://test.net/')"  >Test</button> -->
               </div>
               <div class="col-4">
               </div>
@@ -89,6 +90,14 @@
     </div><!-- end row -->
 
   </div> <!-- end grid container -->
+  <div class="notify-window" if.bind="notifications.length">
+    <div repeat.for="notification of notifications" class="notify">
+      <span class="close" click.trigger="delNotification(notification.id)">X</span>
+      <a if.bind="notification.url.length" href="${notification.url}">${notification.msg}</a>
+      <span if.bind="!notification.url.length">${notification.msg}</span>
+
+    </div>
+  </div>
 
 
 </template>

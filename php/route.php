@@ -33,7 +33,12 @@ if (!$micropub_endpoint) {
     $_SESSION['micropub_' . $me] = $micropub_endpoint;
 }
 
-$ch = curl_init($micropub_endpoint);
+$request_url = $micropub_endpoint;
+if(isset($_GET['q']) && !empty($_GET['q'])){
+    $request_url = $request_url . (strpos($request_url, '?') === false ? '?' : '&') . 'q='.$_GET['q'];
+}
+
+$ch = curl_init($request_url);
 
 if (!$ch) {
     header('HTTP/1.1 500 Server Error');

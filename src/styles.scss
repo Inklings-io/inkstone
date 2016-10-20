@@ -180,6 +180,36 @@ body {
     text-align:center;
   }
 
+  .notify-window {
+    position:fixed;
+    width:20%;
+    right:0;
+    bottom:0;
+    background-color: lighten($first-palette-bright, 30);
+    border-radius:20px 0 0 0;
+
+    padding: 10px 15px ;
+
+    .notify {
+      margin-bottom:4px;
+
+      .close {
+          font-size:10px;
+          float:left;
+          display:block;
+          text-align:center;
+          margin-right:10px;
+          width:14px;
+          height:14px;
+          background-color:lighten($first-palette-dark,20);
+          box-shadow: 1px 1px 1px 1px $first-palette-dark;
+          cursor:pointer;
+      }
+    }
+  }
+
+
+
 }
 
 #login_form{
@@ -246,6 +276,7 @@ body {
     border-radius:5px;
   }
 }
+
 
 //grid system
 .grid-container {
