@@ -209,6 +209,7 @@ export class MicropubAPI {
                     },
                     body: serialize({'mp-me':window.localStorage.getItem("me")})
                 }
+                ).then( resonse => resonse.json()
                 ).then( data => {
                     syndications = data['syndicate-to'];
                     window.localStorage.setItem("syndicate-to", JSON.stringify(syndications));

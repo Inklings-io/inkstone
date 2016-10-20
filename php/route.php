@@ -13,7 +13,11 @@ if(!isset($_POST['mp-me'])){
 $me = normalizeUrl($_POST['mp-me']);
 unset($_POST['mp-me']);
 
-if ( (!isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) || empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) && !isset($headers['Authorization'])) {
+if ( 
+    (!isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) || empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) 
+    && !isset($headers['Authorization'])
+    && (!isset($_SERVER['HTTP_AUTHORIZATION']) || empty($_SERVER['HTTP_AUTHORIZATION'])) 
+) {
     header('HTTP/1.1 400 Invalid Request');
     //header('HTTP/1.1 401 Unauthorized');
     exit();
@@ -21,6 +25,10 @@ if ( (!isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) || empty($_SERVER['REDIREC
 
 // NOTE: we use $bearer_string not $token here as this still include the "Bearer " part, we would just be adding it back anyway
 $bearer_string = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+if (!$bearer_string) {
+    $bearer_string = $headers['Authorization'];
+}
+$bearer_string = $_SERVER['HTTP_AUTHORIZATION'];
 if (!$bearer_string) {
     $bearer_string = $headers['Authorization'];
 }
@@ -55,7 +63,7 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 
 $response = curl_exec($ch);
 //TODO just return the result directly
-$result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//$result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 
 //$headers = array();
@@ -66,7 +74,13 @@ $body_text = substr($response, strlen($header_text));
 
 foreach (explode("\r\n", $header_text) as $i => $line){
 
-    header($line);
+    if(
+        preg_match('/^content-type:/i', $line)
+        || preg_match('/^http\//i', $line)
+        || preg_match('/^content-length/i', $line)
+    ){
+        header($line);
+    }
 
     /*
     if ($i === 0)
