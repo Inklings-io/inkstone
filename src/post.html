@@ -93,7 +93,7 @@
   <div class="notify-window" if.bind="notifications.length">
     <div repeat.for="notification of notifications" class="notify">
       <span class="close" click.trigger="delNotification(notification.id)">X</span>
-      <a if.bind="notification.url.length" href="${notification.url}">${notification.msg}</a>
+      <a if.bind="notification.url.length" href="${notification.url}" target="_blank">${notification.msg}</a>
       <span if.bind="!notification.url.length">${notification.msg}</span>
 
     </div>

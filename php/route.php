@@ -77,6 +77,7 @@ foreach (explode("\r\n", $header_text) as $i => $line){
     if(
         preg_match('/^content-type:/i', $line)
         || preg_match('/^http\//i', $line)
+        || preg_match('/^location/i', $line)
         || preg_match('/^content-length/i', $line)
     ){
         header($line);

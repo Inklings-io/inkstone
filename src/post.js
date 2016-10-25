@@ -174,6 +174,8 @@ export class PostDetails {
     this.post.post_config = this.post_config;
     this.post['mp-syndicate-to'] = this.syndicate_tos;
     this.mp.send(this.post).then(data => {
+      //console.log(data);
+      this.addNotification("New Post created", data);
       this.blankPost();
     }).catch(error => {
       delete this.post.post_config;

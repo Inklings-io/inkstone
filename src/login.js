@@ -50,4 +50,9 @@ export class Login {
   isOnline() {
     return this.debug_mode || navigator.onLine;
   }
+
+  clearMessage(){
+    this.message = '';
+
+  }
 }

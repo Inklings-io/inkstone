@@ -32,7 +32,7 @@ export class MicropubAPI {
     login(me){
         return new Promise((resolve, reject) => {
             this.get_endpoints(me).then(data => {
-                window.localStorage.setItem("mp_endpoint", data.mp_endpoint);
+                //window.localStorage.setItem("mp_endpoint", data.mp_endpoint);
 
                 
                 var state =  Math.floor(Math.random() * 100000);
@@ -89,7 +89,6 @@ export class MicropubAPI {
     }
 
     get_token(me, code, state, redirect_uri){
-        this.isRequesting = true;
         return new Promise((resolve, reject) => {
             //TODO don't use php end if possible
 
@@ -114,24 +113,20 @@ export class MicropubAPI {
                 } else {
                     reject(new Error('Error connecting to token endpoint'));
                 }
-                this.isRequesting = false;
             }).catch(error => {
                 reject(new Error('Error connecting to App Server : ' + error.message));
-                this.isRequesting = false;
             });
 
         });
 
     }
     get_endpoints(me, force=false){
-        this.isRequesting = true;
         return new Promise((resolve, reject) => {
             //TODO don't use php end if possible
 
-            var endpoints = window.localStorage.getItem("endpoints");
+            var endpoints = window.localStorage.getItem(me+":endpoints");
             if(!force && endpoints){
                 resolve(JSON.parse(endpoints));
-                this.isRequesting = false;
             } else {
                 client.fetch('php/discoverEndpoints.php',
                     {
@@ -146,13 +141,11 @@ export class MicropubAPI {
                     if(data.success){
                         resolve(data);
                     } else {
-                        window.localStorage.setItem("endpoints", JSON.stringify(data));
+                        window.localStorage.setItem(me+":endpoints", JSON.stringify(data));
                         reject(new Error('Unable to find auth endpoint'));
                     }
-                    this.isRequesting = false;
                 }).catch(error => {
                     reject(new Error('Error connecting to App Server : ' + error.message));
-                    this.isRequesting = false;
                 });
             } // else
 
@@ -161,13 +154,11 @@ export class MicropubAPI {
     }
 
     get_configs(force = false){
-        this.isRequesting = true;
         return new Promise((resolve, reject) => {
 
             mpconfigs = window.localStorage.getItem("mp-config");
             if(!force && mpconfigs){
                 resolve(JSON.parse(mpconfigs));
-                this.isRequesting = false;
             } else {
                 client.fetch('php/route.php?q=config', {
                     method: "POST",
@@ -179,11 +170,9 @@ export class MicropubAPI {
                 }
                 ).then( data => {
                     window.localStorage.setItem("mp-config", JSON.stringify(data));
-                    this.isRequesting = false;
                     resolve(data);
 
                 }).catch(error => {
-                    this.isRequesting = false;
                     reject(new Error('Error connecting to MobilePub Server : ' + error.message));
                 });
             }
@@ -193,13 +182,11 @@ export class MicropubAPI {
 
     //should prefer get_configs over this 
     get_syndication_targets(force = false){
-        this.isRequesting = true;
         return new Promise((resolve, reject) => {
 
             var syndications = window.localStorage.getItem("syndicate-to");
             if(!force && syndications){
                 resolve(JSON.parse(syndications));
-                this.isRequesting = false;
             } else {
                 client.fetch('php/route.php?q=syndicate-to', {
                     method: "POST",
@@ -213,11 +200,9 @@ export class MicropubAPI {
                 ).then( data => {
                     syndications = data['syndicate-to'];
                     window.localStorage.setItem("syndicate-to", JSON.stringify(syndications));
-                    this.isRequesting = false;
                     resolve(syndications);
 
                 }).catch(error => {
-                    this.isRequesting = false;
                     reject(new Error('Error connecting to MobilePub Server : ' + error.message));
                 });
             }
@@ -231,7 +216,7 @@ export class MicropubAPI {
             //todo, these should not be in the post directly if using endpoint directly
             //send_data.token = window.localStorage.getItem("token");
             send_data['mp-me'] = window.localStorage.getItem("me");
-            client.fetch('php/send.php', 
+            client.fetch('php/route.php', 
                 {
                     method: "POST",
                     headers: {
@@ -240,18 +225,17 @@ export class MicropubAPI {
                     },
                     body: this.prep_for_publish(send_data)
                 }
-            ).then( resonse => resonse.json()
             ).then( data => {
-                if(data.success){
-                    resolve(data.url);
-                } else {
-                    reject(new Error(data.error));
-                }
                 this.isRequesting = false;
+                if(data.ok){
+                    resolve(data.headers.get('Location'));
+                } else {
+                    reject(new Error("error Processing Send"));
+                }
 
             }).catch( error => {
-                reject( new Error('Error connecting to App Server : ' + error.message));
                 this.isRequesting = false;
+                reject( new Error('Error connecting to App Server : ' + error.message));
             });
 
         });
@@ -283,6 +267,7 @@ export class MicropubAPI {
             saved = JSON.parse(saved);
             for(var i = 0; i < saved.length; i++){
                 this.send(saved[i]);
+                //TODO log this
             }
         } 
         window.localStorage.removeItem("saved");

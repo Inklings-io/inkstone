@@ -36,12 +36,6 @@ $post_data_array = $_POST;
 if (!isset($post_data_array['h']) || empty($post_data_array['h'])) {
     $post_data_array['h'] = 'entry';
 }
-
-//todo move this to front end and structure content correctly
-if (isset($post_data_array['mp-type']) && $post_data_array['mp-type'] == 'article') {
-    $post_data_array['content']  = html_entity_decode($post_data_array['content']);
-}
-
 //todo i think i can remove this
 $syn_to_hack = '';
 if (isset($post_data_array['syndicate-to'])) {
@@ -60,10 +54,7 @@ if (!$micropub_endpoint) {
 $ch = curl_init($micropub_endpoint);
 
 if (!$ch) {
-    //$this->log->write('error with curl_init');
-    $json['success'] = false;
-    $json['error'] = 'Failure posting to your micropub endpoint.';
-    echo json_encode($json);
+    header('HTTP/1.1 500 Server Error');
     exit();
 }
 
