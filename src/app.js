@@ -5,7 +5,7 @@ export class App {
   router: Router;
 
   configureRouter(config: RouterConfiguration, router: Router){
-    config.title = 'Mobilepub';
+    config.title = 'InkStone';
     config.addAuthorizeStep(AuthorizeStep);
     config.map([
       { route: '',          moduleId: 'home',       name:'home',        title: 'Home',		  loggedIn: true  },

@@ -173,7 +173,7 @@ export class MicropubAPI {
                     resolve(data);
 
                 }).catch(error => {
-                    reject(new Error('Error connecting to MobilePub Server : ' + error.message));
+                    reject(new Error('Error connecting to InkStone Server : ' + error.message));
                 });
             }
         });
@@ -203,7 +203,7 @@ export class MicropubAPI {
                     resolve(syndications);
 
                 }).catch(error => {
-                    reject(new Error('Error connecting to MobilePub Server : ' + error.message));
+                    reject(new Error('Error connecting to InkStone Server : ' + error.message));
                 });
             }
         });
@@ -349,7 +349,7 @@ export class MicropubAPI {
 }
 
 /*
- * this is leftover from cordova days of mobilepub, need to work out how to do this all in raw JS
+ * this is leftover from cordova days of InkStone, need to work out how to do this all in raw JS
  *
  */
 /*
