@@ -6,16 +6,16 @@ var urlsToCache = [
   BASE_DIR + '/',
   BASE_DIR + '/manifest.json',
 
-  BASE_DIR + '/img/png/inkstone144.png',
-  BASE_DIR + '/img/png/inkstone192.png',
-  BASE_DIR + '/img/svg/inkstone.svg',
-  BASE_DIR + '/img/svg/inklings.svg',
+ '/img/png/inkstone144.png',
+ '/img/png/inkstone192.png',
+ '/img/svg/inkstone.svg',
+ '/img/svg/inkling.svg',
 
   BASE_DIR + '/scripts/app-bundle.js',
   BASE_DIR + '/scripts/app-bundle.js.map',
   BASE_DIR + '/scripts/require.js',
   BASE_DIR + '/scripts/text.js',
-  BASE_DIR + '/scripts/vendor-bundle.js'
+  BASE_DIR + '/scripts/vendor-bundle.js',
 
   BASE_DIR + '/icons/circle-icons/audio.svg',
   BASE_DIR + '/icons/circle-icons/bookmark.svg',
@@ -73,7 +73,7 @@ self.addEventListener('activate', function(event) {
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
-            if(cacheName !== CACHE_DIR) {
+            if(cacheName !== CACHE_NAME) {
                 return caches.delete(cacheName);
             }
         })
