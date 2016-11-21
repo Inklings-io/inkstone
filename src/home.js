@@ -40,11 +40,14 @@ export class Home{
         } else if(post['like-of']){
           post.discovered.type = 'Like';
           post.discovered.additional = post['like-of'];
-        } else if(post['video']){
+        } else if(post['video'].length != 0){
           post.discovered.type = 'Video';
           //todo
-        } else if(post['photo']){
+        } else if(post['photo'].length != 0){
           post.discovered.type = 'Photo';
+          //todo
+        } else if(post['audio'].length != 0){
+          post.discovered.type = 'Audio';
           //todo
         } else {
           post.discovered.type = 'Note';

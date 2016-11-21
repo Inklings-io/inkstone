@@ -33,6 +33,9 @@
               <!-- todo put a special case for gps to be able to fetch gps from device -->
               <input value.bind="post[field.name]" placeholder="${field.label}"/>
             </div>
+            <div  class="col-12" if.bind="field.name == 'location'">
+              <button click.delegate="getGeo()">Get GPS Coordinates</button>
+            </div>
 
             <div  if.bind="field.type == 'select'">
               <label class="col-2">${field.label}</label>
@@ -40,6 +43,14 @@
                 <select value.bind="post[field.name]" >
                   <option repeat.for="opt of field.options" value="${opt}">${opt}</option>
                 </select>
+              </div>
+            </div>
+
+            <div  if.bind="field.type == 'files'">
+              <label class="col-2">${field.label}</label>
+              <div class="col-10">
+
+                <input type="file" ${mp_config['media-endpoint'] ? 'multiple' : ''} files.bind="post[field.name]">  
               </div>
             </div>
 
@@ -59,11 +70,11 @@
 
           </div><!-- end row -->
 
-          <div class="row" if.bind="syndication_targets">
+          <div class="row" if.bind="mp_configs['syndication_targets']">
             <div class="col-12">
               <div><label>Syndicate-To:</label></div>
               <select value.bind="syndicate_tos" multiple="multitple">
-                <option repeat.for="syn of syndication_targets" value="${syn.uid}">${syn.name}</option>
+                <option repeat.for="syn of mp_configs['syndication_targets']" value="${syn.uid}">${syn.name}</option>
               </select>
             </div>
           </div>

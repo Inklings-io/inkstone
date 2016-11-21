@@ -26,8 +26,10 @@ note that some icons are not provided with InkStone.  You may want to change any
 
 ```bash
     au build
+    composer install
 ```
-This will build the scripts directory
+The au command will build the scripts directory and the composer command will build the vendor directory
+
 
 ## deploy
 The only files needed are 
@@ -38,6 +40,7 @@ The only files needed are
 * scripts/
 * php/
 * icons/
+* vendor/
 
 ## MobilePub 2 and Earlier
 

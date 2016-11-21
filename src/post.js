@@ -9,6 +9,9 @@ export class PostDetails {
   //TODO for this class
   //    add visual confirmation when things are saved, cleared, etc
   //    add ability to actually submit posts
+  //
+  //
+  //TODO add some info about if the logged in user has a media endpoint or not, so we know if we can post multiple media objects at once or not
 
   constructor(Router, MicropubAPI, Config){
     this.config = Config;
@@ -31,8 +34,13 @@ export class PostDetails {
     this.originalPost = JSON.parse(JSON.stringify(this.post));
 
     this.syndication_targets =  null
-    this.mp.get_syndication_targets().then(data => 
-        this.syndication_targets = data)
+    this.mp_configs =  null
+    this.mp.get_configs().then(data => {
+      this.syndication_targets = data['syndicate-to']
+      this.mp_configs = data
+    }).catch(error => {
+      ;
+    });
 
 /* //FOR DEBUGGING
         this.syndication_targets = [
@@ -237,6 +245,23 @@ export class PostDetails {
           break;
         }
       }
+  }
+
+  getGeo(){
+    function setPos(position){
+      console.log( 'geo:'+position.coords.latitude + "," + position.coords.longitude);
+	  this.post.location =  'geo:'+position.coords.latitude + "," + position.coords.longitude
+    }
+
+
+	navigator.geolocation.getCurrentPosition(setPos.bind(this),
+	function(message){
+      console.log(message);
+	  //error('error: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+	},
+	{
+	  maximumAge: 3000, timeout: 5000, enableHighAccuracy: false
+	});
   }
   
 
