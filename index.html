@@ -4,8 +4,8 @@
     <title>InkStone</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes" />
-    <link href="/img/png/inkstone.png" rel="icon shortcut" />
-    <link rel="apple-touch-icon-precomposed" href="/img/png/inkstone.png"/>
+    <link href="img/png/inkstone.png" rel="icon shortcut" />
+    <link rel="apple-touch-icon-precomposed" href="img/png/inkstone.png"/>
 
     
   <script>
@@ -26,6 +26,89 @@
 
   <body aurelia-app="main">
     <script src="scripts/vendor-bundle.js" data-main="aurelia-bootstrapper"></script>
-    <noscript><h1>InkStone is based on a Javascript framework.  You'll need to enable Javascript to continue.</h1></noscript>
+    <noscript>
+      <link rel="stylesheet" href='/styles.css'>
+
+
+    <header>
+        <img class="homelogo" src="img/svg/inkstone.svg"/>
+        <h1 class="hometitle">Welcome to InkStone</h1>
+    </header>
+
+    <div class="grid-container main-wrapper">
+
+      <div class="row">
+
+        <div class="col-6">
+          <h2 class="red">InkStone is based on a Javascript framework.  You'll need to enable Javascript to continue.</h2>
+        </div>
+        
+
+        <div class="col-6">
+          <h2 class="title">InkStone?</h2>
+          <p>
+          The inkstone is one of the most basic tools a writer can use.  Blocks of solid ink are ground against the stone with water creating liquid ink.  Japanese calligraphers say that one must use an inkstone to create ones own ink and infuse your spirit in to the very ink itself.  Bottled ink is easy, cheap but has no inspiration within it.
+
+          </p>
+        </div>
+
+      </div>
+      <div class="row">
+
+        <div class="col-12">
+          <h2 class="title">Unsure how to log in?</h2>
+          <p>
+          InkStone is an app designed for posting content to your own site.  To do this InkStone implementats a few simple standards.  The first is called Web Sign-In.  With only a small snippet of code, you can log in here using your website URL as your login.  The second is called <a href="http://micropub.net">Micropub</a> currently working its way through the W3C.  Micropub makes it easy to use any application to post content to your own site.  Interested? Here are some additional links to take a look at.
+          </p>
+          <ul>
+            <li>
+              <a href="http://indiewebcamp.com/How_to_set_up_web_sign-in_on_your_own_domain">What is Web Sign-In?</a>
+            </li>
+            <li>
+              <a href="http://indiewebcamp.com/Micropub">What is Micropub?</a>
+            </li>
+            <li>
+              <a href="http://indieauth.com/">IndieAuth</a>
+            </li>
+            <li>
+              <a href="http://micropub.net/">Micropub spec</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-6">
+          <h2 class="title">Source Code</h2>
+          <p>
+            InkStone is completely open source and is released under Creative Commons CC0 License.
+            Source code is freely available <a href="https://github.com/dissolve/inkstone">On GitHub</a>
+          </p>
+        </div>
+
+        <div class="col-6">
+          <h2 class="title">Issues, Comments, Feedback?</h2>
+          <p>
+            Having problems or questions, please check out the 
+            <a href="https://github.com/dissolve/inkstone/issues">Issues on GitHub</a>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-12 center">
+          <a href="https://inklings.io/"><img style="width:20px;" src="img/svg/inkling.svg"/></a>
+          InkStone is an <a href="https://inklings.io/">Inkling</a> brought to you by <a href="https://ben.thatmustbe.me">Ben Roberts</a>.
+        </div>
+      </div>
+    </div>
+
+    
+
+    </noscript>
   </body>
 </html>
