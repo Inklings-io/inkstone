@@ -10,8 +10,6 @@ export class PostDetails {
   //    add visual confirmation when things are saved, cleared, etc
   //    add ability to actually submit posts
   //
-  //
-  //TODO add some info about if the logged in user has a media endpoint or not, so we know if we can post multiple media objects at once or not
 
   constructor(Router, MicropubAPI, Config){
     this.config = Config;
