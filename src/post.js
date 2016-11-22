@@ -104,7 +104,7 @@ export class PostDetails {
 		for (var key in params) {
 
 			// skip loop if the property is from prototype
-			if (!params.hasOwnProperty(key) || !post.hasOwnProperty(key)) continue;
+			if (!params.hasOwnProperty(key) || !this.post.hasOwnProperty(key)) continue;
 
 				for(var i = 0; i < this.post_config.length; i++){
 					if(this.post_config[i].name == key){

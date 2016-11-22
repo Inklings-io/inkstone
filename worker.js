@@ -1,4 +1,4 @@
-var CACHE_NAME = 'inkstone-v1.0.2';
+var CACHE_NAME = 'inkstone-v1.0.5';
 var BASE_DIR = '/inkstone';
 
 // The files we want to cache

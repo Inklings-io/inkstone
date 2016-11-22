@@ -30,7 +30,6 @@ note that some icons are not provided with InkStone.  You may want to change any
 ```
 The au command will build the scripts directory and the composer command will build the vendor directory
 
-
 ## deploy
 The only files needed are 
 
@@ -41,6 +40,14 @@ The only files needed are
 * php/
 * icons/
 * vendor/
+
+## Prefilled Posts
+
+InkStone will automatically populate any field given in the URL.  As such you can use tools such as URL-Forwarder on mobile to allow for using the Share menu
+Some examples would be
+
+* https://inklings.io/inkstone/#/post?like-of=@url
+* https://inklings.io/inkstone/#/post?in-reply-to=@url
 
 ## MobilePub 2 and Earlier
 
