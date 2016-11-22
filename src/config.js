@@ -33,7 +33,10 @@ export class Config {
          'repost-of'      : '',
          'slug'           : '',
          'summary'        : '',
-         'tag-of'         : [] 
+         'tag-of'         : [],
+         'photo'          : [],
+         'video'          : [],
+         'audio'          : []
     };
     this.preset_fields = [
         { 
@@ -101,6 +104,42 @@ export class Config {
           label: 'Location',
           type: 'string',
           icon: 'icons/circle-icons/location.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
+          shown: false,
+          always_send: false
+        },
+        { 
+          name: 'photo',
+          label: 'Photo',
+          type: 'files',
+          icon: 'icons/circle-icons/photo.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
+          shown: false,
+          always_send: false
+        },
+        { 
+          name: 'video',
+          label: 'Video',
+          type: 'files',
+          icon: 'icons/circle-icons/film.svg',
+          adding: '',
+          adding_option: '',
+          options: [],
+          custom: false,
+          shown: false,
+          always_send: false
+        },
+        { 
+          name: 'audio',
+          label: 'Audio',
+          type: 'files',
+          icon: 'icons/circle-icons/audio.svg',
           adding: '',
           adding_option: '',
           options: [],
