@@ -34,25 +34,33 @@ export class MicropubAPI {
             this.get_endpoints(me).then(data => {
                 //window.localStorage.setItem("mp_endpoint", data.mp_endpoint);
 
+                if(data.success){
                 
-                var state =  Math.floor(Math.random() * 100000);
-                window.localStorage.setItem("state", state);
-                window.localStorage.setItem("me", me);
+                    var state =  Math.floor(Math.random() * 100000);
+                    window.localStorage.setItem("state", state);
+                    window.localStorage.setItem("me", me);
 
-                var url = data.auth_endpoint +
-                    (data.auth_endpoint.indexOf('?') > -1 ? '&' : '?' ) +
-                    serialize({
-                        me: me,
-                        redirect_uri: this.config.get('redirect_uri'),
-                        response_type: 'id',
-                        state: state,
-                        client_id: this.config.get('client_id'),
-                        scope: this.config.get('scope'),
-                        response_type: 'code'
-                    });
+                    var url = data.auth_endpoint +
+                        (data.auth_endpoint.indexOf('?') > -1 ? '&' : '?' ) +
+                        serialize({
+                            me: me,
+                            redirect_uri: this.config.get('redirect_uri'),
+                            response_type: 'id',
+                            state: state,
+                            client_id: this.config.get('client_id'),
+                            scope: this.config.get('scope'),
+                            response_type: 'code'
+                        });
 
-               resolve(url);
+                   resolve(url);
+                } else {
+                    reject(new Error(data.error));
+                }
+            })
+            .catch( error => { 
+                reject(new Error(error.message));
             });
+            //
         });
     }
 

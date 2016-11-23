@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "version": "1.0.7",
+    "version": "1.0.8",
     "name": "InkStone",
     "short_name": "InkStone",
     "default_locale": "en",

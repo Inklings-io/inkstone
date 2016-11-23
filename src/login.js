@@ -41,6 +41,9 @@ export class Login {
             this.mp.login(this.loginUrl).then( url => {
                 console.log('good' + url );
                 window.location = url;
+            })
+            .catch( error => { 
+                this.message = 'Login Error: ' + error.message;
             });
           }
       }
