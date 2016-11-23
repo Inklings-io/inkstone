@@ -22,6 +22,19 @@
         </div>
       </div>
 
+      <div if.bind="saved_post_list.length > 0 && canPost()" href="#" click.trigger="post_all()" class="col-6">
+        <div class="grid-container card">
+          <a class="row" click.trigger="postAll()">
+            <div class="x-sm-col-1 sm-col-1 col-2">
+              <img src="icons/circle-icons/recycle.svg"/>
+            </div>
+            <div class="x-sm-col-3 sm-col-5 col-10">
+              <span class="menu-label">Post All Saved Items</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
 
       <div repeat.for="post of saved_post_list" class="col-6">
         <div class="grid-container card saved-card">
@@ -45,18 +58,6 @@
         </div>
       </div>
 
-      <div if.bind="saved_post_list.length > 0 && canPost()" href="#" click.trigger="post_all()" class="col-6">
-        <div class="grid-container card">
-          <div class="row">
-            <div class="x-sm-col-1 sm-col-1 col-2">
-              <img src="icons/circle-icons/recycle.svg"/>
-            </div>
-            <div class="x-sm-col-3 sm-col-5 col-10">
-              <span class="menu-label">Post All Saved Items</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
       <div class="col-6">

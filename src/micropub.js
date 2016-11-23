@@ -156,7 +156,7 @@ export class MicropubAPI {
     get_configs(force = false){
         return new Promise((resolve, reject) => {
 
-            mpconfigs = window.localStorage.getItem("mp-config");
+            var mpconfigs = window.localStorage.getItem("mp-config");
             if(!force && mpconfigs){
                 resolve(JSON.parse(mpconfigs));
             } else {
@@ -168,6 +168,7 @@ export class MicropubAPI {
                     },
                     body: serialize({'mp-me':window.localStorage.getItem("me")})
                 }
+                ).then( resonse => resonse.json()
                 ).then( data => {
                     window.localStorage.setItem("mp-config", JSON.stringify(data));
                     resolve(data);

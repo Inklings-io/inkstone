@@ -71,4 +71,10 @@ export class Home{
     return navigator.onLine;
   }
 
+  postAll() {
+    this.mp.send_all_saved();
+    this.saved_post_list = [];
+    
+  }
+
 }

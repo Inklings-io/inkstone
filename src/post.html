@@ -70,11 +70,11 @@
 
           </div><!-- end row -->
 
-          <div class="row" if.bind="mp_configs['syndication_targets']">
+          <div class="row" if.bind="mp_configs['syndicate-to']">
             <div class="col-12">
               <div><label>Syndicate-To:</label></div>
               <select value.bind="syndicate_tos" multiple="multitple">
-                <option repeat.for="syn of mp_configs['syndication_targets']" value="${syn.uid}">${syn.name}</option>
+                <option repeat.for="syn of mp_configs['syndicate-to']" value="${syn.uid}">${syn.name}</option>
               </select>
             </div>
           </div>

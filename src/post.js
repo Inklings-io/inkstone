@@ -31,13 +31,13 @@ export class PostDetails {
 
     this.originalPost = JSON.parse(JSON.stringify(this.post));
 
-    this.syndication_targets =  null
+    //this.syndication_targets =  null
     this.mp_configs =  null
     this.mp.get_configs().then(data => {
-      this.syndication_targets = data['syndicate-to']
+      //this.syndication_targets = data['syndicate-to']
       this.mp_configs = data
     }).catch(error => {
-      ;
+      console.log(error);
     });
 
 /* //FOR DEBUGGING
@@ -172,7 +172,7 @@ export class PostDetails {
   }
 
   doPost(){
-      //TODO
+      //TODO this needs some sort of loading UI
     if(this.saved_index > -1){
         this.mp.remove_saved(this.saved_index);
         this.saved_index = -1;
