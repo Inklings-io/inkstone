@@ -10,8 +10,6 @@ export class PostDetails {
   //    add visual confirmation when things are saved, cleared, etc
   //    add ability to actually submit posts
   //
-  //
-  //TODO add some info about if the logged in user has a media endpoint or not, so we know if we can post multiple media objects at once or not
 
   constructor(Router, MicropubAPI, Config){
     this.config = Config;
@@ -33,13 +31,13 @@ export class PostDetails {
 
     this.originalPost = JSON.parse(JSON.stringify(this.post));
 
-    this.syndication_targets =  null
+    //this.syndication_targets =  null
     this.mp_configs =  null
     this.mp.get_configs().then(data => {
-      this.syndication_targets = data['syndicate-to']
+      //this.syndication_targets = data['syndicate-to']
       this.mp_configs = data
     }).catch(error => {
-      ;
+      console.log(error);
     });
 
 /* //FOR DEBUGGING
@@ -106,7 +104,7 @@ export class PostDetails {
 		for (var key in params) {
 
 			// skip loop if the property is from prototype
-			if (!params.hasOwnProperty(key) || !post.hasOwnProperty(key)) continue;
+			if (!params.hasOwnProperty(key) || !this.post.hasOwnProperty(key)) continue;
 
 				for(var i = 0; i < this.post_config.length; i++){
 					if(this.post_config[i].name == key){
@@ -174,7 +172,7 @@ export class PostDetails {
   }
 
   doPost(){
-      //TODO
+      //TODO this needs some sort of loading UI
     if(this.saved_index > -1){
         this.mp.remove_saved(this.saved_index);
         this.saved_index = -1;

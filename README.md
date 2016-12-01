@@ -11,7 +11,6 @@ cd into the main directory
     npm install aurelia-cli -g
     npm install
 ```
-
 This will install the client libraries in their correct locations.
 
 ## Configure
@@ -20,16 +19,16 @@ edit src/config.js and set te client_id and redirect_uri value.
 
 edit worker.js and set the BASE_DIR to whatever the web addressable path to this directlry is
 
-note that some icons are not provided with InkStone.  You may want to change any references to "/svg/", "/png/", and "/ico/" to suit your needs.
-
 ## build
 
 ```bash
     au build
     composer install
+    sass src/styles.scss > styles.css
 ```
-The au command will build the scripts directory and the composer command will build the vendor directory
-
+The au command will build the scripts directory which is the core javascript needed to run the app.
+The composer command will build the vendor directory which is used by the php folder on the server.
+The sass command builds an extra copy of the stylesheets, this is needed for those visiting the page without js.
 
 ## deploy
 The only files needed are 
@@ -41,6 +40,14 @@ The only files needed are
 * php/
 * icons/
 * vendor/
+
+## Prefilled Posts
+
+InkStone will automatically populate any field given in the URL.  As such you can use tools such as URL-Forwarder on mobile to allow for using the Share menu
+Some examples would be
+
+* https://inklings.io/inkstone/#/post?like-of=@url
+* https://inklings.io/inkstone/#/post?in-reply-to=@url
 
 ## MobilePub 2 and Earlier
 

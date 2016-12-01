@@ -1,18 +1,18 @@
 {
     "manifest_version": 2,
-    "version": "1.0.2",
+    "version": "1.0.8",
     "name": "InkStone",
     "short_name": "InkStone",
     "default_locale": "en",
     "description": "micropub posting application",,
     "icons": [
         {
-            "src": "/img/png/inkstone192.png",
+            "src": "img/png/inkstone192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/img/png/inkstone144.png",
+            "src": "img/png/inkstone144.png",
             "sizes": "144x144",
             "type": "image/png"
         }

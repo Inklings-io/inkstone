@@ -1,4 +1,4 @@
-var CACHE_NAME = 'inkstone-v1.0.2';
+var CACHE_NAME = 'inkstone-v1.0.8';
 var BASE_DIR = '/inkstone';
 
 // The files we want to cache
@@ -6,10 +6,10 @@ var urlsToCache = [
   BASE_DIR + '/',
   BASE_DIR + '/manifest.json',
 
- '/img/png/inkstone144.png',
- '/img/png/inkstone192.png',
- '/img/svg/inkstone.svg',
- '/img/svg/inkling.svg',
+  BASE_DIR + '/img/png/inkstone144.png',
+  BASE_DIR + '/img/png/inkstone192.png',
+  BASE_DIR + '/img/svg/inkstone.svg',
+  BASE_DIR + '/img/svg/inkling.svg',
 
   BASE_DIR + '/scripts/app-bundle.js',
   BASE_DIR + '/scripts/app-bundle.js.map',
