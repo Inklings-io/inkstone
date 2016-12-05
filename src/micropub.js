@@ -225,7 +225,7 @@ export class MicropubAPI {
             //todo, these should not be in the post directly if using endpoint directly
             //send_data.token = window.localStorage.getItem("token");
             send_data['mp-me'] = window.localStorage.getItem("me");
-            client.fetch('php/route.php', 
+            client.fetch('php/post.php', 
                 {
                     method: "POST",
                     headers: {
@@ -345,8 +345,14 @@ export class MicropubAPI {
               } else if(typeof obj[key] === 'string'){
                   str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
               } else if(typeof obj[key] === 'object' && obj[key].constructor === Array){
-                  for(var i = 0; i < obj[key].length; i++){
-                      str.push(encodeURIComponent(key) + "[]=" + encodeURIComponent(obj[key][i]));
+                  if(key == 'photo' || key == 'audio' || key == 'video'){ 
+                      for(var i = 0; i < obj[key].length; i++){
+                          str.push(encodeURIComponent(key) + "[]=" + JSON.stringify(obj[key][i]));
+                      }
+                  } else {
+                      for(var i = 0; i < obj[key].length; i++){
+                          str.push(encodeURIComponent(key) + "[]=" + encodeURIComponent(obj[key][i]));
+                      }
                   }
               }
             }

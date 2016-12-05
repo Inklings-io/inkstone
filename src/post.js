@@ -27,6 +27,15 @@ export class PostDetails {
     this.post = JSON.parse(JSON.stringify(this.default_post));
     this.post_config = JSON.parse(JSON.stringify(this.default_post_config));
 
+    var files = {};
+
+    for(let i = 0; i < this.post_config.length; i++){
+      if(this.post_config[i].type == 'files'){
+        files[this.post_config[i]['name']] = [];
+      }
+    }
+    this.files = files;
+
     this.syndicate_tos = [];
 
     this.originalPost = JSON.parse(JSON.stringify(this.post));
@@ -74,6 +83,15 @@ export class PostDetails {
     this.saved_index = -1;
     this.post = JSON.parse(JSON.stringify(this.default_post));
     this.originalPost = JSON.parse(JSON.stringify(this.post));
+
+    this.files = {};
+
+    for(var i = 0; i < this.post_config.length; i++){
+      if(this.post_config[i].type == 'files'){
+        this.files[this.post_config[i]['name']] = [];
+      }
+    }
+
   }
 
   blankPost(){
@@ -95,6 +113,14 @@ export class PostDetails {
           this.syndicate_tos = this.post['mp-syndicate-to'];
           delete this.post['mp-syndicate-to'];
           this.originalPost = JSON.parse(JSON.stringify(this.post));
+
+          this.files = {};
+          for(var i = 0; i < this.post_config.length; i++){
+            if(this.post_config[i].type == 'files'){
+              this.files[this.post_config[i]['name']] = [];
+            }
+          }
+
         } else {
           this.blank_post(); //not needed?
           this.router.navigate('/post');
@@ -261,7 +287,28 @@ export class PostDetails {
 	  maximumAge: 3000, timeout: 5000, enableHighAccuracy: false
 	});
   }
-  
+
+  logit(obj){
+    console.log(obj);
+  }
+
+  addFile(field_name){
+
+    if(this.files[field_name]){
+      for(var i = 0; i < this.files[field_name].length; i++){
+        let itm = this.files[field_name].item(i);
+        let fr = new FileReader();
+        console.log(itm);
+        console.log(fr);
+        fr.onload = function(e) {
+          console.log(fr.result);
+          this.post[field_name].push( {'src' : fr.result, 'size': itm.size, 'lastModified': itm.lastModified, 'type': itm.type, 'name': itm.name} );
+        }.bind(this);
+        fr.readAsDataURL(itm);
+      }
+      this.files[field_name] = [];
+    }
+  }
 
 }
 

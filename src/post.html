@@ -50,8 +50,17 @@
               <label class="col-2">${field.label}</label>
               <div class="col-10">
 
-                <input type="file" ${mp_config['media-endpoint'] ? 'multiple' : ''} files.bind="post[field.name]">  
+                <input type="file" ${mp_config['media-endpoint'] ? 'multiple' : ''} files.bind="files[field.name]">  
+                  <button click.delegate="addFile(field.name)" >add</button>
               </div>
+
+              <ul>
+                <li repeat.for="file of post[field.name]">
+                  <h1>${file.name}: ${file.type} ${file.size / 1000} kb</h1>
+                  <img src.bind="file.src " />
+                  <h3>Last Modified: ${file.lastModified}</h3>
+                </li>
+              </ul>
             </div>
 
             <div if.bind="field.type == 'list'">

@@ -68,7 +68,7 @@ $response = curl_exec($ch);
 
 //$headers = array();
 
-//should use header lenth
+//should use header length
 $header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
 $body_text = substr($response, strlen($header_text));
 
