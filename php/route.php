@@ -6,7 +6,7 @@ require '../vendor/autoload.php';
 
 $me = getMe();
 $bearer_string = getBearerString();
-$micropub_endpoint = getMicropubEndoint($me);
+$micropub_endpoint = getMicropubEndpoint($me);
 
 $request_url = $micropub_endpoint;
 if(isset($_GET['q']) && !empty($_GET['q'])){

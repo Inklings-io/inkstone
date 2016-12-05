@@ -73,7 +73,7 @@ function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
         // generate safe boundary
         do {
             $boundary = "---------------------" . md5(mt_rand() . microtime());
-        } while (preg_grep("/{$boundary}/", $filename.$filedata));
+        } while (preg_match("/{$boundary}/", $filename.$filedata));
     
 
         $headers = array('Content-Type:multipart/form-data; boundary='.$boundary,
@@ -93,7 +93,8 @@ function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
 		$options = array(
 			CURLOPT_URL => $media_endpoint,
 			CURLOPT_HEADER => true,
-			CURLOPT_POST => 1,
+			CURLOPT_VERBOSE => true,
+			CURLOPT_POST => true,
 			CURLOPT_HTTPHEADER => $headers,
 			CURLOPT_POSTFIELDS => $postfields,
 			CURLOPT_RETURNTRANSFER => true
@@ -106,8 +107,10 @@ function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
 			$info = curl_getinfo($ch);
 			if ($info['http_code'] == 201){
 				$errmsg = "File uploaded successfully";
-				$header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
-				$body_text = substr($response, strlen($header_text));
+
+                $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+				$header_text = substr($response, 0, $header_size);
+				$body_text = substr($response, $header_size);
 
 				foreach (explode("\r\n", $header_text) as $i => $line){
 
@@ -133,9 +136,9 @@ function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
 }
 
 //TODO
-function multipartPost($endpoint, $bearer_string, $post_data, $media_fields) 
+function multipartPost($target, $bearer_string, $post_data, $media_fields) 
 {
-    $ch = curl_init($micropub_endpoint);
+    $ch = curl_init($target);
 
     if (!$ch) {
         header('HTTP/1.1 500 Server Error');
@@ -154,9 +157,9 @@ function multipartPost($endpoint, $bearer_string, $post_data, $media_fields)
     return $response;
 }
 
-function standardPost($endpoint, $bearer_string, $post_data = null) 
+function standardPost($target, $bearer_string, $post_data = null) 
 {
-    $ch = curl_init($micropub_endpoint);
+    $ch = curl_init($target);
 
     if (!$ch) {
         header('HTTP/1.1 500 Server Error');
@@ -165,6 +168,7 @@ function standardPost($endpoint, $bearer_string, $post_data = null)
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: ' . $bearer_string));
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_HEADER, true);
     if($post_data){
         curl_setopt($ch, CURLOPT_POST, true);
@@ -172,20 +176,21 @@ function standardPost($endpoint, $bearer_string, $post_data = null)
     }
 
     $response = curl_exec($ch);
-    return $response;
+
+    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $header_text = substr($response, 0, $header_size);
+    $body_text = substr($response, $header_size);
+
+    return array('header' => $header_text, 'body' => $body_text);
 }
 
-function returnResponse($response)
+function returnResponse($response_obj)
 {
     //TODO just return the result directly
-    //$result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
+    $header_text = $response_obj['header'];
+    $body_text = $response_obj['body'];
 
-    //$headers = array();
-
-    //should use header length
-    $header_text = substr($response, 0, strpos($response, "\r\n\r\n"));
-    $body_text = substr($response, strlen($header_text));
 
     foreach (explode("\r\n", $header_text) as $i => $line){
 
