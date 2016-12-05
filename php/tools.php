@@ -14,7 +14,6 @@ function normalizeUrl($url)
 function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
 
     $split = explode(';base64,', $media_data['src']);
-
     $encoded_data = str_replace(' ','+',$split[1]);
     $filedata = base64_decode($encoded_data);
 
@@ -23,26 +22,23 @@ function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
 	if ($filedata != '')
 	{
 
-//TODO make this safe
-$boundary = md5($filedata);
-
-// generate safe boundary
-    do {
-        $boundary = "---------------------" . md5(mt_rand() . microtime());
-    } while (preg_grep("/{$boundary}/", $filename.$filedata));
+        // generate safe boundary
+        do {
+            $boundary = "---------------------" . md5(mt_rand() . microtime());
+        } while (preg_grep("/{$boundary}/", $filename.$filedata));
     
 
         $headers = array('Content-Type:multipart/form-data; boundary='.$boundary,
                          'Authorization: ' . $bearer_string
             ); // cURL headers for file uploading
 
-$postfields = '--'.$boundary.'
-Content-Disposition: form-data; name="file"; filename="'.$filename.'"
-Content-Type: '.$media_data['type'].'
-Content-Transfer-Encoding: binary
-
-'.$filedata.'
---'.$boundary.'--';
+        $postfields = '--'.$boundary.                                                           "\n" .
+                      'Content-Disposition: form-data; name="file"; filename="'.$filename.'"' . "\n" .
+                      'Content-Type: '.$media_data['type'] .                                    "\n" .
+                      'Content-Transfer-Encoding: binary' .                                     "\n" .
+                                                                                                "\n" .
+                      $filedata .                                                               "\n" .
+                      '--'.$boundary.'--';
 
 
 		$ch = curl_init();

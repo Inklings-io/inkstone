@@ -90,13 +90,21 @@ if( $has_media_set ) {
                     $_POST[$media_type] = array();
                     foreach($media_data as $media_object){
                         $decoded_object = json_decode($media_object, true);
-                        $_POST[$media_type][] = $decoded_object['src'];
+                    //TODO: not sure if this will work or not
+    $split = explode(';base64,', $decoded_object['src']);
+    $encoded_data = str_replace(' ','+',$split[1]);
+    $filedata = base64_decode($encoded_data);
+                        $_POST[$media_type][] = $filedata;
 
                     }
 
                 } else { //not at array
                     $decoded_object = json_decode($media_data, true);
-                    $_POST[$media_type][] = $decoded_object['src'];
+                    //TODO: not sure if this will work or not
+    $split = explode(';base64,', $decoded_object['src']);
+    $encoded_data = str_replace(' ','+',$split[1]);
+    $filedata = base64_decode($encoded_data);
+                    $_POST[$media_type][] = $filedata;
                 }
 
             } else { //we have a media endpoint
