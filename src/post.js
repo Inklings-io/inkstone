@@ -44,9 +44,14 @@ export class PostDetails {
     this.mp_configs =  null
     this.mp.get_configs().then(data => {
       //this.syndication_targets = data['syndicate-to']
-      this.mp_configs = data
+      this.mp_configs = data;
     }).catch(error => {
-      console.log(error);
+        this.mp.get_syndication_targets().then(data => {
+          //this.syndication_targets = data['syndicate-to']
+          this.mp_configs = {'syndicate-to' : data};
+        }).catch(error => {
+          console.log(error);
+        });
     });
 
 /* //FOR DEBUGGING
