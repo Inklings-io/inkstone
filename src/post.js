@@ -309,24 +309,12 @@ export class PostDetails {
       this.files[field_name] = [];
     }
   }
+  
+  removeFile(field_name, index) {
+    if(this.post[field_name] && this.post[field_name][index]) {
+        this.post[field_name].splice(index, 1);
+    } 
 
-}
+  } 
 
-export class FileListToArrayValueConverter{
-    toView(fileList){
-        let files = [];
-        if (!fileList){
-            return files;
-        }
-        for(let i = 0; i < fileList.length; i++){
-            files.push(fileList.item(i));
-        }
-        return files;
-    }
-}
-
-export class BlobToUrlValueConverter{
-    toView(blob){
-        return URL.createObjectURL( blob);
-    }
 }

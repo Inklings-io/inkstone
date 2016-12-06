@@ -8,6 +8,7 @@
 
 
 
+  <div class="main-wrapper main-menu">
 
     <div class="grid-container setting_box" repeat.for="field of settings.default_post_config" >
 
@@ -77,7 +78,7 @@
             </div>
           </form>
           <ul class="col-12 list_values">
-            <li class="list_value" repeat.for="opt of field.options"><a class="list_item_remove" click.delegate="remove_selection_item(field.name, opt)">X</a> ${opt}</li>
+            <li class="list_value" repeat.for="opt of field.options"><a class="list_item_remove" click.delegate="remove_selection_item(field.name, opt)">X</a> <span>${opt}</span></li>
           </ul>
         </div>
         <!-- if type = 'select' -->
@@ -122,5 +123,7 @@
         </div>
       </div><!-- end row -->
     </div> <!-- end grid container -->
+
+  </div> <!-- main container -->
 
 </template>

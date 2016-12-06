@@ -324,15 +324,18 @@ body {
     list-style-type: none;
     .list_value {
         float:left;
-        background-color:white;
-        border-radius:20px;
-        padding:4px 6px;
-        border: 1px solid gray;
+        background-color:$first-palette-white;
+        border-radius:3px;
+        border: 1px solid $first-palette-bright;
         margin-right:5px;
-
+        padding:3px 0;
+        span {
+          padding:4px 7px 4px 4px;
+        }
+        //TODO: make this an icon or something
         .list_item_remove {
-            background-color:gray;
-            border-radius:20px;
+            background-color:$first-palette-bright;
+            padding:4px;
             height:10px;
             width:10px;
             overflow:hidden;
@@ -340,6 +343,36 @@ body {
         }
     }
 }
+
+.upload_objects {
+    list-style-type: none;
+    li {
+      float:left;
+      background-color:$first-palette-white;
+      border-radius:3px;
+      border: 1px solid $first-palette-bright;
+      margin-right:5px;
+      padding:3px 3px 3px 0;
+      text-align:center;
+      div {
+        font-weight:bold;
+        .list_item_remove {
+            background-color:$first-palette-bright;
+            border-radius:3px 0;
+            padding:4px;
+            height:10px;
+            width:10px;
+            overflow:hidden;
+            cursor:pointer;
+        }
+      }
+      img {
+        max-width:50px;
+        max-height:50px;
+      }
+    }
+}
+
 
 .main-menu {
   .card {

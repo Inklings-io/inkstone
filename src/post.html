@@ -47,18 +47,17 @@
             </div>
 
             <div  if.bind="field.type == 'files'">
-              <label class="col-2">${field.label}</label>
-              <div class="col-10">
-
-                <input type="file" ${mp_config['media-endpoint'] ? 'multiple' : ''} files.bind="files[field.name]">  
-                  <button click.delegate="addFile(field.name)" >add</button>
+              <div class="col-12">
+                <input class="file_input" type="file" multiple files.bind="files[field.name]" change.delegate="addFile(field.name)">  
               </div>
 
-              <ul>
+              <ul class="upload_objects col-12">
                 <li repeat.for="file of post[field.name]">
-                  <h1>${file.name}: ${file.type} ${file.size / 1000} kb</h1>
-                  <img src.bind="file.src " />
-                  <h3>Last Modified: ${file.lastModified}</h3>
+                  <div>
+                    <a class="list_item_remove" click.delegate="removeFile(field.name, $index)">X</a>
+                    ${file.name}
+                  </div>
+                  <img if.bind="field.name == 'photo'" src.bind="file.src " />
                 </li>
               </ul>
             </div>
@@ -73,7 +72,10 @@
                 </div>
               </form>
               <ul class="col-12 list_values">
-                <li class="list_value" repeat.for="opt of post[field.name]"><a class="list_item_remove" click.delegate="removeListItem(field.name, opt)">X</a> ${opt}</li>
+                <li class="list_value" repeat.for="opt of post[field.name]">
+                  <a class="list_item_remove" click.delegate="removeListItem(field.name, opt)">X</a>
+                  <span>${opt}</span>
+                </li>
               </ul>
             </div>
 
