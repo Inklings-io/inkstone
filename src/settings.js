@@ -16,7 +16,27 @@ export class Settings {
       default_post_config: this.config.get('default_post_config'),
     }
 
+    this.software_version = this.config.get('software_version');
+
     this.user = this.mp.get_user();
+
+    this.mp_configs =  null
+    this.mp.get_configs().then(data => {
+      if(!data){
+        this.mp.get_configs(true,true).then(data => {
+          this.mp_configs = data;
+        }).catch(error => {
+            console.log(error);
+        });
+      }
+      this.mp_configs = data;
+    }).catch(error => {
+        this.mp.get_configs(true,true).then(data => {
+          this.mp_configs = data;
+        }).catch(error => {
+            console.log(error);
+        });
+    });
 
     this.originalSettings = JSON.parse(JSON.stringify(this.settings));
   }
@@ -145,5 +165,23 @@ export class Settings {
     }
   }
 
+  update_mp_configs(){
+    this.mp.get_configs(true).then(data => {
+      if(!data){
+        this.mp.get_configs(true,true).then(data => {
+          this.mp_configs = data;
+        }).catch(error => {
+            console.log(error);
+        });
+      }
+      this.mp_configs = data;
+    }).catch(error => {
+        this.mp.get_configs(true,true).then(data => {
+          this.mp_configs = data;
+        }).catch(error => {
+            console.log(error);
+        });
+    });
+  }
 
 }

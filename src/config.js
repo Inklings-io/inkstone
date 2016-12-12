@@ -2,6 +2,9 @@ export class Config {
 
 
   constructor(){
+
+    this.software_version = '1.1.4';
+
     this.client_id = 'https://inklings.io/inkstone/';
     this.redirect_uri = 'https://inklings.io/inkstone/';
 

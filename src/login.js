@@ -39,7 +39,7 @@ export class Login {
             window.location.href = '/';
           } else {
             this.mp.login(this.loginUrl).then( url => {
-                console.log('good' + url );
+                //console.log('good' + url );
                 window.location = url;
             })
             .catch( error => { 

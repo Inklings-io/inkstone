@@ -40,48 +40,23 @@ export class PostDetails {
 
     this.originalPost = JSON.parse(JSON.stringify(this.post));
 
-    //this.syndication_targets =  null
     this.mp_configs =  null
     this.mp.get_configs().then(data => {
-      //this.syndication_targets = data['syndicate-to']
+      if(!data){
+        this.mp.get_configs(true,true).then(data => {
+          this.mp_configs = data;
+        }).catch(error => {
+            console.log(error);
+        });
+      }
       this.mp_configs = data;
     }).catch(error => {
-        this.mp.get_syndication_targets().then(data => {
-          //this.syndication_targets = data['syndicate-to']
-          this.mp_configs = {'syndicate-to' : data};
+        this.mp.get_configs(true,true).then(data => {
+          this.mp_configs = data;
         }).catch(error => {
-          console.log(error);
+            console.log(error);
         });
     });
-
-/* //FOR DEBUGGING
-        this.syndication_targets = [
-    {
-      "uid": "https://archive.org/",
-      "name": "archive.org"
-    },
-    {
-      "uid": "https://wikimedia.org/",
-      "name": "WikiMedia"
-    },
-    {
-      "uid": "https://myfavoritesocialnetwork.example/aaronpk",
-      "name": "aaronpk on myfavoritesocialnetwork",
-      "service": {
-        "name": "My Favorite Social Network",
-        "url": "https://myfavoritesocialnetwork.example/",
-        "photo": "https://myfavoritesocialnetwork.example/img/icon.png"
-      },
-      "user": {
-        "name": "aaronpk",
-        "url": "https://myfavoritesocialnetwork.example/aaronpk",
-        "photo": "https://myfavoritesocialnetwork.example/aaronpk/photo.jpg"
-      }
-    }
-  ];
-*/
-
-    
   }
 
   clearPostData(){

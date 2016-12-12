@@ -92,6 +92,26 @@
     </div><!-- grid-container -->
 
 
+    <div class="grid-container setting_box">
+      <div class="row settings_option">
+
+        <div class="right col-4">
+          <label>Syndication Targets</label>
+        </div>
+
+        <div class="left col-4">
+
+          <ul if.bind="mp_configs['syndicate-to']">
+            <li repeat.for="syn of mp_configs['syndicate-to']" >${syn.name}</li>
+          </ul>
+        </div>
+
+        <div class="left col-4">
+          <button click.delegate="update_mp_configs()">Force Refresh</button>
+        </div>
+
+      </div>
+    </div><!-- grid-container -->
 
     <div class="grid-container setting_box">
       <div class="row settings_option">
@@ -123,6 +143,11 @@
         </div>
       </div><!-- end row -->
     </div> <!-- end grid container -->
+
+    <div class="center">
+      InkStone ${software_version} by <a href="https://ben.thatmustbe.me" target="_blank">Ben Roberts</a>
+    </div>
+
 
   </div> <!-- main container -->
 

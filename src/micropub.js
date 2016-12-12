@@ -114,7 +114,7 @@ export class MicropubAPI {
                         redirect_uri: redirect_uri
                     })
                 }
-            ).then( resonse => resonse.json()
+            ).then( response => response.json()
             ).then( data => {
                 if(data.success){
                     resolve(data);
@@ -144,7 +144,7 @@ export class MicropubAPI {
                         },
                         body: serialize({me: me})
                     }
-                ).then( resonse => resonse.json()
+                ).then( response => response.json()
                 ).then( data => {
                     if(data.success){
                         resolve(data);
@@ -161,14 +161,14 @@ export class MicropubAPI {
 
     }
 
-    get_configs(force = false){
+    get_configs(force = false, syndicate_to_only = false){
         return new Promise((resolve, reject) => {
 
             var mpconfigs = window.localStorage.getItem("mp-config");
             if(!force && mpconfigs){
                 resolve(JSON.parse(mpconfigs));
             } else {
-                client.fetch('php/route.php?q=config', {
+                client.fetch('php/route.php?q='+ (syndicate_to_only ? 'syndicate-to' : 'config'), {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -176,41 +176,10 @@ export class MicropubAPI {
                     },
                     body: serialize({'mp-me':window.localStorage.getItem("me")})
                 }
-                ).then( resonse => resonse.json()
+                ).then( response => response.json()
                 ).then( data => {
                     window.localStorage.setItem("mp-config", JSON.stringify(data));
                     resolve(data);
-
-                }).catch(error => {
-                    reject(new Error('Error connecting to InkStone Server : ' + error.message));
-                });
-            }
-        });
-
-    }
-
-    //should prefer get_configs over this 
-    get_syndication_targets(force = false){
-        return new Promise((resolve, reject) => {
-
-            var syndications = window.localStorage.getItem("syndicate-to");
-            if(!force && syndications){
-                resolve(JSON.parse(syndications));
-            } else {
-                client.fetch('php/route.php?q=syndicate-to', {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
-                    },
-                    body: serialize({'mp-me':window.localStorage.getItem("me")})
-                }
-                ).then( resonse => resonse.json()
-                ).then( data => {
-                    syndications = data['syndicate-to'];
-                    window.localStorage.setItem("syndicate-to", JSON.stringify(syndications));
-                    resolve(syndications);
-
                 }).catch(error => {
                     reject(new Error('Error connecting to InkStone Server : ' + error.message));
                 });
