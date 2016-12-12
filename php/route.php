@@ -12,9 +12,15 @@ $request_url = $micropub_endpoint;
 if(isset($_GET['q']) && !empty($_GET['q'])){
     $request_url = $request_url . (strpos($request_url, '?') === false ? '?' : '&') . 'q='.$_GET['q'];
 }
-
+$additional_headers = array();
+if($_SERVER['CONTENT_TYPE']){
+    $additional_headers[] = 'Content-Type:'. $_SERVER['CONTENT_TYPE'];
+}
+if($_SERVER['HTTP_ACCEPT']){
+    $additional_headers[] = 'Accept:'. $_SERVER['HTTP_ACCEPT'];
+}
 $post_data = http_build_query($_POST);
-$response = standardPost($request_url, $bearer_string, $post_data);
+$response = standardPost($request_url, $bearer_string, $post_data, $additional_headers);
 
 returnResponse($response);
 

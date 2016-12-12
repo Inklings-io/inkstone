@@ -157,7 +157,7 @@ function multipartPost($target, $bearer_string, $post_data, $media_fields)
     return $response;
 }
 
-function standardPost($target, $bearer_string, $post_data = null) 
+function standardPost($target, $bearer_string, $post_data = null, $additional_headers = null) 
 {
     $ch = curl_init($target);
 
@@ -167,7 +167,7 @@ function standardPost($target, $bearer_string, $post_data = null)
     }
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: ' . $bearer_string));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge(array('Authorization: ' . $bearer_string), $additional_headers));
     curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_HEADER, true);
     if($post_data){

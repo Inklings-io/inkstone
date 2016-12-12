@@ -171,6 +171,7 @@ export class MicropubAPI {
                 client.fetch('php/route.php?q='+ (syndicate_to_only ? 'syndicate-to' : 'config'), {
                     method: "POST",
                     headers: {
+                        'Accept': 'application/json',
                         'Content-Type': 'application/x-www-form-urlencoded',
                         'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     },
