@@ -157,7 +157,7 @@ function multipartPost($target, $bearer_string, $post_data, $media_fields)
     return $response;
 }
 
-function standardPost($target, $bearer_string, $post_data = null, $additional_headers = null) 
+function standardPost($target, $bearer_string, $post_data = null, $additional_headers = array()) 
 {
     $ch = curl_init($target);
 
