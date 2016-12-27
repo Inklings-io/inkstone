@@ -7,7 +7,20 @@ require '../vendor/autoload.php';
 //TODO put this in configs?
 $media_types = ['photo', 'video', 'audio'];
 
-$me = getMe();
+$encoding = 'form';
+try {
+	$input_post_data = json_decode(file_get_contents('php://input'), true);
+    if(empty($input_post_data)){
+        $input_post_data = $_POST;
+    } else {
+        $encoding = 'JSON';
+    }
+} catch (Exception $e){
+	$input_post_data = $_POST;
+}
+
+
+$me = getMe($input_post_data);
 $bearer_string = getBearerString();
 $micropub_endpoint = getMicropubEndpoint($me);
 
@@ -15,12 +28,12 @@ $micropub_endpoint = getMicropubEndpoint($me);
 
 $has_media_set = false;
 foreach($media_types as $media_type){
-    if(isset($_POST[$media_type])){
+    if(isset($input_post_data[$media_type])){
         $has_media_set = true;
     }
 }
 
-$post_array = $_POST;
+$post_array = $input_post_data;
 if( $has_media_set ) {
 
     //get config
@@ -73,8 +86,16 @@ if( $has_media_set ) {
     } //end foreach media type 
 }
 
-$post_data = http_build_query($post_array);
+$post_data = '';
+$additional_headers = array();
+if($encoding == 'form'){
+	$post_data = http_build_query($input_post_data);
+    $additional_headers[] = 'Content-Type: application/x-www-form-urlencoded';
+} else {
+	$post_data = json_encode($input_post_data);
+    $additional_headers[] = 'Content-Type: application/json';
+}
 
-$response = standardPost($micropub_endpoint, $bearer_string, $post_data);
+$response = standardPost($micropub_endpoint, $bearer_string, $post_data, $additional_headers);
 returnResponse($response);
 

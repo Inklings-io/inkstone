@@ -195,11 +195,17 @@ export class MicropubAPI {
             //todo, these should not be in the post directly if using endpoint directly
             //send_data.token = window.localStorage.getItem("token");
             send_data['mp-me'] = window.localStorage.getItem("me");
+            var encoding = this.config.get('post_encoding');
+            var content_type = 'application/x-www-form-urlencoded';
+            if(encoding == 'JSON'){
+                content_type = 'application/json';
+            }
+            console.log(content_type);
             client.fetch('php/post.php', 
                 {
                     method: "POST",
                     headers: {
-                        'Content-Type' : 'application/x-www-form-urlencoded',
+                        'Content-Type' : content_type,
                         'Authorization': 'Bearer ' + window.localStorage.getItem("token")
                     },
                     body: this.prep_for_publish(send_data)
@@ -209,11 +215,13 @@ export class MicropubAPI {
                 if(data.ok){
                     resolve(data.headers.get('Location'));
                 } else {
+                    console.log('error A11 ' + data.status + ' ' + data.statusText);
                     reject(new Error("error Processing Send"));
                 }
 
             }).catch( error => {
                 this.isRequesting = false;
+                console.log('error A12');
                 reject( new Error('Error connecting to App Server : ' + error.message));
             });
 
@@ -303,31 +311,39 @@ export class MicropubAPI {
             }
         }
 
+        var encoding = this.config.get('post_encoding');
+        if(encoding == 'JSON'){
+            console.log('debug1');
+            var res = JSON.stringify(obj);
+            console.log(res);
+            return res;
+        } else {
+            console.log('debug2');
+            var str = [];
 
-        var str = [];
+            for(var key in obj) {
 
-        for(var key in obj) {
+                if (obj.hasOwnProperty(key)) {
 
-            if (obj.hasOwnProperty(key)) {
-
-              if(!obj[key]){
-                 ; //do nothing 
-              } else if(typeof obj[key] === 'string'){
-                  str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-              } else if(typeof obj[key] === 'object' && obj[key].constructor === Array){
-                  if(key == 'photo' || key == 'audio' || key == 'video'){ 
-                      for(var i = 0; i < obj[key].length; i++){
-                          str.push(encodeURIComponent(key) + "[]=" + JSON.stringify(obj[key][i]));
-                      }
-                  } else {
-                      for(var i = 0; i < obj[key].length; i++){
-                          str.push(encodeURIComponent(key) + "[]=" + encodeURIComponent(obj[key][i]));
+                  if(!obj[key]){
+                     ; //do nothing 
+                  } else if(typeof obj[key] === 'string'){
+                      str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+                  } else if(typeof obj[key] === 'object' && obj[key].constructor === Array){
+                      if(key == 'photo' || key == 'audio' || key == 'video'){ 
+                          for(var i = 0; i < obj[key].length; i++){
+                              str.push(encodeURIComponent(key) + "[]=" + JSON.stringify(obj[key][i]));
+                          }
+                      } else {
+                          for(var i = 0; i < obj[key].length; i++){
+                              str.push(encodeURIComponent(key) + "[]=" + encodeURIComponent(obj[key][i]));
+                          }
                       }
                   }
-              }
+                }
             }
+          return str.join("&");
         }
-      return str.join("&");
         
     }
     

@@ -12,6 +12,7 @@ export class Settings {
 
     this.settings = {
       scope: this.config.get('scope'),
+      post_encoding: this.config.get('post_encoding'),
       default_post: this.config.get('default_post'),
       default_post_config: this.config.get('default_post_config'),
     }
@@ -86,6 +87,7 @@ export class Settings {
 
     this.settings = {
       scope: this.config.get('scope'),
+      post_encoding: this.config.get('post_encoding'),
       default_post: this.config.get('default_post'),
       default_post_config: this.config.get('default_post_config'),
     }

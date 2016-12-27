@@ -9,16 +9,16 @@ function normalizeUrl($url)
     return $url;
 }
 
-function getMe()
+function getMe(&$obj)
 {
-    if(!isset($_POST['mp-me'])){
+    if(!isset($obj['mp-me'])){
         header('HTTP/1.1 400 Invalid Request');
         exit();
     }
     //this should be the only difference if we are sending to our local copy and not the live user micropub endpoint dierectly
     // so its important that we unset mp-me when we forward the request
-    $me = normalizeUrl($_POST['mp-me']);
-    unset($_POST['mp-me']);
+    $me = normalizeUrl($obj['mp-me']);
+    unset($obj['mp-me']);
 
     return $me;
 }

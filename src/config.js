@@ -3,7 +3,9 @@ export class Config {
 
   constructor(){
 
-    this.software_version = '1.1.6';
+    this.software_version = '1.1.7';
+
+    this.post_encoding = 'form';
 
     this.client_id = 'https://inklings.io/inkstone/';
     this.redirect_uri = 'https://inklings.io/inkstone/';
