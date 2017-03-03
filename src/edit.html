@@ -1,0 +1,125 @@
+<template>
+  <header>
+      <a class="back-icon" route-href="route:home;"><img src="icons/circle-icons/uparrow.svg"/></a>
+      <h1 class="title">Create Post</h1>
+      <div class="user"><img src="icons/circle-icons/person.svg"/><span>${user}</span></div>
+      <div style="clear:both;"></div>
+  </header>
+
+
+  <div class="grid-container main-wrapper">
+    <div class="row">
+      <div class="toggle_buttons col-1">
+        <div repeat.for="field of post_config" if.bind="field.icon" class="toggle_button" click.trigger="toggleField(field.name)">
+          <div class="icon ${field.shown ? 'active' : 'inactive'}">
+            <img src="${field.icon}" width="50px;" />
+          </div>
+          <div class="label">${field.name}</div>
+        </div>
+      </div>
+
+      <div class="col-11 sm-col-5 x-sm-col-3">
+        <div class="post_inputs grid-container">
+
+          <div class="row" repeat.for="field of post_config" hidden.bind='!field.shown' >
+
+
+            <div class="col-12" if.bind="field.type == 'text'">
+              <!-- todo put a special case for content to allow html? -->
+              <textarea placeholder="${field.label}" value.bind="post[field.name]" ></textarea>
+            </div>
+
+            <div  class="col-12" if.bind="field.type == 'string'">
+              <!-- todo put a special case for gps to be able to fetch gps from device -->
+              <input value.bind="post[field.name]" placeholder="${field.label}"/>
+            </div>
+            <div  class="col-12" if.bind="field.name == 'location'">
+              <button click.delegate="getGeo()">Get GPS Coordinates</button>
+            </div>
+
+            <div  if.bind="field.type == 'select'">
+              <label class="col-2">${field.label}</label>
+              <div class="col-10">
+                <select value.bind="post[field.name]" >
+                  <option repeat.for="opt of field.options" value="${opt}">${opt}</option>
+                </select>
+              </div>
+            </div>
+
+            <div  if.bind="field.type == 'files'">
+              <div class="col-12">
+                <input class="file_input" type="file" multiple files.bind="files[field.name]" change.delegate="addFile(field.name)">  
+              </div>
+
+              <ul class="upload_objects col-12">
+                <li repeat.for="file of post[field.name]">
+                  <div>
+                    <a class="list_item_remove" click.delegate="removeFile(field.name, $index)">X</a>
+                    ${file.name}
+                  </div>
+                  <img if.bind="field.name == 'photo'" src.bind="file.src " />
+                </li>
+              </ul>
+            </div>
+
+            <div if.bind="field.type == 'list'">
+              <form submit.trigger="addListItem(field.name)">
+                <div  class="col-10">
+                  <input value.bind="field.adding" placeholder="${field.label}"/>
+                </div>
+                <div  class="col-2">
+                  <button type="submit">Add</button>
+                </div>
+              </form>
+              <ul class="col-12 list_values">
+                <li class="list_value" repeat.for="opt of post[field.name]">
+                  <a class="list_item_remove" click.delegate="removeListItem(field.name, opt)">X</a>
+                  <span>${opt}</span>
+                </li>
+              </ul>
+            </div>
+
+          </div><!-- end row -->
+
+          <div class="row" if.bind="mp_configs['syndicate-to']">
+            <div class="col-12">
+              <div><label>Syndicate-To:</label></div>
+              <select value.bind="syndicate_tos" multiple="multitple">
+                <option repeat.for="syn of mp_configs['syndicate-to']" value="${syn.uid}">${syn.name}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="control-buttons">
+              <div class="col-4">
+              </div>
+              <div class="col-4">
+                <button click.delegate="clearPostConfirm()">Clear</button>
+                <button click.delegate="save()" >Save</button>
+                <button click.trigger="doPost()" disabled.bind="!canPost()" >Post</button>
+                <!-- <button click.trigger="addNotification('New Post', 'https://test.net/')"  >Test</button> -->
+              </div>
+              <div class="col-4">
+              </div>
+            </div>
+          </div><!-- end row -->
+
+        </div> <!-- end grid container -->
+
+      </div> <!-- end col-11 -->
+
+    </div><!-- end row -->
+
+  </div> <!-- end grid container -->
+  <div class="notify-window" if.bind="notifications.length">
+    <div repeat.for="notification of notifications" class="notify">
+      <span class="close" click.trigger="delNotification(notification.id)">X</span>
+      <a if.bind="notification.url.length" href="${notification.url}" target="_blank">${notification.msg}</a>
+      <span if.bind="!notification.url.length">${notification.msg}</span>
+
+    </div>
+  </div>
+
+
+</template>
