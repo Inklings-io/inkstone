@@ -8,12 +8,15 @@ export class App {
     config.title = 'InkStone';
     config.addAuthorizeStep(AuthorizeStep);
     config.map([
-      { route: '',          moduleId: 'home',       name:'home',        title: 'Home',		  loggedIn: true  },
-      { route: 'home',      moduleId: 'home',                           title: 'Home',		  loggedIn: true  },
-      { route: 'login',     moduleId: 'login',      name:'login',       title: 'Login',		  loggedOut: true },
-      { route: 'settings',  moduleId: 'settings',   name:'settings',    title: 'Settings',	  loggedIn: true  },
-      { route: 'post/:num', moduleId: 'post',       name:'post',		title: 'Edit Post',   loggedIn: true  },
-      { route: 'post',      moduleId: 'post',       name:'newpost',	    title: 'Create Post', loggedIn: true  }
+      { route: '',                            moduleId: 'home',       name:'home',        title: 'Home',        loggedIn: true  },
+      { route: 'home',                        moduleId: 'home',                           title: 'Home',        loggedIn: true  },
+      { route: 'login',                       moduleId: 'login',      name:'login',       title: 'Login',       loggedOut: true },
+      { route: 'settings',                    moduleId: 'settings',   name:'settings',    title: 'Settings',    loggedIn: true  },
+      { route: 'post/:num',                   moduleId: 'post',       name:'post',        title: 'Edit Post',   loggedIn: true  },
+      { route: 'post',                        moduleId: 'post',       name:'newpost',     title: 'Create Post', loggedIn: true  },
+      { route: 'edit/url/:url',               moduleId: 'edit',       name:'editpost',    title: "Edit Post",   loggedIn: true  },
+      { route: 'edit/field/:field/url/:url',  moduleId: 'edit',       name:'editpost',    title: "Edit Field",  loggedIn: true  }
+
     ]);
 
     this.router = router;

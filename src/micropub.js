@@ -346,6 +346,34 @@ export class MicropubAPI {
         }
         
     }
+
+    fetch_source(url, field = null){
+        fields_query = ''
+        if(field && field != ''){
+            fields_query = '&properties[]=' + field;
+        } 
+
+
+        this.isRequesting = true;
+        return new Promise((resolve, reject) => {
+
+            client.fetch('php/route.php?q=source'+ field_query + '&url=' + url, {
+                method: "POST",
+                headers: {
+                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                },
+                body: serialize({'mp-me':window.localStorage.getItem("me")})
+            }).then( response => response.json()
+            ).then( data => {
+                //console.log(data)
+                resolve(data);
+            }).catch(error => {
+                reject(new Error('Error connecting to InkStone Server : ' + error.message));
+            });
+
+        });
+    
+    }
     
 }
 
