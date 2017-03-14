@@ -7,7 +7,11 @@ require '../vendor/autoload.php';
 $encoding = 'form';
 try {
 	$input_post_data = json_decode(file_get_contents('php://input'), true);
-	$encoding = 'JSON';
+    if(!empty($input_post_data)){
+        $encoding = 'JSON';
+    } else {
+        $input_post_data = $_POST;
+    }
 } catch (Exception $e){
 	$input_post_data = $_POST;
 }

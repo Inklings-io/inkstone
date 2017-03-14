@@ -250,7 +250,7 @@ export class Config {
         } 
     ];
 
-    this.preset_scope = 'post';
+    this.preset_scope = 'create';
 
     if(!window.localStorage.getItem('settings_default_post')){
         window.localStorage.setItem('settings_default_post', JSON.stringify(this.preset_post));
