@@ -6,6 +6,7 @@ export class App {
 
   configureRouter(config: RouterConfiguration, router: Router){
     config.title = 'InkStone';
+    config.pushState = true;
     config.addAuthorizeStep(AuthorizeStep);
     config.map([
       { route: '',                            moduleId: 'home',       name:'home',        title: 'Home',        loggedIn: true  },
@@ -14,8 +15,7 @@ export class App {
       { route: 'settings',                    moduleId: 'settings',   name:'settings',    title: 'Settings',    loggedIn: true  },
       { route: 'post/:num',                   moduleId: 'post',       name:'post',        title: 'Edit Post',   loggedIn: true  },
       { route: 'post',                        moduleId: 'post',       name:'newpost',     title: 'Create Post', loggedIn: true  },
-      { route: 'edit/url/:url',               moduleId: 'edit',       name:'editpost',    title: "Edit Post",   loggedIn: true  },
-      { route: 'edit/field/:field/url/:url',  moduleId: 'edit',       name:'editpost',    title: "Edit Field",  loggedIn: true  }
+      { route: 'edit',                        moduleId: 'edit',       name:'editpost',    title: "Edit Post",   loggedIn: true  }
 
     ]);
 

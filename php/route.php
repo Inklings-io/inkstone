@@ -18,9 +18,11 @@ $bearer_string = getBearerString();
 $micropub_endpoint = getMicropubEndpoint($me);
 
 $request_url = $micropub_endpoint;
-if(isset($_GET['q']) && !empty($_GET['q'])){
-    $request_url = $request_url . (strpos($request_url, '?') === false ? '?' : '&') . 'q='.$_GET['q'];
+
+if(isset($_GET) && !empty($_GET)){
+    $request_url = $request_url . (strpos($request_url, '?') === false ? '?' : '&') . http_build_query($_GET);
 }
+
 $additional_headers = array();
 if($_SERVER['CONTENT_TYPE']){
     $additional_headers[] = 'Content-Type:'. $_SERVER['CONTENT_TYPE'];

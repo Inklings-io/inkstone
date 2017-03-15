@@ -119,10 +119,10 @@ export class MicropubAPI {
                 if(data.success){
                     resolve(data);
                 } else {
-                    reject(new Error('Error connecting to token endpoint'));
+                    reject(new Error('E2: Error connecting to token endpoint'));
                 }
             }).catch(error => {
-                reject(new Error('Error connecting to App Server : ' + error.message));
+                reject(new Error('E3: Error connecting to App Server : ' + error.message));
             });
 
         });
@@ -153,7 +153,7 @@ export class MicropubAPI {
                         reject(new Error('Unable to find auth endpoint'));
                     }
                 }).catch(error => {
-                    reject(new Error('Error connecting to App Server : ' + error.message));
+                    reject(new Error('E4: Error connecting to App Server : ' + error.message));
                 });
             } // else
 
@@ -182,7 +182,7 @@ export class MicropubAPI {
                     window.localStorage.setItem("mp-config", JSON.stringify(data));
                     resolve(data);
                 }).catch(error => {
-                    reject(new Error('Error connecting to InkStone Server : ' + error.message));
+                    reject(new Error('E5: Error connecting to InkStone Server : ' + error.message));
                 });
             }
         });
@@ -222,7 +222,7 @@ export class MicropubAPI {
             }).catch( error => {
                 this.isRequesting = false;
                 console.log('error A12');
-                reject( new Error('Error connecting to App Server : ' + error.message));
+                reject( new Error('E6: Error connecting to App Server : ' + error.message));
             });
 
         });
@@ -348,7 +348,7 @@ export class MicropubAPI {
     }
 
     fetch_source(url, field = null){
-        fields_query = ''
+        var fields_query = ''
         if(field && field != ''){
             fields_query = '&properties[]=' + field;
         } 
@@ -357,18 +357,19 @@ export class MicropubAPI {
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
 
-            client.fetch('php/route.php?q=source'+ field_query + '&url=' + url, {
-                method: "POST",
-                headers: {
-                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")
-                },
-                body: serialize({'mp-me':window.localStorage.getItem("me")})
+            client.fetch('php/test/query_source.php?q=source'+ fields_query + '&url=' + url, {
+            //client.fetch('php/route.php?q=source'+ fields_query + '&url=' + url, {
+                method: "POST"//,
+                //headers: {
+                    //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                //},
+                //body: serialize({'mp-me':window.localStorage.getItem("me")})
             }).then( response => response.json()
             ).then( data => {
                 //console.log(data)
                 resolve(data);
             }).catch(error => {
-                reject(new Error('Error connecting to InkStone Server : ' + error.message));
+                reject(new Error('E1: Error connecting to InkStone Server : ' + error.message));
             });
 
         });

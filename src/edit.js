@@ -6,31 +6,23 @@ import {Router} from 'aurelia-router';
 export class EditDetails {
   static inject() { return [Router, MicropubAPI, Config]; }
 
-  //TODO for this class
-  //    add visual confirmation when things are saved, cleared, etc
-  //    add ability to actually submit posts
-  //
 
   constructor(Router, MicropubAPI, Config){
     this.config = Config;
     this.mp = MicropubAPI;
     this.router = Router;
-    this.saved_index = -1;
     this.notifications = [];
     this.notifications_id= 1;
 
     this.user = this.mp.get_user();
 
-    this.default_post = this.config.get('default_post');
     this.default_post_config = this.config.get('default_post_config');
     
-    this.post = JSON.parse(JSON.stringify(this.default_post));
     this.post_config = JSON.parse(JSON.stringify(this.default_post_config));
 
-    this.syndicate_tos = [];
+    //this.syndicate_tos = [];
 
-    this.originalPost = JSON.parse(JSON.stringify(this.post));
-
+    /*
     this.mp_configs =  null
     this.mp.get_configs().then(data => {
       if(!data){
@@ -48,41 +40,60 @@ export class EditDetails {
             console.log(error);
         });
     });
+    */
   }
 
   clearPostData(){
-    this.saved_index = -1;
-    this.post = JSON.parse(JSON.stringify(this.default_post));
-    this.originalPost = JSON.parse(JSON.stringify(this.post));
-
+    this.post = JSON.parse(JSON.stringify(this.originalPost));
   }
 
   blankPost(){
-    this.post_config = JSON.parse(JSON.stringify(this.default_post_config));
     this.clearPostData();
   }
 
 
   activate(params, routeConfig) {
     this.routeConfig = routeConfig;
-
-    field_name = '';
-    if(params.field){
-      field_name = params.field
+    
+    var field_names = '';
+    if(params.properties){
+      field_names = params.properties
     }
+      //this.toggleField('content');
+      //
 
     if(params.url){
 
-        var recalled = this.mp.fetch_source(params.url, field_name);
-        if(recalled){
-          this.post = recalled.properties;
-          this.originalPost = JSON.parse(JSON.stringify(this.post));
+        this.post = {};
 
-        } else {
+        this.mp.fetch_source(params.url, field_names).then(data => {
+            //console.log('sucessfully recalled ' + JSON.stringify(data));
+            var keys = Object.keys(data['properties']);
+
+            console.log(JSON.stringify(keys));
+            //console.log(JSON.stringify(this.post_config));
+            
+            for(var i = 0; i < this.post_config.length; i++){
+              this.post_config[i].shown = false;
+            }
+
+            for(var i = 0; i < keys.length; i++){
+              var field_name = keys[i];
+              this.toggleField(field_name);
+
+              this.post[field_name] = data['properties'][field_name][0];
+            }
+            //foreach(data.properties as 
+            this.post = data['properties'];
+            this.originalPost = JSON.parse(JSON.stringify(this.post));
+        }).catch( error => {
+          console.log('routing away from edit, T1 ' + error);
           //TODO: some sort of session error message
           this.router.navigate('/post');
-        }
+        });
+
     } else {
+          console.log('routing away from edit, T2');
         //TODO: some sort of session error message?
         this.router.navigate('/post');
     }
@@ -92,27 +103,16 @@ export class EditDetails {
 
 
   clearPostConfirm(){
-    if(this.saved_index > -1){
-        if( confirm('This will delete the saved copy. Are you sure?')) {
-          this.mp.remove_saved(this.saved_index);
-          this.blankPost();
-          this.router.navigate('/post');
-        }
-    } else {
-        if (!areEqual(this.originalPost, this.post)){
-            if( confirm('Are you sure you want to clear the post?')) {
-                this.blankPost();
-            }
-        } else {
+    if (!areEqual(this.originalPost, this.post)){
+        if( confirm('Are you sure you want to reset this edit?')) {
             this.blankPost();
         }
-
     }
   }
 
   canDeactivate() {
     if (!areEqual(this.originalPost, this.post)){
-      return confirm('You have unsaved changes. Are you sure you wish to leave?');
+      return confirm('You have  changes. Are you sure you wish to leave?');
     }
 
     return true;
@@ -120,13 +120,8 @@ export class EditDetails {
 
 
   doPost(){
-    //TODO this needs some sort of loading UI
-    if(this.saved_index > -1){
-      this.mp.remove_saved(this.saved_index);
-      this.saved_index = -1;
-    }
     this.post.post_config = this.post_config;
-    this.post['mp-syndicate-to'] = this.syndicate_tos;
+    //this.post['mp-syndicate-to'] = this.syndicate_tos;
     this.mp.send(this.post).then(data => {
       //console.log(data);
       this.addNotification("New Post created", data);
@@ -134,6 +129,15 @@ export class EditDetails {
     }).catch(error => {
       delete this.post.post_config;
     });
+  }
+
+  toggleField(field_name){
+    for(var i = 0; i < this.post_config.length; i++){
+      if(this.post_config[i].name == field_name){
+        this.post_config[i].shown = !this.post_config[i].shown;
+        break;
+      }
+    }
   }
 
   addListItem(field_name){
@@ -167,21 +171,7 @@ export class EditDetails {
     return navigator.onLine;
   }
 
-  addNotification(message, url){
-    this.notifications.push({id:this.notifications_id, msg: message, url:url});
-    this.notifications_id += 1;
-  }
-
-  delNotification(id){
-      for(var i = 0; i < this.notifications.length; i++){
-        if(this.notifications[i].id == id){
-          this.notifications.splice(i,1);
-          break;
-        }
-      }
-  }
-
-  getGeo(){
+ getGeo(){
     function setPos(position){
       console.log( 'geo:'+position.coords.latitude + "," + position.coords.longitude);
       this.post.location =  'geo:'+position.coords.latitude + "," + position.coords.longitude
