@@ -67,14 +67,22 @@ if( $has_media_set ) {
                 if(is_array($media_data)){
                     $media_urls = array();
                     foreach($media_data as $media_object){
-                        $media_object = json_decode($media_object, true);
+                        if(!is_array($media_object)){
+                            $media_object = json_decode($media_object, true);
+                        }
+                        //debug_log($media_object['src']);
                         $media_loc = uploadToMediaEndpoint($config['media-endpoint'],$bearer_string,  $media_object);
                         if($media_loc){
                             $media_urls[] = $media_loc;
                         }
                         
                     }
-                    $post_array[$media_type] = $media_urls; 
+                    if(sizeof($media_urls) == 1){
+                        $post_array[$media_type] = $media_urls[0]; 
+                    } else {
+                        $post_array[$media_type] = $media_urls; 
+                    }
+
                 } else {
                     $media_data = json_decode($media_data, true);
                     $post_array[$media_type] = uploadToMediaEndpoint($config['media-endpoint'],$bearer_string,  $media_data);
@@ -89,10 +97,16 @@ if( $has_media_set ) {
 $post_data = '';
 $additional_headers = array();
 if($encoding == 'form'){
-	$post_data = http_build_query($input_post_data);
+    //debug_log('form');
+    //debug_log($post_array);
+	$post_data = http_build_query($post_array);
+    $post_data = preg_replace('/%5B[0-9]+%5D/simU', '[]', $post_data);
+    //debug_log($post_data);
     $additional_headers[] = 'Content-Type: application/x-www-form-urlencoded';
 } else {
-	$post_data = json_encode($input_post_data);
+    //debug_log(print_r($post_array,true));
+	$post_data = json_encode(transform_json_post($post_array));
+    //debug_log($post_data);
     $additional_headers[] = 'Content-Type: application/json';
 }
 

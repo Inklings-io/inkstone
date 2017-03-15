@@ -217,3 +217,29 @@ function returnResponse($response_obj)
     echo $body_text;
 }
 
+function debug_log($content){
+    file_put_contents('log.txt', 
+        date("Y-m-d H:i:s - ")  .$content . "\n",
+        FILE_APPEND);
+}
+
+function transform_json_post($old_format){
+    $result_obj = array('type' => array(), 'properties' => array());
+    if(isset($old_format['h'])){
+        $result_obj['type'][] = 'h-' . $old_format['h'];
+        unset($old_format['h']);
+    }
+    foreach($old_format as $key => $val){
+        if(!empty($val)){
+            if(is_array($val)){
+                $result_obj['properties'][$key] = $val;
+            } else {
+                $result_obj['properties'][$key] = array($val);
+            }
+        }
+    }
+
+    return $result_obj;
+
+}
+

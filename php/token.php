@@ -34,9 +34,21 @@ function getToken($me, $code, $redir, $client_id, $state = null)
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 
     $response = curl_exec($ch);
+    $curl_info = curl_getinfo($ch);
+    curl_close($ch);
+
+    //debug_log(print_r($curl_info, true));
+
+    //$this->log->write('response from Auth endpoint: ' . $response);
 
     $results = array();
-    parse_str($response, $results);
+    if($curl_info['content_type'] == 'application/json'){
+        $results = json_decode($response, true);
+    } else {
+        parse_str($response, $results);
+    }
+
+    //debug_log(print_r($results, true));
 
     return $results;
 }
