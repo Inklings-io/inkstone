@@ -5,7 +5,7 @@ export class Login {
   static inject() { return [Router, MicropubAPI]; }
 
   constructor(Router, MicropubAPI){
-    this.debug_mode = true;
+    this.debug_mode = false;
     this.loginUrl = "";
     this.mp = MicropubAPI;
     this.router = Router;

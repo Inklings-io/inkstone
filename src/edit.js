@@ -16,9 +16,7 @@ export class EditDetails {
 
     this.user = this.mp.get_user();
 
-    this.default_post_config = this.config.get('default_post_config');
-    
-    this.post_config = JSON.parse(JSON.stringify(this.default_post_config));
+    this.post_config = this.config.get('default_post_config');
 
     //this.syndicate_tos = [];
 
@@ -48,6 +46,7 @@ export class EditDetails {
   }
 
   blankPost(){
+    this.post_config = JSON.parse(JSON.stringify(this.originalPostConfig));
     this.clearPostData();
   }
 
@@ -65,27 +64,50 @@ export class EditDetails {
     if(params.url){
 
         this.post = {};
+        this.url = params.url;
 
         this.mp.fetch_source(params.url, field_names).then(data => {
             //console.log('sucessfully recalled ' + JSON.stringify(data));
             var keys = Object.keys(data['properties']);
 
-            console.log(JSON.stringify(keys));
+            //console.log(JSON.stringify(keys));
             //console.log(JSON.stringify(this.post_config));
             
+            this.post = {};
             for(var i = 0; i < this.post_config.length; i++){
               this.post_config[i].shown = false;
             }
 
             for(var i = 0; i < keys.length; i++){
               var field_name = keys[i];
-              this.toggleField(field_name);
 
-              this.post[field_name] = data['properties'][field_name][0];
+              var entry = data['properties'][field_name];
+
+              //TODO if this is an array of one item (string field) we need to clean this up
+              for(var j = 0; j < this.post_config.length; j++){
+                  if(this.post_config[j].name == field_name){
+                      this.post_config[j].shown = true;
+                    if( this.post_config[j].type == 'string' || 
+                        this.post_config[j].type == 'text' ||
+                        this.post_config[j].type == 'select') {
+
+                        if( typeof entry === 'object' && entry.constructor === Array){
+                            entry = entry[0];
+                        }
+                    }
+                  }
+              }
+                console.log(JSON.stringify(entry));
+              this.post[field_name] = entry;
+                console.log(JSON.stringify(this.post[field_name]));
+                console.log(JSON.stringify(this.post));
+
+
+
             }
-            //foreach(data.properties as 
-            this.post = data['properties'];
+            //this.post = data['properties'];
             this.originalPost = JSON.parse(JSON.stringify(this.post));
+            this.originalPostConfig = JSON.parse(JSON.stringify(this.post_config));
         }).catch( error => {
           console.log('routing away from edit, T1 ' + error);
           //TODO: some sort of session error message
@@ -120,15 +142,148 @@ export class EditDetails {
 
 
   doPost(){
-    this.post.post_config = this.post_config;
-    //this.post['mp-syndicate-to'] = this.syndicate_tos;
-    this.mp.send(this.post).then(data => {
-      //console.log(data);
-      this.addNotification("New Post created", data);
-      this.blankPost();
-    }).catch(error => {
-      delete this.post.post_config;
-    });
+    var edit_obj =  this.prepForPost();
+    if(edit_obj){
+        this.mp.send_edit(edit_obj).then(data => {
+          console.log(data);
+          //this.addNotification("Post Updated", data);
+          this.blankPost();
+        }).catch(error => {
+          delete this.post.post_config;
+        });
+    }
+  }
+
+  prepForPost() {
+
+    var result_obj = {
+        'action': 'update',
+        'url': this.url
+        };
+
+    var deletes = [];
+    var removes = {};
+    var adds = {};
+    var replaces = {};
+
+    var deletes_tainted = false;
+    var adds_tainted = false;
+    var replaces_tainted = false;
+
+    var only_array_replaces = true;
+
+    //console.log(JSON.stringify(this.post_config));
+    for(var i = 0; i < this.post_config.length; i++){
+      var field_name = this.post_config[i].name;
+      if(this.post_config[i].shown){
+          if(this.originalPost.hasOwnProperty(field_name)){
+              if(JSON.stringify(this.originalPost[field_name]) != JSON.stringify(this.post[field_name])){
+                  if(this.post[field_name] == null || this.post[field_name] == '' || this.post[field_name] == []){
+                      deletes_tainted = true;
+                      deletes.push(field_name);
+                  } else {
+                      replaces_tainted = true;
+                      if (typeof this.post[field_name] === 'object' && this.post[field_name].constructor === Array){
+                          replaces[field_name] = this.post[field_name];
+                      } else {
+                          replaces[field_name] = [this.post[field_name]];
+                          only_array_replaces = false;
+                      }
+                  }
+              }
+              //might be updating
+          } else {
+              if(this.post[field_name] != null && this.post[field_name] != '' && this.post[field_name] != []){
+                  adds_tainted = true;
+
+                  if (typeof this.post[field_name] === 'object' && this.post[field_name].constructor === Array){
+                      adds[field_name] = this.post[field_name];
+                  } else {
+                      adds[field_name] = [this.post[field_name]];
+                  }
+              }
+          }
+
+      } else if (this.originalPost.hasOwnProperty(field_name) ) {
+          //item is not shown and the original post had it
+          deletes_tainted = true;
+          deletes.push(field_name);
+      }
+    }
+
+
+    if(!deletes_tainted && !adds_tainted && !replaces_tainted){
+        return null;
+    }
+    if(!deletes_tainted && !adds_tainted && replaces_tainted && only_array_replaces){
+        var keys = Object.keys(replaces);
+        for(var i = 0; i < keys.length; i++){
+            var field_name = keys[i];
+            var entry_list = replaces[field_name];
+
+            for(var j = 0; j < entry_list.length; j++){
+                var current_entry = entry_list[j];
+                var found = false;
+                for(var k = 0; k < this.originalPost[field_name].length && !found ; k++){
+                    var original_entry = this.originalPost[field_name][k];
+                    if( original_entry == current_entry){
+                        found = true;
+                    }
+                }
+                if(!found){
+                    if(!adds.hasOwnProperty(field_name)){
+                        adds[field_name] = [];
+                    }
+                    adds_tainted = true;
+                    adds[field_name].push(current_entry);
+                }
+            }
+
+
+            for(var j = 0; j < this.originalPost[field_name].length ; j++){
+                var original_entry = this.originalPost[field_name][j];
+                console.log(original_entry);
+                var found = false;
+                for(var k = 0; k < entry_list.length && !found; k++){
+                    var current_entry = entry_list[k];
+                    if( original_entry == current_entry){
+                        found = true;
+                    }
+                }
+                if(!found){
+                    console.log("didn't find it");
+                    if(!removes.hasOwnProperty(field_name)){
+                        console.log('debug ' + field_name);
+                        removes[field_name] = [];
+                    }
+                    deletes_tainted = true;
+                    removes[field_name].push(original_entry);
+                    console.log(JSON.stringify(removes));
+                }
+            }
+
+        }
+        if(deletes_tainted){
+            result_obj['delete'] = removes;
+        }
+        if(adds_tainted){
+            result_obj['add'] = adds;
+        }
+        
+    } else {
+        if(deletes_tainted){
+            result_obj['delete'] = deletes;
+        }
+        if(adds_tainted){
+            result_obj['add'] = adds;
+        }
+        if(replaces_tainted){
+            result_obj['replace'] = replaces;
+        }
+    }
+
+    console.log(JSON.stringify(result_obj));
+    return result_obj;
   }
 
   toggleField(field_name){
@@ -145,7 +300,10 @@ export class EditDetails {
       for(var i = 0; i < this.post_config.length; i++){
           if(this.post_config[i].name == field_name){
               if(this.post_config[i].adding != '' ){
-                  this.post[this.post_config[i].name].push(this.post_config[i].adding);
+                  if(this.post[field_name] == null){
+                      this.post[field_name] = [];
+                  }
+                  this.post[field_name].push(this.post_config[i].adding);
                   this.post_config[i].adding = '';
               }
               break;
@@ -168,7 +326,8 @@ export class EditDetails {
 
 
   canPost() {
-    return navigator.onLine;
+      //return true;
+      return navigator.onLine;
   }
 
  getGeo(){

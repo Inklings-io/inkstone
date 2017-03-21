@@ -1,7 +1,7 @@
 <template>
   <header>
       <a class="back-icon" route-href="route:home;"><img src="img/icons/circle-icons/uparrow.svg"/></a>
-      <h1 class="title">Create Post</h1>
+      <h1 class="title">Edit Post</h1>
       <div class="user"><img src="img/icons/circle-icons/person.svg"/><span>${user}</span></div>
       <div style="clear:both;"></div>
   </header>
@@ -9,8 +9,16 @@
 
   <div class="grid-container main-wrapper">
     <div class="row">
+      <div class="toggle_buttons col-1">
+        <div repeat.for="field of post_config" if.bind="field.icon" class="toggle_button" click.trigger="toggleField(field.name)">
+          <div class="icon ${field.shown ? 'active' : 'inactive'}">
+            <img src="${field.icon}" width="50px;" />
+          </div>
+          <div class="label">${field.name}</div>
+        </div>
+      </div>
 
-      <div class="col-12 sm-col-6 x-sm-col-4">
+      <div class="col-11 sm-col-5 x-sm-col-3">
         <div class="post_inputs grid-container">
 
           <div class="row" repeat.for="field of post_config" hidden.bind='!field.shown' >
@@ -87,10 +95,8 @@
               <div class="col-4">
               </div>
               <div class="col-4">
-                <button click.delegate="clearPostConfirm()">Clear</button>
-                <button click.delegate="save()" >Save</button>
-                <button click.trigger="doPost()" disabled.bind="!canPost()" >Post</button>
-                <!-- <button click.trigger="addNotification('New Post', 'https://test.net/')"  >Test</button> -->
+                <button click.delegate="clearPostConfirm()">Reset</button>
+                <button click.trigger="doPost()" disabled.bind="!canPost()" >Edit Post</button>
               </div>
               <div class="col-4">
               </div>

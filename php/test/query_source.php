@@ -6,6 +6,8 @@ $post_obj = array(
   "properties" => array(
     "published" =>  array("2016-02-21T12:50:53-08:00"),
     "content" =>  array("Hello World"),
+    "in-reply-to" => array("Some Website"),
+    "like-of" => array("Some Website Liked"),
     "category" => array(
       "foo", 
       "bar"

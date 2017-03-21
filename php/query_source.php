@@ -35,14 +35,7 @@ if($_SERVER['HTTP_ACCEPT']){
     $additional_headers[] = 'Accept:'. $_SERVER['HTTP_ACCEPT'];
 }
 
-$post_data = '';
-if($encoding == 'form'){
-	$post_data = http_build_query($input_post_data);
-} else {
-	$post_data = json_encode($input_post_data);
-}
-
-$response = standardPost($request_url, $bearer_string, $post_data, $additional_headers);
+$response = standardPost($request_url, $bearer_string, null, $additional_headers);
 
 returnResponse($response);
 

@@ -192,7 +192,6 @@ export class PostDetails {
     }).catch(error => {
       delete this.post.post_config;
     });
-
   }
 
   toggleField(field_name){
@@ -203,7 +202,6 @@ export class PostDetails {
       }
     }
   }
-
 
   addListItem(field_name){
 
@@ -229,7 +227,6 @@ export class PostDetails {
         }
       }
     }
-
   }
 
 

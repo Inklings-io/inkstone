@@ -9,13 +9,15 @@ export class App {
     config.pushState = true;
     config.addAuthorizeStep(AuthorizeStep);
     config.map([
-      { route: '',                            moduleId: 'home',       name:'home',        title: 'Home',        loggedIn: true  },
-      { route: 'home',                        moduleId: 'home',                           title: 'Home',        loggedIn: true  },
-      { route: 'login',                       moduleId: 'login',      name:'login',       title: 'Login',       loggedOut: true },
-      { route: 'settings',                    moduleId: 'settings',   name:'settings',    title: 'Settings',    loggedIn: true  },
-      { route: 'post/:num',                   moduleId: 'post',       name:'post',        title: 'Edit Post',   loggedIn: true  },
-      { route: 'post',                        moduleId: 'post',       name:'newpost',     title: 'Create Post', loggedIn: true  },
-      { route: 'edit',                        moduleId: 'edit',       name:'editpost',    title: "Edit Post",   loggedIn: true  }
+      { route: '',               moduleId: 'home',       name:'home',         title: 'Home',          loggedIn: true  },
+      { route: 'home',           moduleId: 'home',                            title: 'Home',          loggedIn: true  },
+      { route: 'login',          moduleId: 'login',      name:'login',        title: 'Login',         loggedOut: true },
+      { route: 'settings',       moduleId: 'settings',   name:'settings',     title: 'Settings',      loggedIn: true  },
+      { route: 'post/:num',      moduleId: 'post',       name:'post',         title: 'Edit Post',     loggedIn: true  },
+      { route: 'post',           moduleId: 'post',       name:'newpost',      title: 'Create Post',   loggedIn: true  },
+      { route: 'edit',           moduleId: 'edit',       name:'editpost',     title: "Edit Post",     loggedIn: true  },
+      { route: 'delete',         moduleId: 'delete',     name:'deletepost',   title: "Delete Post",   loggedIn: true  },
+      { route: 'undelete',       moduleId: 'undelete',   name:'undeletepost', title: "Undelete Post", loggedIn: true  }
 
     ]);
 

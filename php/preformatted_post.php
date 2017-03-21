@@ -7,13 +7,10 @@ require '../vendor/autoload.php';
 //TODO put this in configs?
 $media_types = ['photo', 'video', 'audio'];
 
-$encoding = 'form';
 try {
 	$input_post_data = json_decode(file_get_contents('php://input'), true);
     if(empty($input_post_data)){
         $input_post_data = $_POST;
-    } else {
-        $encoding = 'JSON';
     }
 } catch (Exception $e){
 	$input_post_data = $_POST;
@@ -96,19 +93,10 @@ if( $has_media_set ) {
 
 $post_data = '';
 $additional_headers = array();
-if($encoding == 'form'){
-    //debug_log('form');
-    //debug_log($post_array);
-	$post_data = http_build_query($post_array);
-    $post_data = preg_replace('/%5B[0-9]+%5D/simU', '[]', $post_data);
-    //debug_log($post_data);
-    $additional_headers[] = 'Content-Type: application/x-www-form-urlencoded';
-} else {
     //debug_log(print_r($post_array,true));
-	$post_data = json_encode(transform_json_post($post_array));
+	$post_data = json_encode($post_array);
     //debug_log($post_data);
     $additional_headers[] = 'Content-Type: application/json';
-}
 
 $response = standardPost($micropub_endpoint, $bearer_string, $post_data, $additional_headers);
 returnResponse($response);

@@ -228,6 +228,129 @@ export class MicropubAPI {
         });
     }
 
+    send_edit(send_data){
+        this.isRequesting = true;
+        return new Promise((resolve, reject) => {
+            //todo, these should not be in the post directly if using endpoint directly
+            //send_data.token = window.localStorage.getItem("token");
+            send_data['mp-me'] = window.localStorage.getItem("me");
+            var content_type = 'application/json';
+            console.log(content_type);
+            client.fetch('php/preformatted_post.php', 
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type' : content_type,
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                    },
+                    body: JSON.stringify(send_data)
+                }
+            ).then( data => {
+                this.isRequesting = false;
+                if(data.ok){
+                    resolve(data.headers.get('Location'));
+                } else {
+                    console.log('error A11 ' + data.status + ' ' + data.statusText);
+                    reject(new Error("error Processing Send"));
+                }
+
+            }).catch( error => {
+                this.isRequesting = false;
+                console.log('error A12');
+                reject( new Error('E6: Error connecting to App Server : ' + error.message));
+            });
+
+        });
+    }
+
+    send_delete(url){
+        this.isRequesting = true;
+        return new Promise((resolve, reject) => {
+            //todo, these should not be in the post directly if using endpoint directly
+            //send_data.token = window.localStorage.getItem("token");
+            var send_data = {};
+            send_data['mp-me'] = window.localStorage.getItem("me");
+            send_data['action'] = 'delete';
+            send_data['url'] = url;
+            var encoding = this.config.get('post_encoding');
+            var content_type = 'application/x-www-form-urlencoded';
+            if(encoding == 'JSON'){
+                content_type = 'application/json';
+            }
+            console.log(send_data);
+
+            //console.log(content_type);
+            client.fetch('php/route.php', 
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type' : content_type,
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                    },
+                    body: this.simple_prep_for_publish(send_data)
+                }
+            ).then( data => {
+                this.isRequesting = false;
+                console.log(data)
+                if(data.ok){
+                    resolve(data.headers.get('Location'));
+                } else {
+                    console.log('error B11 ' + data.status + ' ' + data.statusText);
+                    reject(new Error("error Processing Delete"));
+                }
+
+            }).catch( error => {
+                this.isRequesting = false;
+                console.log('error B12');
+                reject( new Error('E6: Error connecting to App Server : ' + error.message));
+            });
+
+        });
+    }
+
+    send_undelete(url){
+        this.isRequesting = true;
+        return new Promise((resolve, reject) => {
+            //todo, these should not be in the post directly if using endpoint directly
+            //send_data.token = window.localStorage.getItem("token");
+            var send_data = {};
+            send_data['mp-me'] = window.localStorage.getItem("me");
+            send_data['action'] = 'undelete';
+            send_data['url'] = url;
+            var encoding = this.config.get('post_encoding');
+            var content_type = 'application/x-www-form-urlencoded';
+            if(encoding == 'JSON'){
+                content_type = 'application/json';
+            }
+
+            //console.log(content_type);
+            client.fetch('php/route.php', 
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type' : content_type,
+                        'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                    },
+                    body: this.simple_prep_for_publish(send_data)
+                }
+            ).then( data => {
+                this.isRequesting = false;
+                if(data.ok){
+                    resolve(data.headers.get('Location'));
+                } else {
+                    console.log('error C11 ' + data.status + ' ' + data.statusText);
+                    reject(new Error("error Processing Undelete"));
+                }
+
+            }).catch( error => {
+                this.isRequesting = false;
+                console.log('error C12');
+                reject( new Error('F6: Error connecting to App Server : ' + error.message));
+            });
+
+        });
+    }
+
     save(data){
         data.published = getFormattedDate();
 
@@ -313,12 +436,49 @@ export class MicropubAPI {
 
         var encoding = this.config.get('post_encoding');
         if(encoding == 'JSON'){
-            console.log('debug1');
+            //console.log('debug1');
             var res = JSON.stringify(obj);
             console.log(res);
             return res;
         } else {
-            console.log('debug2');
+            //console.log('debug2');
+            var str = [];
+
+            for(var key in obj) {
+
+                if (obj.hasOwnProperty(key)) {
+
+                  if(!obj[key]){
+                     ; //do nothing 
+                  } else if(typeof obj[key] === 'string'){
+                      str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+                  } else if(typeof obj[key] === 'object' && obj[key].constructor === Array){
+                      if(key == 'photo' || key == 'audio' || key == 'video'){ 
+                          for(var i = 0; i < obj[key].length; i++){
+                              str.push(encodeURIComponent(key) + "[]=" + JSON.stringify(obj[key][i]));
+                          }
+                      } else {
+                          for(var i = 0; i < obj[key].length; i++){
+                              str.push(encodeURIComponent(key) + "[]=" + encodeURIComponent(obj[key][i]));
+                          }
+                      }
+                  }
+                }
+            }
+          return str.join("&");
+        }
+        
+    }
+    simple_prep_for_publish(obj){
+
+        var encoding = this.config.get('post_encoding');
+        if(encoding == 'JSON'){
+            //console.log('debug1');
+            var res = JSON.stringify(obj);
+            //console.log(res);
+            return res;
+        } else {
+            //console.log('debug2');
             var str = [];
 
             for(var key in obj) {
@@ -347,23 +507,29 @@ export class MicropubAPI {
         
     }
 
-    fetch_source(url, field = null){
+    fetch_source(url, fields = null){
         var fields_query = ''
-        if(field && field != ''){
-            fields_query = '&properties[]=' + field;
+        if(fields && fields != ''){
+            for(var i = 0; i < fields.length; i++){
+                var field = fields[i].trim();
+                if(field && field != ''){
+                    fields_query = fields_query + '&properties[]=' + field;
+                }
+            }
         } 
 
 
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
 
-            client.fetch('php/test/query_source.php?q=source'+ fields_query + '&url=' + url, {
-            //client.fetch('php/route.php?q=source'+ fields_query + '&url=' + url, {
-                method: "POST"//,
-                //headers: {
-                    //'Authorization': 'Bearer ' + window.localStorage.getItem("token")
-                //},
-                //body: serialize({'mp-me':window.localStorage.getItem("me")})
+            //client.fetch('php/test/query_source.php?q=source'+ fields_query + '&url=' + url, {
+            client.fetch('php/query_source.php?q=source'+ fields_query + '&url=' + url, {
+                method: "POST",
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'Authorization': 'Bearer ' + window.localStorage.getItem("token")
+                },
+                body: JSON.stringify({'mp-me':window.localStorage.getItem("me")})
             }).then( response => response.json()
             ).then( data => {
                 //console.log(data)

@@ -1,0 +1,55 @@
+<template>
+  <header>
+      <a class="back-icon" route-href="route:home;"><img src="img/icons/circle-icons/uparrow.svg"/></a>
+      <h1 class="title">Undelete Post</h1>
+      <div class="user"><img src="img/icons/circle-icons/person.svg"/><span>${user}</span></div>
+      <div style="clear:both;"></div>
+  </header>
+
+
+  <div class="grid-container main-wrapper">
+    <div class="row">
+      <div class="toggle_buttons col-1">
+      </div>
+
+      <div class="col-11 sm-col-5 x-sm-col-3">
+        <div class="post_inputs grid-container">
+
+          <div class="row">
+            <div  class="col-12">
+              <input value.bind="url" placeholder="http://example.com/"/>
+            </div>
+          </div><!-- end row -->
+
+
+          <div class="row">
+            <div class="control-buttons">
+              <div class="col-4">
+              </div>
+              <div class="col-4">
+                <button click.delegate="clearPostConfirm()">Reset</button>
+                <button click.trigger="doPost()" disabled.bind="!canPost()" >Undelete Post</button>
+              </div>
+              <div class="col-4">
+              </div>
+            </div>
+          </div><!-- end row -->
+
+        </div> <!-- end grid container -->
+
+      </div> <!-- end col-11 -->
+
+    </div><!-- end row -->
+
+  </div> <!-- end grid container -->
+  <div class="notify-window" if.bind="notifications.length">
+    <div repeat.for="notification of notifications" class="notify">
+      <span class="close" click.trigger="delNotification(notification.id)">X</span>
+      <a if.bind="notification.url.length" href="${notification.url}" target="_blank">${notification.msg}</a>
+      <span if.bind="!notification.url.length">${notification.msg}</span>
+
+    </div>
+  </div>
+
+
+</template>

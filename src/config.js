@@ -3,7 +3,7 @@ export class Config {
 
   constructor(){
 
-    this.software_version = '1.1.7';
+    this.software_version = '1.1.9';
 
     this.post_encoding = 'form';
 
