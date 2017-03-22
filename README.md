@@ -49,6 +49,13 @@ Some examples would be
 * https://inklings.io/inkstone/#/post?like-of=@url
 * https://inklings.io/inkstone/#/post?in-reply-to=@url
 
+## Edit, Delete, and Undelete
+
+* Currently these features are pretty new and so I don't want to put them in the main interface just yet, but you can access them by going to 
+  /#/edit/?url=<someurl>
+  /#/delete/?url=<someurl>
+  /#/undelete/?url=<someurl>
+
 ## MobilePub 2 and Earlier
 
 Mobilepub was the name for previous versions of this software. These versions still exist as branches on the github repo, but are no longer maintained.
