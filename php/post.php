@@ -71,21 +71,21 @@ if( $has_media_set ) {
                             $media_object = json_decode($media_object, true);
                         }
                         //debug_log($media_object['src']);
-                        $media_loc = uploadToMediaEndpoint($config['media-endpoint'],$bearer_string,  $media_object);
+                        $media_loc = uploadToMediaEndpoint($config['media-endpoint'],$bearer_string,  $media_object, $encoding == 'JSON');
                         if($media_loc){
                             $media_urls[] = $media_loc;
                         }
                         
                     }
-                    if(sizeof($media_urls) == 1){
-                        $post_array[$media_type] = $media_urls[0]; 
-                    } else {
+                    //if(sizeof($media_urls) == 1){
+                        //$post_array[$media_type] = $media_urls[0]; 
+                    //} else {
                         $post_array[$media_type] = $media_urls; 
-                    }
+                    //}
 
                 } else {
                     $media_data = json_decode($media_data, true);
-                    $post_array[$media_type] = uploadToMediaEndpoint($config['media-endpoint'],$bearer_string,  $media_data);
+                    $post_array[$media_type] = uploadToMediaEndpoint($config['media-endpoint'],$bearer_string,  $media_data, $encoding == 'JSON');
                 }
 
             }

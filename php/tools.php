@@ -59,7 +59,7 @@ function getMicropubEndpoint($me)
 }
 
 
-function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
+function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data, $return_alt_obj = false){
 
     $split = explode(';base64,', $media_data['src']);
     $encoded_data = str_replace(' ','+',$split[1]);
@@ -67,6 +67,7 @@ function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
 
 	$filename = $media_data['name'];
 	$filesize = $media_data['size'];
+
 	if ($filedata != '')
 	{
 
@@ -118,7 +119,11 @@ function uploadToMediaEndpoint($media_endpoint, $bearer_string, $media_data){
 
 						$split = explode(': ', $line);
 						curl_close($ch);
-						return $split[1];
+                        if($return_alt_obj && isset($media_data['alt']) && !empty($media_data['alt'])){
+                            return array('alt' => $media_data['alt'], 'value' =>  $split[1]);
+                        } else {
+                            return $split[1];
+                        }
 
 					}
 				}

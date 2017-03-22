@@ -29,6 +29,7 @@
             <option value="text">Text - A large block of text</option>
             <option value="list">List - A set of strings</option>
             <option value="select">Select - A dropdown list of options</option>
+            <option value="files">Files - A set of files</option>
           </select>
         </div>
 
@@ -63,9 +64,11 @@
 
 
 
-        <div class="col-4">
-          <label>Show By Default:</label>
-          <input type="checkbox" checked.bind="field.shown" >
+        <div class="col-4 row">
+          <label class="col-6">Show By Default:</label>
+          <span class="col-6">
+            <input type="checkbox" checked.bind="field.shown" >
+          </span>
         </div>
 
 
@@ -82,6 +85,31 @@
           </ul>
         </div>
         <!-- if type = 'select' -->
+
+        <!-- if type = 'text' -->
+        <div if.bind="field.type == 'text'" class="col-4 row">
+          <label class="col-6">HTML format:</label>
+          <span class="col-6">
+            <input type="checkbox" checked.bind="field.html" >
+          </span>
+        </div>
+        <!-- if type = 'text' -->
+
+        <!-- if type = 'files' -->
+        <div if.bind="field.type == 'files'" class="col-4 row">
+          <label class="col-6">Alt Tag:</label>
+          <span class="col-6">
+            <input type="checkbox" checked.bind="field.alt_tag" >
+          </span>
+        </div>
+
+        <div if.bind="field.type == 'files'" class="col-4 row">
+          <label class="col-6">Preview Image:</label>
+          <span class="col-6">
+            <input type="checkbox" checked.bind="field.preview_img" >
+          </span>
+        </div>
+        <!-- if type = 'files' -->
 
         <div if.bind="field.custom" class="col-12 right ">
             <button click.delegate="remove_field(field.name)">Delete Field</button>

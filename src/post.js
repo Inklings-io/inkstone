@@ -231,6 +231,7 @@ export class PostDetails {
 
 
   canPost() {
+    //return true;
     return navigator.onLine;
   }
 
@@ -265,10 +266,6 @@ export class PostDetails {
 	});
   }
 
-  logit(obj){
-    console.log(obj);
-  }
-
   addFile(field_name){
 
     if(this.files[field_name]){
@@ -279,7 +276,7 @@ export class PostDetails {
         console.log(fr);
         fr.onload = function(e) {
           console.log(fr.result);
-          this.post[field_name].push( {'src' : fr.result, 'size': itm.size, 'lastModified': itm.lastModified, 'type': itm.type, 'name': itm.name} );
+          this.post[field_name].push( {'src' : fr.result, 'size': itm.size, 'lastModified': itm.lastModified, 'type': itm.type, 'name': itm.name, 'alt': ''} );
         }.bind(this);
         fr.readAsDataURL(itm);
       }

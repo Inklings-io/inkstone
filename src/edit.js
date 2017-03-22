@@ -345,4 +345,29 @@ export class EditDetails {
       );
   }
 
+  addFile(field_name){
+
+    if(this.files[field_name]){
+      for(var i = 0; i < this.files[field_name].length; i++){
+        let itm = this.files[field_name].item(i);
+        let fr = new FileReader();
+        console.log(itm);
+        console.log(fr);
+        fr.onload = function(e) {
+          console.log(fr.result);
+          this.post[field_name].push( {'src' : fr.result, 'size': itm.size, 'lastModified': itm.lastModified, 'type': itm.type, 'name': itm.name, 'alt': ''} );
+        }.bind(this);
+        fr.readAsDataURL(itm);
+      }
+      this.files[field_name] = [];
+    }
+  }
+  
+  removeFile(field_name, index) {
+    if(this.post[field_name] && this.post[field_name][index]) {
+        this.post[field_name].splice(index, 1);
+    } 
+
+  } 
+
 }

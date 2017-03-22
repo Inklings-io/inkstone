@@ -190,6 +190,9 @@ export class MicropubAPI {
     }
 
     send(send_data){
+        //return console.log(JSON.stringify(this.prep_for_publish(send_data)));
+        //return null;
+
         this.isRequesting = true;
         return new Promise((resolve, reject) => {
             //todo, these should not be in the post directly if using endpoint directly
@@ -436,6 +439,16 @@ export class MicropubAPI {
 
         var encoding = this.config.get('post_encoding');
         if(encoding == 'JSON'){
+
+            for(var key in obj) {
+                console.log(key);
+                for(var i = 0; i < config.length; i++){
+                    if(config[i].name == key && obj.hasOwnProperty(key) && config[i].html ){
+
+                        obj[key] = [{ 'html' : obj[key] }];
+                    }
+                }
+            }
             //console.log('debug1');
             var res = JSON.stringify(obj);
             console.log(res);

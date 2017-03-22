@@ -20,6 +20,8 @@ export class Config {
       options: [],
       custom: true,
       shown: false,
+      preview_img: false,
+      html: false,
       always_send: false
     } 
 
@@ -54,6 +56,8 @@ export class Config {
           options: ['entry'],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: true
         },
         { 
@@ -66,6 +70,8 @@ export class Config {
           options: [],
           custom: false,
           shown: true,
+          preview_img: false,
+          html: true,
           always_send: false
         },
         { 
@@ -78,6 +84,8 @@ export class Config {
           options: [],
           custom: false,
           shown: true,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -90,6 +98,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -102,6 +112,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -114,6 +126,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -126,6 +140,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: true,
+          html: false,
           always_send: false
         },
         { 
@@ -138,6 +154,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -150,6 +168,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -162,6 +182,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -174,6 +196,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -186,6 +210,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -198,6 +224,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -210,6 +238,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -222,6 +252,8 @@ export class Config {
           options: [],
           custom: false,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -234,6 +266,8 @@ export class Config {
           options: [],
           custom: true,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         },
         { 
@@ -246,6 +280,8 @@ export class Config {
           options: ['note','checkin'],
           custom: true,
           shown: false,
+          preview_img: false,
+          html: false,
           always_send: false
         } 
     ];

@@ -57,7 +57,10 @@
                     <a class="list_item_remove" click.delegate="removeFile(field.name, $index)">X</a>
                     ${file.name}
                   </div>
-                  <img if.bind="field.name == 'photo'" src.bind="file.src " />
+                  <img if.bind="field.preview_img" src.bind="file.src " />
+                  <div>
+                    <input type="text" value.bind="file.alt" placeholder="alt text"/>
+                  </div>
                 </li>
               </ul>
             </div>
