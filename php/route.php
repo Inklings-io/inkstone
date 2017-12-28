@@ -35,11 +35,17 @@ if($_SERVER['HTTP_ACCEPT']){
     $additional_headers[] = 'Accept:'. $_SERVER['HTTP_ACCEPT'];
 }
 
-$post_data = '';
-if($encoding == 'form'){
-	$post_data = http_build_query($input_post_data);
+unset($input_post_data['mp-me']);
+
+if(empty($input_post_data)){
+    $post_data = false;
 } else {
-	$post_data = json_encode($input_post_data);
+    $post_data = '';
+    if($encoding == 'form'){
+        $post_data = http_build_query($input_post_data);
+    } else {
+        $post_data = json_encode($input_post_data);
+    }
 }
 
 $response = standardPost($request_url, $bearer_string, $post_data, $additional_headers);
