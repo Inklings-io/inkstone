@@ -64,10 +64,11 @@ export class MicropubAPI {
         });
     }
 
-    auth(me, code, state){
+    auth(code, state){
         return new Promise((resolve, reject) => {
             var original_state = window.localStorage.getItem("state");
-            var original_me = window.localStorage.getItem("me");
+            //var original_me = window.localStorage.getItem("me");
+            var me = window.localStorage.getItem("me");
             window.localStorage.removeItem("state");
 
             if(original_state != state){
